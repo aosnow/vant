@@ -75,7 +75,7 @@
 @action-sheet-item-font-size: @font-size-lg;
 @action-sheet-item-text-color: @text-color;
 @action-sheet-item-disabled-text-color: @gray-5;
-@action-sheet-subname-color: @gray-7;
+@action-sheet-subname-color: @gray-6;
 @action-sheet-subname-font-size: @font-size-sm;
 @action-sheet-close-icon-size: 22px;
 @action-sheet-close-icon-color: @gray-5;
@@ -116,7 +116,7 @@
 @button-normal-font-size: @font-size-md;
 @button-large-height: 50px;
 @button-default-height: 44px;
-@button-default-line-height: 1.5;
+@button-default-line-height: 1.2;
 @button-default-font-size: @font-size-lg;
 @button-default-color: @text-color;
 @button-default-background-color: @white;
@@ -231,8 +231,8 @@
 
 // Collapse
 @collapse-item-transition-duration: @animation-duration-base;
-@collapse-item-content-padding: @padding-md;
-@collapse-item-content-font-size: 13px;
+@collapse-item-content-padding: @padding-sm @padding-md;
+@collapse-item-content-font-size: 14px;
 @collapse-item-content-line-height: 1.5;
 @collapse-item-content-text-color: @gray-6;
 @collapse-item-content-background-color: @white;
@@ -286,6 +286,7 @@
 @coupon-list-background-color: @background-color;
 @coupon-list-field-padding: 5px 0 5px @padding-md;
 @coupon-list-exchange-button-height: 32px;
+@coupon-list-close-button-height: 40px;
 @coupon-list-empty-image-size: 200px;
 @coupon-list-empty-tip-color: @gray-6;
 @coupon-list-empty-tip-font-size: @font-size-md;
@@ -348,7 +349,7 @@
 @field-input-text-color: @text-color;
 @field-input-error-text-color: @red;
 @field-input-disabled-text-color: @gray-6;
-@field-placeholder-text-color: @gray-6;
+@field-placeholder-text-color: @gray-5;
 @field-icon-size: 16px;
 @field-clear-icon-size: 16px;
 @field-clear-icon-color: @gray-5;
@@ -462,7 +463,7 @@
 @notice-bar-line-height: 24px;
 @notice-bar-background-color: @orange-light;
 @notice-bar-icon-size: 16px;
-@notice-bar-icon-min-width: 22px;
+@notice-bar-icon-min-width: 24px;
 
 // Notify
 @notify-text-color: @white;
@@ -530,10 +531,11 @@
 @picker-background-color: @white;
 @picker-toolbar-height: 44px;
 @picker-title-font-size: @font-size-lg;
+@picker-title-line-height: 20px;
 @picker-action-padding: 0 @padding-md;
 @picker-action-font-size: @font-size-md;
-@picker-action-text-color: @blue;
-@picker-action-active-color: @active-color;
+@picker-confirm-action-color: @text-link-color;
+@picker-cancel-action-color: @gray-6;
 @picker-option-font-size: @font-size-lg;
 @picker-option-text-color: @black;
 @picker-option-disabled-opacity: 0.3;
@@ -578,10 +580,10 @@
 
 // Rate
 @rate-icon-size: 20px;
-@rate-icon-gutter: 4px;
+@rate-icon-gutter: @padding-base;
 @rate-icon-void-color: @gray-5;
 @rate-icon-full-color: #ffd21e;
-@rate-icon-disabled-color: #bdbdbd;
+@rate-icon-disabled-color: @gray-5;
 
 // ShareSheet
 @share-sheet-header-padding: @padding-sm @padding-md @padding-base;
@@ -592,9 +594,10 @@
 @share-sheet-description-font-size: @font-size-sm;
 @share-sheet-description-line-height: 16px;
 @share-sheet-icon-size: 48px;
-@share-sheet-option-margin-right: @padding-xl;
 @share-sheet-option-name-color: @gray-7;
 @share-sheet-option-name-font-size: @font-size-sm;
+@share-sheet-option-description-color: @gray-5;
+@share-sheet-option-description-font-size: @font-size-sm;
 @share-sheet-cancel-button-font-size: @font-size-lg;
 @share-sheet-cancel-button-height: 48px;
 @share-sheet-cancel-button-background: @white;
@@ -673,9 +676,11 @@
 @stepper-button-icon-color: @text-color;
 @stepper-button-disabled-color: @background-color;
 @stepper-button-disabled-icon-color: @gray-5;
+@stepper-button-round-theme-color: @red;
 @stepper-input-width: 32px;
 @stepper-input-height: 28px;
 @stepper-input-font-size: @font-size-md;
+@stepper-input-line-height: normal;
 @stepper-input-text-color: @text-color;
 @stepper-input-disabled-text-color: @gray-5;
 @stepper-input-disabled-background-color: @active-color;

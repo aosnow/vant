@@ -18,41 +18,13 @@ Vue.use(Picker);
 ### Basic Usage
 
 ```html
-<van-picker :columns="columns" @change="onChange" />
-```
-
-```js
-import { Toast } from 'vant';
-
-export default {
-  data() {
-    return {
-      columns: ['Delaware', 'Florida', 'Georqia', 'Indiana', 'Maine'],
-    };
-  },
-  methods: {
-    onChange(picker, value, index) {
-      Toast(`Value: ${value}, Index: ${index}`);
-    },
-  },
-};
-```
-
-### Default Index
-
-```html
-<van-picker :columns="columns" :default-index="2" @change="onChange" />
-```
-
-### Show Toolbar
-
-```html
 <van-picker
   show-toolbar
   title="Title"
   :columns="columns"
-  @cancel="onCancel"
   @confirm="onConfirm"
+  @cancel="onCancel"
+  @change="onChange"
 />
 ```
 
@@ -69,11 +41,20 @@ export default {
     onConfirm(value, index) {
       Toast(`Value: ${value}, Index: ${index}`);
     },
+    onChange(picker, value, index) {
+      Toast(`Value: ${value}, Index: ${index}`);
+    },
     onCancel() {
       Toast('Cancel');
     },
   },
 };
+```
+
+### Default Index
+
+```html
+<van-picker show-toolbar title="Title" :columns="columns" :default-index="2" />
 ```
 
 ### Multiple Columns
@@ -147,7 +128,7 @@ export default {
 ### Disable option
 
 ```html
-<van-picker :columns="columns" />
+<van-picker show-toolbar :columns="columns" />
 ```
 
 ```js
@@ -167,7 +148,7 @@ export default {
 ### Set Column Values
 
 ```html
-<van-picker :columns="columns" @change="onChange" />
+<van-picker show-toolbar title="Title" :columns="columns" @change="onChange" />
 ```
 
 ```js
@@ -195,7 +176,7 @@ export default {
 When Picker columns data is acquired asynchronously, use `loading` prop to show loading prompt
 
 ```html
-<van-picker :columns="columns" :loading="loading" />
+<van-picker show-toolbar title="Title" :columns="columns" :loading="loading" />
 ```
 
 ```js
@@ -226,8 +207,9 @@ export default {
   placeholder="Choose City"
   @click="showPicker = true"
 />
-<van-popup v-model="showPicker" position="bottom">
+<van-popup v-model="showPicker" round position="bottom">
   <van-picker
+    title="Title"
     show-toolbar
     :columns="columns"
     @cancel="showPicker = false"
@@ -270,7 +252,7 @@ export default {
 | show-toolbar | Whether to show toolbar | _boolean_ | `false` |
 | allow-html `v2.1.8` | Whether to allow HTML in option text | _boolean_ | `true` |
 | default-index | Default value index of single column picker | _number \| string_ | `0` |
-| item-height | Option height | _number \| string_ | `44` |
+| item-height `v2.8.6` | Option height, supports `px` ans `rem` unit, default `px` | _number \| string_ | `44` |
 | visible-item-count | Count of visible columns | _number \| string_ | `5` |
 | swipe-duration `v2.2.10` | Duration of the momentum animation，unit `ms` | _number \| string_ | `1000` |
 

@@ -17,7 +17,25 @@ test('click event', () => {
   expect(wrapper.emitted('click')[0][0]).toBeTruthy();
 });
 
-test('click icon event', () => {
+test('click-input event', () => {
+  const wrapper = mount(Field);
+
+  wrapper.find('input').trigger('click');
+  expect(wrapper.emitted('click-input')[0][0]).toBeTruthy();
+});
+
+test('click-input event when using input slot', () => {
+  const wrapper = mount(Field, {
+    scopedSlots: {
+      input: () => 'Custom Input',
+    },
+  });
+
+  wrapper.find('.van-field__control').trigger('click');
+  expect(wrapper.emitted('click-input')[0][0]).toBeTruthy();
+});
+
+test('click-icon event', () => {
   const wrapper = mount(Field, {
     propsData: {
       value: 'a',
@@ -185,14 +203,9 @@ test('clearable', () => {
 });
 
 test('render input slot', () => {
-  const wrapper = mount({
-    template: `
-      <field>
-        <template v-slot:input>Custom Input</template>
-      </field>
-    `,
-    components: {
-      Field,
+  const wrapper = mount(Field, {
+    scopedSlots: {
+      input: () => 'Custom Input',
     },
   });
 
@@ -200,14 +213,19 @@ test('render input slot', () => {
 });
 
 test('render label slot', () => {
-  const wrapper = mount({
-    template: `
-      <field label="Default Label">
-        <template v-slot:label>Custom Label</template>
-      </field>
-    `,
-    components: {
-      Field,
+  const wrapper = mount(Field, {
+    scopedSlots: {
+      label: () => 'Custom Label',
+    },
+  });
+
+  expect(wrapper).toMatchSnapshot();
+});
+
+test('render extra slot', () => {
+  const wrapper = mount(Field, {
+    scopedSlots: {
+      extra: () => 'Extra',
     },
   });
 
@@ -292,6 +310,28 @@ test('reach max word-limit', () => {
   expect(wrapper).toMatchSnapshot();
 });
 
+test('reach max word-limit undefined', () => {
+  const wrapper = mount(Field, {
+    propsData: {
+      value: undefined,
+      maxlength: 3,
+      showWordLimit: true,
+    },
+  });
+  expect(wrapper).toMatchSnapshot();
+});
+
+test('reach max word-limit null', () => {
+  const wrapper = mount(Field, {
+    propsData: {
+      value: null,
+      maxlength: 3,
+      showWordLimit: true,
+    },
+  });
+  expect(wrapper).toMatchSnapshot();
+});
+
 test('name prop', () => {
   const wrapper = mount(Field, {
     propsData: {
@@ -323,4 +363,22 @@ test('colon prop', () => {
     },
   });
   expect(wrapper).toMatchSnapshot();
+});
+
+test('should blur search input on enter', () => {
+  const wrapper = mount(Field);
+
+  wrapper.find('input').element.focus();
+  wrapper.find('input').trigger('keypress.enter');
+  expect(wrapper.emitted('blur')).toBeFalsy();
+
+  wrapper.setProps({ type: 'textarea' });
+  wrapper.find('textarea').element.focus();
+  wrapper.find('textarea').trigger('keypress.enter');
+  expect(wrapper.emitted('blur')).toBeFalsy();
+
+  wrapper.setProps({ type: 'search' });
+  wrapper.find('input').element.focus();
+  wrapper.find('input').trigger('keypress.enter');
+  expect(wrapper.emitted('blur')).toBeTruthy();
 });

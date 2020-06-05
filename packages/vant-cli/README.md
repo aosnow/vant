@@ -35,6 +35,7 @@ yarn add @vant/cli --dev
     "dev": "vant-cli dev",
     "test": "vant-cli test",
     "lint": "vant-cli lint",
+    "build": "vant-cli build",
     "release": "vant-cli release",
     "build-site": "vant-cli build-site"
   },
@@ -73,7 +74,7 @@ yarn add @vant/cli --dev
 
 扫码加入 Vant Cli 交流群，若群二维码过期，可以联系有赞前端小秘书加群
 
-<img src="https://img.yzcdn.cn/vant/wechat_20200428.jpeg" width="220" height="285" >
+<img src="https://img.yzcdn.cn/vant/wechat_20200527.jpeg" width="220" height="285" >
 
 ## 关于桌面端组件
 

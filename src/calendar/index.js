@@ -68,6 +68,10 @@ export default createComponent({
       type: Boolean,
       default: true,
     },
+    lazyRender: {
+      type: Boolean,
+      default: true,
+    },
     showMark: {
       type: Boolean,
       default: true,
@@ -249,6 +253,13 @@ export default createComponent({
           currentMonth = months[i];
         }
 
+        if (!months[i].visible && visible) {
+          this.$emit('month-show', {
+            date: months[i].date,
+            title: months[i].title,
+          });
+        }
+
         months[i].visible = visible;
         height += heights[i];
       }
@@ -363,6 +374,7 @@ export default createComponent({
           showMark={this.showMark}
           formatter={this.formatter}
           rowHeight={this.rowHeight}
+          lazyRender={this.lazyRender}
           currentDate={this.currentDate}
           showSubtitle={this.showSubtitle}
           allowSameDay={this.allowSameDay}

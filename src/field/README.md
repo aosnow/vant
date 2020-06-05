@@ -17,7 +17,7 @@ The value of field is bound with v-model.
 
 ```html
 <van-cell-group>
-  <van-field v-model="value" placeholder="Text" />
+  <van-field v-model="value" label="Label" placeholder="Text" />
 </van-cell-group>
 ```
 
@@ -253,6 +253,7 @@ Field support all native events of input tag
 | blur | Triggered when input loses focus | _event: Event_ |
 | clear | Triggered when click clear icon | _event: Event_ |
 | click | Triggered when click Field | _event: Event_ |
+| click-input `v2.8.1` | Triggered when click input | _event: Event_ |
 | click-left-icon | Triggered when click the left icon of Field | _event: Event_ |
 | click-right-icon | Triggered when click the right icon of Field | _event: Event_ |
 
@@ -267,10 +268,11 @@ Use [ref](https://vuejs.org/v2/api/#ref) to get Field instance and call instance
 
 ### Slots
 
-| Name       | Description       |
-| ---------- | ----------------- |
-| label      | Custom label      |
-| input      | Custom input      |
-| left-icon  | Custom left icon  |
-| right-icon | Custom right icon |
-| button     | Insert button     |
+| Name           | Description                 |
+| -------------- | --------------------------- |
+| label          | Custom label                |
+| input          | Custom input                |
+| left-icon      | Custom left icon            |
+| right-icon     | Custom right icon           |
+| button         | Insert button               |
+| extra `v2.8.2` | Custom content on the right |

@@ -83,6 +83,8 @@ export default createComponent({
         <div class={bem('options', { border: showBorder })}>
           {options.map((option, index) => (
             <div
+              role="button"
+              tabindex="0"
               class={bem('option')}
               onClick={() => {
                 this.onSelect(option, index);
@@ -90,6 +92,11 @@ export default createComponent({
             >
               <img src={this.getIconURL(option.icon)} class={bem('icon')} />
               {option.name && <span class={bem('name')}>{option.name}</span>}
+              {option.description && (
+                <span class={bem('option-description')}>
+                  {option.description}
+                </span>
+              )}
             </div>
           ))}
         </div>

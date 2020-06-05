@@ -167,3 +167,27 @@ test('min-date before current time', () => {
   wrapper.find('.van-calendar__confirm').trigger('click');
   expect(formatDate(wrapper.emitted('confirm')[0][0])).toEqual('1800/1/2');
 });
+
+test('lazy-render prop', () => {
+  const wrapper = mount(Calendar, {
+    propsData: {
+      minDate,
+      maxDate,
+      poppable: false,
+      lazyRender: false,
+    },
+  });
+
+  expect(wrapper).toMatchSnapshot();
+});
+
+test.only('month-show event', async () => {
+  const wrapper = mount(Calendar, {
+    propsData: {
+      value: true,
+    },
+  });
+  await later();
+
+  expect(wrapper.emitted('month-show')).toBeTruthy();
+});

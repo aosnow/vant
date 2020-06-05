@@ -15,35 +15,13 @@ Vue.use(DatetimePicker);
 
 ## Usage
 
-### Choose DateTime
-
-```html
-<van-datetime-picker
-  v-model="currentDate"
-  type="datetime"
-  :min-date="minDate"
-  :max-date="maxDate"
-/>
-```
-
-```js
-export default {
-  data() {
-    return {
-      minDate: new Date(2020, 0, 1),
-      maxDate: new Date(2025, 10, 1),
-      currentDate: new Date(),
-    };
-  },
-};
-```
-
 ### Choose Date
 
 ```html
 <van-datetime-picker
   v-model="currentDate"
   type="date"
+  title="Choose Date"
   :min-date="minDate"
   :max-date="maxDate"
 />
@@ -67,6 +45,7 @@ export default {
 <van-datetime-picker
   v-model="currentDate"
   type="year-month"
+  title="Choose Year-Month"
   :min-date="minDate"
   :max-date="maxDate"
   :formatter="formatter"
@@ -95,12 +74,48 @@ export default {
 };
 ```
 
+### Choose Month-Day
+
+```html
+<van-datetime-picker
+  v-model="currentDate"
+  type="month-day"
+  title="Choose Month-Day"
+  :min-date="minDate"
+  :max-date="maxDate"
+  :formatter="formatter"
+/>
+```
+
+```js
+export default {
+  data() {
+    return {
+      minDate: new Date(2020, 0, 1),
+      maxDate: new Date(2025, 10, 1),
+      currentDate: new Date(),
+    };
+  },
+  methods: {
+    formatter(type, val) {
+      if (type === 'month') {
+        return `${val} Month`;
+      } else if (type === 'day') {
+        return `${val} Day`;
+      }
+      return val;
+    },
+  },
+};
+```
+
 ### Choose Time
 
 ```html
 <van-datetime-picker
   v-model="currentTime"
   type="time"
+  title="Choose Time"
   :min-hour="10"
   :max-hour="20"
 />
@@ -116,10 +131,39 @@ export default {
 };
 ```
 
+### Choose DateTime
+
+```html
+<van-datetime-picker
+  v-model="currentDate"
+  type="datetime"
+  title="Choose DateTime"
+  :min-date="minDate"
+  :max-date="maxDate"
+/>
+```
+
+```js
+export default {
+  data() {
+    return {
+      minDate: new Date(2020, 0, 1),
+      maxDate: new Date(2025, 10, 1),
+      currentDate: new Date(),
+    };
+  },
+};
+```
+
 ### Option Filter
 
 ```html
-<van-datetime-picker v-model="currentTime" type="time" :filter="filter" />
+<van-datetime-picker
+  v-model="currentTime"
+  type="time"
+  title="Option Filter"
+  :filter="filter"
+/>
 ```
 
 ```js
@@ -134,7 +178,6 @@ export default {
       if (type === 'minute') {
         return options.filter((option) => option % 5 === 0);
       }
-
       return options;
     },
   },
@@ -147,7 +190,7 @@ export default {
 
 | Attribute | Description | Type | Default |
 | --- | --- | --- | --- |
-| type | Can be set to `date` `time`<br> `year-month` | _string_ | `datetime` |
+| type | Can be set to `date` `time`<br> `year-month` `month-day` | _string_ | `datetime` |
 | title | Toolbar title | _string_ | `''` |
 | confirm-button-text | Text of confirm button | _string_ | `Confirm` |
 | cancel-button-text | Text of cancel button | _string_ | `Cancel` |
@@ -155,7 +198,7 @@ export default {
 | loading | Whether to show loading prompt | _boolean_ | `false` |
 | filter | Option filter | _(type, vals) => vals_ | - |
 | formatter | Option text formatter | _(type, val) => val_ | - |
-| item-height | Option height | _number \| string_ | `44` |
+| item-height `v2.8.6` | Option height, supports `px` ans `rem` unit, default `px` | _number \| string_ | `44` |
 | visible-item-count | Count of visible columns | _number \| string_ | `5` |
 | swipe-duration `v2.2.13` | Duration of the momentum animation，unit `ms` | _number \| string_ | `1000` |
 
