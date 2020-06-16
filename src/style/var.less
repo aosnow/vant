@@ -42,12 +42,10 @@
 @font-size-sm: 12px;
 @font-size-md: 14px;
 @font-size-lg: 16px;
+@font-size-xl: 20px;
 @font-weight-bold: 500;
-@base-font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue',
-  Helvetica, Segoe UI, Arial, Roboto, 'PingFang SC', 'Hiragino Sans GB',
-  'Microsoft Yahei', sans-serif;
-@price-integer-font-family: Avenir-Heavy, PingFang SC, Helvetica Neue, Arial,
-  sans-serif;
+@base-font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Segoe UI, Arial, Roboto, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft Yahei', sans-serif;
+@price-integer-font-family: Avenir-Heavy, PingFang SC, Helvetica Neue, Arial, sans-serif;
 
 // Animation
 @animation-duration-base: 0.3s;
@@ -723,7 +721,7 @@
 @switch-node-z-index: 1;
 @switch-node-background-color: @white;
 @switch-node-box-shadow: 0 3px 1px 0 rgba(0, 0, 0, 0.05),
-  0 2px 2px 0 rgba(0, 0, 0, 0.1), 0 3px 3px 0 rgba(0, 0, 0, 0.05);
+0 2px 2px 0 rgba(0, 0, 0, 0.1), 0 3px 3px 0 rgba(0, 0, 0, 0.05);
 @switch-background-color: @white;
 @switch-on-background-color: @blue;
 @switch-transition-duration: @animation-duration-base;
@@ -836,3 +834,45 @@
 @sku-item-background-color: @background-color;
 @sku-icon-gray-color: @gray-4;
 @sku-upload-mask-color: rgba(50, 50, 51, 0.8);
+
+// Box-shadow
+@box-shadow-base: 0 .02rem .04rem rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+@box-shadow-dark: 0 .02rem .04rem rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .12);
+@box-shadow-light: 0 .02rem .06rem 0 rgba(0, 0, 0, 0.06);
+
+// GoodsColumns
+// ----------------------------------------
+@goods-columns-text-color: @text-color;
+@goods-columns-font-size: @font-size-md;
+@goods-columns-thumb-background-color: fade(@gray-2, 80%);
+@goods-columns-background-color: fade(@white, 80%);
+
+@goods-columns-title-height: @font-size-lg * 1.5;
+@goods-columns-title-line-height: @font-size-lg * 1.5;
+@goods-columns-desc-color: @gray-7;
+@goods-columns-desc-line-height: @font-size-sm * 1.25;
+@goods-columns-tags-height: 25px;
+@goods-columns-bottom-line-height: 20px;
+
+@goods-columns-price-font-size: @font-size-sm;
+@goods-columns-price-font-family: @price-integer-font-family;
+@goods-columns-origin-price-font-size: @font-size-xs;
+@goods-columns-price-color: @gray-8;
+@goods-columns-origin-price-color: @gray-6;
+
+@goods-columns-member-color: lighten(@orange, 25%);
+@goods-columns-member-background: @gray-8;
+
+.van-goods-columns-item {
+  &__detail-title {
+    max-height: @goods-columns-title-height;
+    line-height: @goods-columns-title-line-height;
+  }
+
+  &--round {
+    .van-grid-item__content {
+      //overflow: hidden;
+      border-radius: @border-radius-lg;
+    }
+  }
+}

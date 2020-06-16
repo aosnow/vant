@@ -1,0 +1,169 @@
+@import '../style/var';
+@import '../style/mixins/ellipsis';
+
+.van-goods-columns-item {
+
+  // 解决文字撑开 flex 容器问题
+  width: 0;
+
+  .van-grid-item__content {
+    padding: 0;
+    box-sizing: border-box;
+    box-shadow: @box-shadow-base;
+    background-color: @goods-columns-background-color;
+  }
+
+  &__thumb {
+    position: relative;
+    width: 100%;
+    height: 220px;
+    background-color: @goods-columns-thumb-background-color;
+  }
+
+  &__thumb-tag {
+    position: absolute;
+    top: 10px;
+    opacity: .8;
+
+    &--left {
+      left: 0;
+      padding-right: 0.7em;
+
+      &,
+      &::after {
+        border-radius: 0 @tag-round-border-radius @tag-round-border-radius 0;
+      }
+    }
+
+    &--center {
+      left: 50%;
+      transform: translateX(-50%);
+      padding-left: 0.7em;
+      padding-right: 0.7em;
+
+      &,
+      &::after {
+        border-radius: @tag-round-border-radius;
+      }
+    }
+
+    &--right {
+      right: 0;
+
+      padding-left: 0.7em;
+
+      &,
+      &::after {
+        border-radius: @tag-round-border-radius 0 0 @tag-round-border-radius;
+      }
+    }
+  }
+
+  &__detail {
+    width: 100%;
+    min-height: 80px;
+    padding: 10px;
+    box-sizing: border-box;
+    font-size: @goods-columns-font-size;
+
+    display: flex;
+    flex-direction: column;
+    //overflow: hidden;
+  }
+
+  &__detail-title {
+    font-size: @font-size-lg;
+    font-weight: @font-weight-bold;
+    max-height: @goods-columns-title-height;
+    line-height: @goods-columns-title-line-height;
+
+    .ellipsis();
+  }
+
+  &__detail-desc {
+    font-size: @font-size-sm;
+    color: @goods-columns-desc-color;
+    line-height: @goods-columns-desc-line-height;
+
+    .multi-ellipsis(2);
+  }
+
+  &__detail-tags {
+    max-height: @goods-columns-tags-height;
+    line-height: @goods-columns-tags-height;
+
+    overflow: hidden;
+
+    .van-tag {
+      margin-right: 2px;
+    }
+  }
+
+  &__detail-bottom {
+    line-height: @goods-columns-bottom-line-height;
+  }
+
+  &--round {
+    .van-grid-item__content {
+      overflow: hidden;
+      border-radius: @border-radius-lg;
+    }
+  }
+
+
+  // 会员价
+  // --------------------------------------------------
+
+  &__member {
+    display: flex;
+    align-items: center;
+  }
+
+  &__member-price, &__member-symbol {
+    display: inline-block;
+    font-size: @goods-columns-price-font-size;
+    font-family: @goods-columns-price-font-family;
+    text-align: center;
+    padding: 1px @padding-base 0;
+    min-width: 30px;
+  }
+
+  &__member-price {
+    color: @goods-columns-member-color;
+    border-radius: @border-radius-md 0 0 @border-radius-md;
+    background: @goods-columns-member-background;
+  }
+
+  &__member-symbol {
+    color: @goods-columns-member-background;
+    border-radius: 0 @border-radius-md @border-radius-md 0;
+    background: @goods-columns-member-color;
+  }
+
+  // 原价、优惠价
+  // --------------------------------------------------
+
+  &__price {
+    display: inline-block;
+    color: @goods-columns-price-color;
+    font-weight: @font-weight-bold;
+    font-size: @goods-columns-price-font-size;
+    font-family: @goods-columns-price-font-family;
+    padding-top: @padding-sm;
+  }
+
+  &__price-integer {
+    font-size: @font-size-xl;
+  }
+
+  &__price-decimal {
+  }
+
+  &__origin-price {
+    display: inline-block;
+    margin-left: 5px;
+    color: @goods-columns-origin-price-color;
+    font-size: @goods-columns-origin-price-font-size;
+    text-decoration: line-through;
+  }
+}

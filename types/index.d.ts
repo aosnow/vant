@@ -91,6 +91,10 @@ export class TabbarItem extends VanComponent {}
 export class Tag extends VanComponent {}
 export class TreeSelect extends VanComponent {}
 
+// custom
+export class GoodsColumns extends VanComponent {}
+export class GoodsColumnsItem extends VanComponent {}
+
 export {
   AddressEdit,
   Area,

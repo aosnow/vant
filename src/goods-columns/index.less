@@ -1,0 +1,48 @@
+@import '../style/var';
+
+.van-goods-columns {
+  //box-sizing: border-box;
+  //background: #4fc08d;
+
+  &--col1 {
+    .van-goods-columns-item {
+      .van-goods-columns-item__detail {
+        .van-goods-columns-item__detail-title {
+          font-size: @font-size-lg;
+        }
+      }
+    }
+  }
+
+  &--col2 {
+    .van-goods-columns-item {
+      .van-goods-columns-item__thumb {
+        height: 170px;
+      }
+
+      .van-goods-columns-item__detail {
+        min-height: 60px;
+
+        .van-goods-columns-item__detail-title {
+          font-size: @font-size-lg;
+        }
+      }
+    }
+  }
+
+  &--col3 {
+    .van-goods-columns-item {
+      .van-goods-columns-item__thumb {
+        height: 110px;
+      }
+
+      .van-goods-columns-item__detail {
+        min-height: 50px;
+
+        .van-goods-columns-item__detail-title {
+          font-size: @font-size-md;
+        }
+      }
+    }
+  }
+}
