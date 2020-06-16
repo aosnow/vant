@@ -289,11 +289,9 @@ test('formatter prop', () => {
     },
   });
 
-  const input = wrapper.find('input');
-
-  input.trigger('input');
   expect(wrapper.emitted('input')[0][0]).toEqual('abc');
 
+  const input = wrapper.find('input');
   input.element.value = '123efg';
   input.trigger('input');
   expect(wrapper.emitted('input')[1][0]).toEqual('efg');
@@ -381,4 +379,15 @@ test('should blur search input on enter', () => {
   wrapper.find('input').element.focus();
   wrapper.find('input').trigger('keypress.enter');
   expect(wrapper.emitted('blur')).toBeTruthy();
+});
+
+test('value is null', () => {
+  const wrapper = mount(Field, {
+    propsData: {
+      value: null,
+    },
+  });
+
+  expect(wrapper.find('input').element.value).toEqual('');
+  expect(wrapper.emitted('input')[0][0]).toEqual('');
 });
