@@ -1,10 +1,12 @@
 // Utils
-import { createNamespace, isDef } from '../utils';
+import { createNamespace, isDef, noop } from '../utils';
+import { stopPropagation } from '../utils/dom/event';
 
 // Components
 import GridItem from '../grid-item';
 import Image from '../image';
 import Tag from '../tag';
+import Stepper from '../stepper';
 
 // Types
 import { CreateElement, RenderContext } from 'vue/types';
@@ -24,15 +26,16 @@ export type GoodsColumnsItemSlots = DefaultSlots & {
   'member-price'?: ScopedSlot;
   price?: ScopedSlot;
   'origin-price'?: ScopedSlot;
-  num?: ScopedSlot;
   footer?: ScopedSlot;
 };
 
 export type GoodsColumnsItemEvents = {
   onClick?(event: Event): void;
+  onThumbClick?(event: Event): void;
+  onChange?(value: string, detail: { name: string }): void;
 };
 
-const [createComponent, bem] = createNamespace('goods-columns-item');
+const [createComponent, bem, createI18N] = createNamespace('goods-columns-item');
 
 function GoodsColumnsItem(
   h: CreateElement,
@@ -41,9 +44,8 @@ function GoodsColumnsItem(
   ctx: RenderContext<GoodsColumnsItemProps>
 ) {
 
-  const { tags, title, thumb, desc, num, price, memberPrice, originPrice, trailingZeros, memberSymbol } = props;
+  const { tags, title, thumb, desc, unit, price, memberPrice, originPrice, trailingZeros, soldout } = props;
 
-  const showNum = slots.num || isDef(num);
   const showMemberPrice = slots['member-price'] || isDef(memberPrice);
   const showPrice = slots.price || isDef(price);
   const showOriginPrice = slots['origin-price'] || isDef(originPrice);
@@ -60,7 +62,16 @@ function GoodsColumnsItem(
   }
 
   function onThumbClick(event: MouseEvent) {
+    stopPropagation(event);
     emit(ctx, 'click-thumb', event);
+  }
+
+  function onChange(value: string, detail: { name: string }) {
+    emit(ctx, 'change', value, detail);
+  }
+
+  function stepperClick(event: MouseEvent) {
+    stopPropagation(event);
   }
 
   // --------------------------------------------------------------------------
@@ -84,8 +95,9 @@ function GoodsColumnsItem(
 
   function Thumb() {
     if (slots.thumb || thumb) {
+      const handler = ctx.listeners['click-thumb'];
       return (
-        <div class={bem('thumb')} onClick={onThumbClick}>
+        <div class={bem('thumb')} onClick={handler ? onThumbClick : noop}>
           {slots.thumb ? (
             slots.thumb()
           ) : (
@@ -156,6 +168,68 @@ function GoodsColumnsItem(
   }
 
   // ----------------------------------------
+  // 数量控制
+  // ----------------------------------------
+
+  // 当显示数量控制器时
+  function GoodsNum() {
+    const { id, num, min, max, step, showStep } = props;
+
+    if (showStep && !soldout) {
+      return (
+        <div class={[bem('detail-step')]} onClick={stepperClick}>
+          <Stepper name={id}
+                   theme="round"
+                   value={num}
+                   min={min}
+                   max={max}
+                   step={step}
+                   default-value={0}
+                   button-size={22}
+                   input-width={22}
+                   disable-input
+                   onChange={onChange}/>
+        </div>
+      );
+    }
+  }
+
+  // 当仅显示数量时（控制器隐藏）
+  function OnlyGoodsNum() {
+    const { num, otherNum, showStep } = props;
+
+    if (!showStep) {
+      const Num = !isDef(num) ? '' : (
+        <Tag round type='danger'>{num}</Tag>
+      );
+
+      const OtherNum = !isDef(otherNum) ? '' : (
+        <Tag round type='success'>{otherNum}</Tag>
+      );
+
+      return (
+        <div class={[bem('num-tag')]}>
+          {OtherNum}{Num}
+        </div>
+      );
+    }
+  }
+
+  // ----------------------------------------
+  // 是否售罄
+  // ----------------------------------------
+
+  function SoldoutHold() {
+    if (soldout) {
+      return (
+        <div class={[bem('soldout')]}>
+          {createI18N('soldout')}
+        </div>
+      );
+    }
+  }
+
+  // ----------------------------------------
   // 商品价格
   // ----------------------------------------
 
@@ -166,7 +240,7 @@ function GoodsColumnsItem(
       return (
         <div class={bem('member')}>
           <span class={bem('member-price')}>{props.currency}{price}</span>
-          <span class={bem('member-symbol')}>{memberSymbol}</span>
+          <span class={bem('member-symbol')}>{props.memberSymbol}</span>
         </div>
       );
     }
@@ -177,15 +251,20 @@ function GoodsColumnsItem(
     curPrice = trailingZeros ? curPrice : removeTrailingZeros(curPrice);
     const priceArr = curPrice.split('.');
 
-    const priceDecimal = priceArr.length <= 1 ? '' : (
+    const PriceDecimal = priceArr.length <= 1 ? '' : (
       <span class={bem('price-decimal')}>.{priceArr[1]}</span>
+    );
+
+    const PriceUnit = !unit ? '' : (
+      <span class={bem('price-unit')}>/{unit}</span>
     );
 
     return (
       <div>
         <span class={bem('price-currency')}>{props.currency}</span>
         <span class={bem('price-integer')}>{priceArr[0]}</span>
-        {priceDecimal}
+        {PriceDecimal}
+        {PriceUnit}
       </div>
     );
   }
@@ -220,21 +299,25 @@ function GoodsColumnsItem(
 
   const classes = [
     bem({
-      round: props.round
+      round: props.round,
+      soldout: props.soldout
     })
   ];
 
   return (
     <GridItem class={classes} onClick={onClick} {...inherit(ctx)}>
       {Thumb()}
+      {OnlyGoodsNum()}
+      {SoldoutHold()}
       <div class={bem('detail')}>
         {Title()}
         {Desc()}
         {Tags()}
+        {MemberPrice()}
         <div class={[bem('detail-bottom')]}>
-          {MemberPrice()}
           {Price()}
           {OriginPrice()}
+          {GoodsNum()}
         </div>
       </div>
       {Footer()}

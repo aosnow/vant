@@ -346,7 +346,7 @@
 @field-label-width: 90px;
 @field-input-text-color: @text-color;
 @field-input-error-text-color: @red;
-@field-input-disabled-text-color: @gray-6;
+@field-input-disabled-text-color: @gray-5;
 @field-placeholder-text-color: @gray-5;
 @field-icon-size: 16px;
 @field-clear-icon-size: 16px;
@@ -358,7 +358,7 @@
 @field-word-limit-color: @gray-7;
 @field-word-limit-font-size: @font-size-sm;
 @field-word-limit-line-height: 16px;
-@field-word-num-full-color: @red;
+@field-disabled-text-color: @gray-5;
 
 // GridItem
 @grid-item-content-padding: @padding-md @padding-xs;
@@ -845,34 +845,47 @@
 @goods-columns-text-color: @text-color;
 @goods-columns-font-size: @font-size-md;
 @goods-columns-thumb-background-color: fade(@gray-2, 80%);
+@goods-columns-thumb-top: @padding-md;
 @goods-columns-background-color: fade(@white, 80%);
+
+@goods-columns-tag-opacity: .68;
 
 @goods-columns-title-height: @font-size-lg * 1.5;
 @goods-columns-title-line-height: @font-size-lg * 1.5;
 @goods-columns-desc-color: @gray-7;
 @goods-columns-desc-line-height: @font-size-sm * 1.25;
 @goods-columns-tags-height: 25px;
+
+@goods-columns-detail-padding: @padding-xs;
 @goods-columns-bottom-line-height: 20px;
 
 @goods-columns-price-font-size: @font-size-sm;
 @goods-columns-price-font-family: @price-integer-font-family;
 @goods-columns-origin-price-font-size: @font-size-xs;
 @goods-columns-price-color: @gray-8;
-@goods-columns-origin-price-color: @gray-6;
+@goods-columns-origin-price-color: @gray-5;
 
 @goods-columns-member-color: lighten(@orange, 25%);
 @goods-columns-member-background: @gray-8;
 
-.van-goods-columns-item {
-  &__detail-title {
-    max-height: @goods-columns-title-height;
-    line-height: @goods-columns-title-line-height;
-  }
+.van-goods-columns {
 
-  &--round {
-    .van-grid-item__content {
-      //overflow: hidden;
-      border-radius: @border-radius-lg;
+  &--col1 {
+    .van-goods-columns-item {
     }
   }
+
+  &--col2 {
+    .van-goods-columns-item {
+    }
+  }
+
+  &--col3 {
+    .van-goods-columns-item {
+    }
+  }
+}
+
+.van-goods-columns-item {
+
 }

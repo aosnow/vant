@@ -8,15 +8,15 @@
   <demo-section>
 
     <demo-block :title="t('basicUsage')">
-      <van-goods-columns/>
+      <van-goods-columns @change="changeHandler" @click="clickHandler"/>
     </demo-block>
 
     <demo-block :title="t('col2')">
-      <van-goods-columns :size="2" thumb-tag-align="center"/>
+      <van-goods-columns :size="2" thumb-tag-align="center" @change="changeHandler" @click="clickHandler"/>
     </demo-block>
 
     <demo-block :title="t('col3')">
-      <van-goods-columns :size="3" thumb-tag-align="left" :trailing-zeros="false"/>
+      <van-goods-columns :size="3" thumb-tag-align="left" @change="changeHandler" @click="clickHandler" @click-thumb="thumbClickHandler"/>
     </demo-block>
 
   </demo-section>
@@ -32,8 +32,22 @@ export default {
     'en-US': {
       col2: 'Two columns of goods display',
       col3: 'Three columns of goods display'
-    },
+    }
   },
+
+  methods: {
+    changeHandler(value, detail) {
+      console.warn('demo.changeHandler:', detail, value);
+    },
+
+    clickHandler(event) {
+      console.warn('demo.clickHandler:', event);
+    },
+
+    thumbClickHandler(event) {
+      console.warn('demo.thumbClickHandler:', event);
+    }
+  }
 };
 </script>
 

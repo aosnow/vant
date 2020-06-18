@@ -1,13 +1,14 @@
 // Utils
 import { createNamespace, isDef, oneOf } from '../utils';
-import { inherit } from '../utils/functional';
+import { emit, inherit } from '../utils/functional';
 
 // Components
 import Grid from '../grid';
 import GoodsColumnsItem from '../goods-columns-item';
 
 // Types
-import { CreateElement, RenderContext } from 'vue/types';
+import { CreateElement, RenderContext, VNodeData } from 'vue/types';
+import { functionalRoute } from '../utils/router';
 import { DefaultSlots } from '../utils/types';
 import { goodsColumnsProps, SharedGoodsColumnsProps } from './shared';
 
@@ -25,6 +26,32 @@ function GoodsColumns(
   // 默认为 1，且值控制在 1,2,3 中
   const columnNum = !isDef(props.size) || !oneOf([1, 2, 3], props.size) ? 1 : props.size;
 
+  // --------------------------------------------------------------------------
+  //
+  // Event handlers
+  //
+  // --------------------------------------------------------------------------
+
+  function onClick(event: Event) {
+    emit(ctx, 'click', event);
+    functionalRoute(ctx);
+  }
+
+  function onThumbClick(event: MouseEvent) {
+    emit(ctx, 'click-thumb', event);
+  }
+
+  function onChange(value: string, detail: { name: string }) {
+    console.warn('countChangeHandler:', { id: detail.name, value });
+    emit(ctx, 'change', { id: detail.name, value });
+  }
+
+  // --------------------------------------------------------------------------
+  //
+  // renderer
+  //
+  // --------------------------------------------------------------------------
+
   const classes = [
     bem({
       col1: columnNum === 1,
@@ -33,39 +60,41 @@ function GoodsColumns(
     })
   ];
 
-  const Goods = props.goods.map(item => {
-    console.warn('GoodsColumnsItem:', item);
-    return (
-      <GoodsColumnsItem title={item.title}
-                        tags={item.tags}
-                        thumb={item.thumb}
-                        thumbTag={item.thumbTag}
-                        thumbTagAlign={props.thumbTagAlign}
-                        trailingZeros={props.trailingZeros}
-                        round={props.round}
-                        lazyLoad={props.lazyLoad}
-                        desc={item.desc}
-                        num={item.num}
-                        price={item.price}
-                        memberPrice={item.memberPrice}
-                        originPrice={item.originPrice}
-                        currency={item.currency}/>
-    );
-  });
+  function GoodsChildren() {
+    const { round, lazyLoad, memberSymbol, thumbTagAlign, trailingZeros, showStep } = props;
+
+    return props.goods.map(item => {
+
+      const itemData: VNodeData = {
+        attrs: {
+          ...item,
+          round,
+          lazyLoad,
+          memberSymbol,
+          thumbTagAlign,
+          trailingZeros,
+          showStep
+        },
+        on: { ...ctx.listeners }
+      };
+
+      return (
+        <GoodsColumnsItem {...itemData}/>
+      );
+    });
+  }
 
   // {slots.default?.()}
 
-  const Group = (
+  return (
     <Grid class={classes}
           column-num={columnNum}
           gutter={props.gutter}
           border={props.border}
           {...inherit(ctx, true)}>
-      {Goods}
+      {GoodsChildren()}
     </Grid>
   );
-
-  return Group;
 }
 
 GoodsColumns.props = {

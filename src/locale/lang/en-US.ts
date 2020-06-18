@@ -12,6 +12,9 @@ export default {
   nameInvalid: 'Malformed name',
   confirmDelete: 'Are you sure you want to delete?',
   telInvalid: 'Malformed phone number',
+
+  soldout: 'Sold out',
+
   vanCalendar: {
     end: 'End',
     start: 'Start',

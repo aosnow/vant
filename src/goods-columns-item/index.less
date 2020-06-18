@@ -5,8 +5,28 @@
 
   // 解决文字撑开 flex 容器问题
   width: 0;
+  user-select: none;
+
+  &--soldout {
+    filter: grayscale(90%);
+  }
+
+  &__soldout {
+    font-size: @font-size-md;
+    position: absolute;
+    left: 50%;
+    top: 35%;
+    color: @goods-columns-desc-color;
+    padding: @padding-base @padding-sm;
+    white-space: nowrap;
+    background: fade(@white, 60%);
+    transform: translate(-50%, -50%);
+    border-radius: @border-radius-max;
+    box-shadow: @box-shadow-dark;
+  }
 
   .van-grid-item__content {
+    position: relative;
     padding: 0;
     box-sizing: border-box;
     box-shadow: @box-shadow-base;
@@ -22,8 +42,8 @@
 
   &__thumb-tag {
     position: absolute;
-    top: 10px;
-    opacity: .8;
+    top: @goods-columns-thumb-top;
+    opacity: @goods-columns-tag-opacity;
 
     &--left {
       left: 0;
@@ -49,7 +69,6 @@
 
     &--right {
       right: 0;
-
       padding-left: 0.7em;
 
       &,
@@ -59,12 +78,25 @@
     }
   }
 
+  &__num-tag {
+    position: absolute;
+    right: 0;
+    top: 0;
+    transform: translateY(-30%);
+
+    .van-tag {
+      opacity: @goods-columns-tag-opacity;
+      margin-left: 1px;
+    }
+  }
+
   &__detail {
     width: 100%;
     min-height: 80px;
-    padding: 10px;
+    padding: @goods-columns-detail-padding;
     box-sizing: border-box;
     font-size: @goods-columns-font-size;
+    position: relative;
 
     display: flex;
     flex-direction: column;
@@ -95,28 +127,35 @@
     overflow: hidden;
 
     .van-tag {
-      margin-right: 2px;
+      margin-left: 2px;
     }
   }
 
   &__detail-bottom {
+    position: relative;
     line-height: @goods-columns-bottom-line-height;
+  }
+
+  &__detail-step {
+    text-align: center;
+    display: inline-block;
   }
 
   &--round {
     .van-grid-item__content {
-      overflow: hidden;
       border-radius: @border-radius-lg;
+
+      .van-goods-columns-item__thumb {
+        overflow: hidden;
+        border-radius: @border-radius-lg @border-radius-lg 0 0;
+      }
     }
   }
-
 
   // 会员价
   // --------------------------------------------------
 
   &__member {
-    display: flex;
-    align-items: center;
   }
 
   &__member-price, &__member-symbol {
