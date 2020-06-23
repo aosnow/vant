@@ -5,6 +5,7 @@ import { stopPropagation } from '../utils/dom/event';
 // Components
 import GridItem from '../grid-item';
 import Image from '../image';
+import Icon from '../icon';
 import Tag from '../tag';
 import Stepper from '../stepper';
 
@@ -94,23 +95,29 @@ function GoodsColumnsItem(
   }
 
   function Thumb() {
-    if (slots.thumb || thumb) {
-      const handler = ctx.listeners['click-thumb'];
-      return (
-        <div class={bem('thumb')} onClick={handler ? onThumbClick : noop}>
-          {slots.thumb ? (
-            slots.thumb()
-          ) : (
-             <Image src={thumb}
-                    width="100%"
-                    height="100%"
-                    fit="cover"
-                    lazy-load={props.lazyLoad}/>
-           )}
-          {ThumbTag()}
-        </div>
-      );
-    }
+    // if (slots.thumb || thumb) {
+    const handler = ctx.listeners['click-thumb'];
+
+    const ThumbHolder = thumb ?
+                        (
+                          <Image src={thumb}
+                                 width="100%"
+                                 height="100%"
+                                 fit="cover"
+                                 lazy-load={props.lazyLoad}/>
+                        ) : (
+                          <Icon class={bem('thumb-icon')} name="bag-o"/>
+                        );
+
+    return (
+      <div class={bem('thumb')} onClick={handler ? onThumbClick : noop}>
+        {slots.thumb ? (
+          slots.thumb()
+        ) : ThumbHolder}
+        {ThumbTag()}
+      </div>
+    );
+    // }
   }
 
   // ----------------------------------------
@@ -204,7 +211,7 @@ function GoodsColumnsItem(
       );
 
       const OtherNum = !isDef(otherNum) ? '' : (
-        <Tag round type='success'>{otherNum}</Tag>
+        <Tag round type='default'>{otherNum}</Tag>
       );
 
       return (
@@ -282,10 +289,11 @@ function GoodsColumnsItem(
   function OriginPrice() {
     if (showOriginPrice) {
       const slot = slots['origin-price'];
-      const price = trailingZeros ? originPrice : removeTrailingZeros(originPrice || 0);
+      let curPrice: any = currency(originPrice || 0).format();
+      curPrice = trailingZeros ? curPrice : removeTrailingZeros(curPrice);
       return (
         <div class={bem('origin-price')}>
-          {slot ? slot() : `${props.currency} ${price}`}
+          {slot ? slot() : `${props.currency} ${curPrice}`}
         </div>
       );
     }

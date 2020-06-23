@@ -10,7 +10,7 @@ import Icon from '../icon';
 import { CreateElement, RenderContext } from 'vue/types';
 import { DefaultSlots } from '../utils/types';
 
-export type TagType = 'default' | 'primary' | 'success' | 'danger';
+export type TagType = 'default' | 'primary' | 'success' | 'danger' | 'warning';
 
 export type TagSize = 'large' | 'medium';
 

@@ -68,18 +68,15 @@ export const goodsColumnsProps = {
           id: (Math.random() * 10000000 >> 0).toString(),
           title: '商品名称',
           // tags: ['限购1份', '热卖'],
-          thumb: ['http://img.blibao.com/upload/550912/2019062815345938381-2019041011390988568-20190116一层芝士牛堡400x400px.jpg',
-            'https://img.blibao.com/upload/1066250/2020052714005230974-1.jpg',
-            'https://img.blibao.com/upload/1066250/2020052714010032103-2.jpg'][Math.random() * 3 >> 0],
+          thumb: '', // 'http://img.blibao.com/upload/550912/2019062815345938381-2019041011390988568-20190116一层芝士牛堡400x400px.jpg',
           // desc: '商品描述信息商品描述信息商品描述信息',
-          thumbTag: '热卖商品',
-          num: 2,
-          otherNum: 5,
+          // thumbTag: '热卖商品',
+          // num: 2,
+          // otherNum: 5,
           // unit: '个',
-          price: 11,
+          price: 0,
           // memberPrice: 9,
-          originPrice: 12.5,
-          soldout: false
+          originPrice: 0
         }
       ];
     }

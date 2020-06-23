@@ -38,11 +38,19 @@
     width: 100%;
     height: 220px;
     background-color: @goods-columns-thumb-background-color;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__thumb-icon {
+    font-size: 48px;
+    color: @gray-5;
   }
 
   &__thumb-tag {
     position: absolute;
-    top: @goods-columns-thumb-top;
+    bottom: @goods-columns-thumb-bottom;
     opacity: @goods-columns-tag-opacity;
 
     &--left {
@@ -80,9 +88,10 @@
 
   &__num-tag {
     position: absolute;
-    right: 0;
-    top: 0;
-    transform: translateY(-30%);
+    right: @goods-columns-thumb-tag-dis;
+    top: @goods-columns-thumb-tag-dis;
+    line-height: 1;
+    //transform: translateY(-30%);
 
     .van-tag {
       opacity: @goods-columns-tag-opacity;
