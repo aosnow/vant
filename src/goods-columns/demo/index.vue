@@ -8,15 +8,15 @@
   <demo-section>
 
     <demo-block :title="t('basicUsage')">
-      <van-goods-columns @change="changeHandler" @click="clickHandler"/>
+      <van-goods-columns show-step @change="changeHandler" @click="clickHandler"/>
     </demo-block>
 
     <demo-block :title="t('col2')">
-      <van-goods-columns :size="2" thumb-tag-align="center" @change="changeHandler" @click="clickHandler"/>
+      <van-goods-columns :size="2" thumb-tag-align="center" show-step @change="changeHandler" @click="clickHandler"/>
     </demo-block>
 
     <demo-block :title="t('col3')">
-      <van-goods-columns :size="3" thumb-tag-align="left" @change="changeHandler" @click="clickHandler" @click-thumb="thumbClickHandler"/>
+      <van-goods-columns :size="3" thumb-tag-align="left" show-step @change="changeHandler" @click="clickHandler" @click-thumb="thumbClickHandler"/>
     </demo-block>
 
   </demo-section>

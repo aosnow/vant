@@ -30,11 +30,6 @@ export const goodsColumnsProps = {
     default: true
   },
 
-  border: {
-    type: Boolean,
-    default: false
-  },
-
   lazyLoad: {
     type: Boolean,
     default: true
@@ -74,9 +69,9 @@ export const goodsColumnsProps = {
           // num: 2,
           // otherNum: 5,
           // unit: '个',
-          price: 0,
+          price: 0
           // memberPrice: 9,
-          originPrice: 0
+          // originPrice: 0
         }
       ];
     }
