@@ -1,6 +1,6 @@
 {
   "name": "@mudas/vant",
-  "version": "0.0.1-beta7",
+  "version": "0.0.1-beta8",
   "description": "Mobile UI Components built on Vue",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -48,7 +48,7 @@
   "license": "MIT",
   "dependencies": {
     "@babel/runtime": "7.x",
-    "@vant/icons": "1.2.1",
+    "@vant/icons": "^1.2.3",
     "@vue/babel-helper-vue-jsx-merge-props": "^1.0.0",
     "vue-lazyload": "1.2.3"
   },
@@ -59,7 +59,7 @@
     "@babel/plugin-proposal-class-properties": "^7.10.1",
     "@babel/plugin-proposal-object-rest-spread": "^7.10.1",
     "@ls-lint/ls-lint": "^1.8.0",
-    "@vant/cli": "^2.5.1",
+    "@vant/cli": "^2.5.2",
     "prettier": "^2.0.4",
     "vue": "^2.6.11",
     "vue-template-compiler": "^2.6.11"

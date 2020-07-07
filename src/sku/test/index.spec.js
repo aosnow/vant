@@ -1,6 +1,9 @@
 import { mount } from '../../../test';
 import Sku from '..';
-import { skuData, initialSku } from '../demo/data';
+import { getSkuData, initialSku } from '../demo/data';
+import { stringToDate, dateToString } from '../utils/time-helper';
+
+const skuData = getSkuData();
 
 test('resetSelectedSku method', () => {
   skuData.sku.messages = [];
@@ -27,4 +30,15 @@ test('resetSelectedSku method', () => {
 
   wrapper.find('.van-button--danger').trigger('click');
   expect(wrapper.emitted('buy-clicked').length).toEqual(1);
+});
+
+test('stringToDate', () => {
+  expect(dateToString(stringToDate(''))).toEqual('');
+  expect(dateToString(stringToDate('2020-07-01'))).toEqual('2020-07-01');
+  expect(dateToString(stringToDate('2020-07-01 22:44'), 'datetime')).toEqual(
+    '2020-07-01 22:44'
+  );
+  expect(dateToString(stringToDate('2020-12-31 23:59'), 'datetime')).toEqual(
+    '2020-12-31 23:59'
+  );
 });

@@ -4,6 +4,7 @@ export { createNamespace } from './create';
 export { addUnit } from './format/unit';
 export * from './value';
 
+export const inBrowser = typeof window !== 'undefined';
 export const isServer: boolean = Vue.prototype.$isServer;
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function

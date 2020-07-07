@@ -16,7 +16,7 @@
     </demo-block>
 
     <demo-block :title="t('col3')">
-      <van-goods-columns :size="3" thumb-tag-align="left" show-step @change="changeHandler" @click="clickHandler" @click-thumb="thumbClickHandler"/>
+      <van-goods-columns :size="3" thumb-tag-align="left" @change="changeHandler" @click="clickHandler" @click-thumb="thumbClickHandler"/>
     </demo-block>
 
   </demo-section>
