@@ -288,7 +288,7 @@ export default createComponent({
       if (status === 'uploading' || status === 'failed') {
         const MaskIcon =
           status === 'failed' ? (
-            <Icon name="warning-o" class={bem('mask-icon')} />
+            <Icon name="close" class={bem('mask-icon')} />
           ) : (
             <Loading class={bem('loading')} />
           );
@@ -318,6 +318,11 @@ export default createComponent({
         />
       );
 
+      const PreviewCoverContent = this.slots('preview-cover', item);
+      const PreviewCover = PreviewCoverContent && (
+        <div class={bem('preview-cover')}>{PreviewCoverContent}</div>
+      );
+
       const Preview = isImageFile(item) ? (
         <Image
           fit={this.imageFit}
@@ -329,7 +334,9 @@ export default createComponent({
           onClick={() => {
             this.onPreviewImage(item);
           }}
-        />
+        >
+          {PreviewCover}
+        </Image>
       ) : (
         <div
           class={bem('file')}
@@ -342,6 +349,7 @@ export default createComponent({
           <div class={[bem('file-name'), 'van-ellipsis']}>
             {item.file ? item.file.name : item.url}
           </div>
+          {PreviewCover}
         </div>
       );
 
