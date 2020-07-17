@@ -267,7 +267,7 @@ export default createComponent({
     },
 
     // emit event when clicked
-    onClick(index) {
+    onClick(item, index) {
       const { title, disabled, computedName } = this.children[index];
       if (disabled) {
         this.$emit('disabled', computedName, title);
@@ -275,6 +275,7 @@ export default createComponent({
         this.setCurrentIndex(index);
         this.scrollToCurrentContent();
         this.$emit('click', computedName, title);
+        route(item.$router, item);
       }
     },
 
@@ -298,7 +299,15 @@ export default createComponent({
       this.$emit('scroll', params);
     },
 
-    scrollToCurrentContent() {
+    // @exposed-api
+    scrollTo(name) {
+      this.$nextTick(() => {
+        this.setCurrentIndexByName(name);
+        this.scrollToCurrentContent(true);
+      });
+    },
+
+    scrollToCurrentContent(immediate = false) {
       if (this.scrollspy) {
         const target = this.children[this.currentIndex];
         const el = target?.$el;
@@ -307,7 +316,7 @@ export default createComponent({
           const to = getElementTop(el, this.scroller) - this.scrollOffset;
 
           this.lockScroll = true;
-          scrollTopTo(this.scroller, to, +this.duration, () => {
+          scrollTopTo(this.scroller, to, immediate ? 0 : +this.duration, () => {
             this.lockScroll = false;
           });
         }
@@ -360,8 +369,7 @@ export default createComponent({
           default: () => item.slots('title'),
         }}
         onClick={() => {
-          this.onClick(index);
-          route(item.$router, item);
+          this.onClick(item, index);
         }}
       />
     ));
