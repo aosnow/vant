@@ -41,14 +41,18 @@
     "url": "git@github.com:youzan/vant.git"
   },
   "keywords": [
+    "ui",
     "vue",
-    "component"
+    "frontend",
+    "mobile ui",
+    "component",
+    "components"
   ],
   "author": "youzanfe",
   "license": "MIT",
   "dependencies": {
     "@babel/runtime": "7.x",
-    "@vant/icons": "^1.2.3",
+    "@vant/icons": "1.2.3",
     "@vue/babel-helper-vue-jsx-merge-props": "^1.0.0",
     "vue-lazyload": "1.2.3"
   },
