@@ -4,7 +4,7 @@
 
 ```js
 import Vue from 'vue';
-import { AddressEdit } from 'vant';
+import { AddressEdit } from '@mudas/vant';
 
 Vue.use(AddressEdit);
 ```
@@ -29,7 +29,7 @@ Vue.use(AddressEdit);
 ```
 
 ```js
-import { Toast } from 'vant';
+import { Toast } from '@mudas/vant';
 
 export default {
   data() {

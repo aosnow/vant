@@ -360,15 +360,43 @@ module.exports = {
               }
             ]
           },
+
           {
-            title: '电商业务组件',
+            title: '装修平台-图文类',
+            items: [
+              // {
+              //   path: 'goods-columns',
+              //   title: 'GoodsColumns 多列商品展示'
+              // }
+            ]
+          },
+          {
+            title: '装修平台-商品类',
             items: [
               {
-                path: 'goods-columns',
-                title: 'GoodsColumns 多列商品展示'
+                path: 'goods-single',
+                title: 'GoodsSingle 单列商品展示'
+              },
+              {
+                path: 'goods-double',
+                title: 'GoodsDouble 双列商品展示'
+              },
+              {
+                path: 'goods-three',
+                title: 'GoodsThree 三列列商品展示'
               }
             ]
           },
+          {
+            title: '装修平台-营销类',
+            items: [
+              // {
+              //   path: 'goods-columns',
+              //   title: 'GoodsColumns 多列商品展示'
+              // }
+            ]
+          },
+
           {
             title: '废弃',
             items: [

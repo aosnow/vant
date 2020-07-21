@@ -4,7 +4,7 @@
 
 ```js
 import Vue from 'vue';
-import { Swipe, SwipeItem } from 'vant';
+import { Swipe, SwipeItem } from '@mudas/vant';
 
 Vue.use(Swipe);
 Vue.use(SwipeItem);
@@ -49,7 +49,7 @@ Use [Lazyload](#/en-US/lazyload) component to lazyload image.
 
 ```js
 import Vue from 'vue';
-import { Lazyload } from 'vant';
+import { Lazyload } from '@mudas/vant';
 
 Vue.use(Lazyload);
 
@@ -77,7 +77,7 @@ export default {
 ```
 
 ```js
-import { Toast } from 'vant';
+import { Toast } from '@mudas/vant';
 
 export default {
   methods: {

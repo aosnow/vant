@@ -9,7 +9,7 @@
 Notify 是一个函数，调用后会直接在页面中弹出相应的消息提示。
 
 ```js
-import { Notify } from 'vant';
+import { Notify } from '@mudas/vant';
 
 Notify('通知内容');
 ```
@@ -20,7 +20,7 @@ Notify('通知内容');
 
 ```js
 import Vue from 'vue';
-import { Notify } from 'vant';
+import { Notify } from '@mudas/vant';
 
 // 全局注册
 Vue.use(Notify);

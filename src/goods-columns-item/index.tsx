@@ -125,12 +125,12 @@ function GoodsColumnsItem(
   // ----------------------------------------
 
   function Title() {
-    const showLabel = slots.title || isDef(title);
+    const showLabel = (slots.title && slots.title()) || title || '-';
 
     if (showLabel) {
       return (
         <div class={[bem('detail-title')]}>
-          {slots.title ? slots.title() : title}
+          {showLabel}
         </div>
       );
     }

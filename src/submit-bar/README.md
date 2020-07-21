@@ -4,7 +4,7 @@
 
 ```js
 import Vue from 'vue';
-import { SubmitBar } from 'vant';
+import { SubmitBar } from '@mudas/vant';
 
 Vue.use(SubmitBar);
 ```

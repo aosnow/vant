@@ -8,7 +8,7 @@ Quickly and easily create layouts with `van-row` and `van-col`
 
 ```js
 import Vue from 'vue';
-import { Col, Row } from 'vant';
+import { Col, Row } from '@mudas/vant';
 
 Vue.use(Col);
 Vue.use(Row);

@@ -4,7 +4,7 @@
 
 ```js
 import Vue from 'vue';
-import { Grid, GridItem } from 'vant';
+import { Grid, GridItem } from '@mudas/vant';
 
 Vue.use(Grid);
 Vue.use(GridItem);

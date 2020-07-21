@@ -8,7 +8,7 @@
 
 ```js
 import Vue from 'vue';
-import { Popup } from 'vant';
+import { Popup } from '@mudas/vant';
 
 Vue.use(Popup);
 ```

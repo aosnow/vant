@@ -4,7 +4,7 @@
 
 ```js
 import Vue from 'vue';
-import { Progress } from 'vant';
+import { Progress } from '@mudas/vant';
 
 Vue.use(Progress);
 ```

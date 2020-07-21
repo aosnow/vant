@@ -8,7 +8,7 @@ The Panel component will be deprecated in version 3.0. Please use the Cell and B
 
 ```js
 import Vue from 'vue';
-import { Panel } from 'vant';
+import { Panel } from '@mudas/vant';
 
 Vue.use(Panel);
 ```

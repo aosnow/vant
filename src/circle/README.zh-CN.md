@@ -4,7 +4,7 @@
 
 ```js
 import Vue from 'vue';
-import { Circle } from 'vant';
+import { Circle } from '@mudas/vant';
 
 Vue.use(Circle);
 ```

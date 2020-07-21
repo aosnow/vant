@@ -8,7 +8,7 @@
 
 ```js
 import Vue from 'vue';
-import { Overlay } from 'vant';
+import { Overlay } from '@mudas/vant';
 
 Vue.use(Overlay);
 ```

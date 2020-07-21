@@ -8,7 +8,7 @@ The SwitchCell component will be deprecated in version 3.0. Please use the Cell 
 
 ```js
 import Vue from 'vue';
-import { SwitchCell } from 'vant';
+import { SwitchCell } from '@mudas/vant';
 
 Vue.use(SwitchCell);
 ```

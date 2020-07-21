@@ -4,7 +4,7 @@
 
 ```js
 import Vue from 'vue';
-import { Collapse, CollapseItem } from 'vant';
+import { Collapse, CollapseItem } from '@mudas/vant';
 
 Vue.use(Collapse);
 Vue.use(CollapseItem);

@@ -4,7 +4,7 @@
 
 ```js
 import Vue from 'vue';
-import { GoodsColumns } from 'vant';
+import { GoodsColumns } from '@mudas/vant';
 
 Vue.use(GoodsColumns);
 ```

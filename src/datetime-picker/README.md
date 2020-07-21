@@ -8,7 +8,7 @@ Used to select time, support date and time dimensions, usually used with the [Po
 
 ```js
 import Vue from 'vue';
-import { DatetimePicker } from 'vant';
+import { DatetimePicker } from '@mudas/vant';
 
 Vue.use(DatetimePicker);
 ```

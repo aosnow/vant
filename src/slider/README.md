@@ -4,7 +4,7 @@
 
 ```js
 import Vue from 'vue';
-import { Slider } from 'vant';
+import { Slider } from '@mudas/vant';
 
 Vue.use(Slider);
 ```
@@ -18,7 +18,7 @@ Vue.use(Slider);
 ```
 
 ```js
-import { Toast } from 'vant';
+import { Toast } from '@mudas/vant';
 
 export default {
   data() {

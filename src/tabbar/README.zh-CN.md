@@ -4,7 +4,7 @@
 
 ```js
 import Vue from 'vue';
-import { Tabbar, TabbarItem } from 'vant';
+import { Tabbar, TabbarItem } from '@mudas/vant';
 
 Vue.use(Tabbar);
 Vue.use(TabbarItem);
@@ -125,7 +125,7 @@ export default {
 ```
 
 ```js
-import { Notify } from 'vant';
+import { Notify } from '@mudas/vant';
 
 export default {
   methods: {

@@ -8,7 +8,7 @@
 
 ```js
 import Vue from 'vue';
-import { Image as VanImage } from 'vant';
+import { Image as VanImage } from '@mudas/vant';
 
 Vue.use(VanImage);
 ```
@@ -64,7 +64,7 @@ Vue.use(VanImage);
 
 ```js
 import Vue from 'vue';
-import { Lazyload } from 'vant';
+import { Lazyload } from '@mudas/vant';
 
 Vue.use(Lazyload);
 ```
@@ -162,7 +162,7 @@ Vue.use(Lazyload);
 </template>
 
 <script>
-import { Image } from 'vant';
+import { Image } from '@mudas/vant';
 
 export default {
   components: {

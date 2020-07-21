@@ -9,7 +9,7 @@
 ImagePreview 是一个函数，调用函数后会直接在页面中展示图片预览界面。
 
 ```js
-import { ImagePreview } from 'vant';
+import { ImagePreview } from '@mudas/vant';
 
 ImagePreview(['https://img.yzcdn.cn/vant/apple-1.jpg']);
 ```
@@ -20,7 +20,7 @@ ImagePreview(['https://img.yzcdn.cn/vant/apple-1.jpg']);
 
 ```js
 import Vue from 'vue';
-import { ImagePreview } from 'vant';
+import { ImagePreview } from '@mudas/vant';
 
 // 全局注册
 Vue.use(ImagePreview);

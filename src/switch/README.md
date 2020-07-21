@@ -4,7 +4,7 @@
 
 ```js
 import Vue from 'vue';
-import { Switch } from 'vant';
+import { Switch } from '@mudas/vant';
 
 Vue.use(Switch);
 ```

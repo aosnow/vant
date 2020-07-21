@@ -4,7 +4,7 @@
 
 ```js
 import Vue from 'vue';
-import { Tag } from 'vant';
+import { Tag } from '@mudas/vant';
 
 Vue.use(Tag);
 ```

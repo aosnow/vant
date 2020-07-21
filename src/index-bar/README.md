@@ -4,7 +4,7 @@
 
 ```js
 import Vue from 'vue';
-import { IndexBar } from 'vant';
+import { IndexBar } from '@mudas/vant';
 
 Vue.use(IndexBar);
 Vue.use(IndexAnchor);

@@ -8,7 +8,7 @@
 
 ```js
 import Vue from 'vue';
-import { Toast } from 'vant';
+import { Toast } from '@mudas/vant';
 
 Vue.use(Toast);
 ```

@@ -4,7 +4,7 @@
 
 ```js
 import Vue from 'vue';
-import { Search } from 'vant';
+import { Search } from '@mudas/vant';
 
 Vue.use(Search);
 ```
@@ -42,7 +42,7 @@ export default {
 ```
 
 ```js
-import { Toast } from 'vant';
+import { Toast } from '@mudas/vant';
 
 export default {
   data() {

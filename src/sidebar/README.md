@@ -4,7 +4,7 @@
 
 ```js
 import Vue from 'vue';
-import { Sidebar, SidebarItem } from 'vant';
+import { Sidebar, SidebarItem } from '@mudas/vant';
 
 Vue.use(Sidebar);
 Vue.use(SidebarItem);
@@ -63,7 +63,7 @@ export default {
 ```
 
 ```js
-import { Notify } from 'vant';
+import { Notify } from '@mudas/vant';
 
 export default {
   data() {

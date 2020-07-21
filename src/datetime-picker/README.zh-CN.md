@@ -8,7 +8,7 @@
 
 ```js
 import Vue from 'vue';
-import { DatetimePicker } from 'vant';
+import { DatetimePicker } from '@mudas/vant';
 
 Vue.use(DatetimePicker);
 ```

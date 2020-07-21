@@ -92,7 +92,9 @@ export class Tag extends VanComponent {}
 export class TreeSelect extends VanComponent {}
 
 // custom
-export class GoodsColumns extends VanComponent {}
+export class GoodsSingle extends VanComponent {}
+export class GoodsDouble extends VanComponent {}
+export class GoodsThree extends VanComponent {}
 export class GoodsColumnsItem extends VanComponent {}
 
 export {

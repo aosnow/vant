@@ -6,7 +6,7 @@
 
 ```js
 import Vue from 'vue';
-import { Lazyload } from 'vant';
+import { Lazyload } from '@mudas/vant';
 
 Vue.use(Lazyload);
 

@@ -8,7 +8,7 @@
 
 ```js
 import Vue from 'vue';
-import { Picker } from 'vant';
+import { Picker } from '@mudas/vant';
 
 Vue.use(Picker);
 ```
@@ -37,7 +37,7 @@ Picker 组件通过`columns`属性配置选项数据，`columns`是一个包含�
 ```
 
 ```js
-import { Toast } from 'vant';
+import { Toast } from '@mudas/vant';
 
 export default {
   data() {

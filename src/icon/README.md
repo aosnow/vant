@@ -4,7 +4,7 @@
 
 ```js
 import Vue from 'vue';
-import { Icon } from 'vant';
+import { Icon } from '@mudas/vant';
 
 Vue.use(Icon);
 ```

@@ -4,7 +4,7 @@
 
 ```js
 import Vue from 'vue';
-import { SwipeCell } from 'vant';
+import { SwipeCell } from '@mudas/vant';
 
 Vue.use(SwipeCell);
 ```

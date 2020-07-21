@@ -4,7 +4,7 @@
 
 ```js
 import Vue from 'vue';
-import { Tab, Tabs } from 'vant';
+import { Tab, Tabs } from '@mudas/vant';
 
 Vue.use(Tab);
 Vue.use(Tabs);
@@ -79,7 +79,7 @@ You can set `disabled` attribute on the corresponding `van-tab`.
 ```
 
 ```js
-import { Toast } from 'vant';
+import { Toast } from '@mudas/vant';
 
 export default {
   methods: {
@@ -113,7 +113,7 @@ Tabs styled as cards.
 ```
 
 ```js
-import { Toast } from 'vant';
+import { Toast } from '@mudas/vant';
 
 export default {
   methods: {

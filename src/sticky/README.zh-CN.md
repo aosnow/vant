@@ -8,7 +8,7 @@ Sticky 组件与 CSS 中`position: sticky`属性实现的效果一致，当组�
 
 ```js
 import Vue from 'vue';
-import { Sticky } from 'vant';
+import { Sticky } from '@mudas/vant';
 
 Vue.use(Sticky);
 ```

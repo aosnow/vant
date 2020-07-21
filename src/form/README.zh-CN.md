@@ -8,7 +8,7 @@
 
 ```js
 import Vue from 'vue';
-import { Form } from 'vant';
+import { Form } from '@mudas/vant';
 
 Vue.use(Form);
 ```
@@ -96,7 +96,7 @@ export default {
 ```
 
 ```js
-import { Toast } from 'vant';
+import { Toast } from '@mudas/vant';
 
 export default {
   data() {

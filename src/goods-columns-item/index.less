@@ -9,6 +9,7 @@
 
   &--soldout {
     filter: grayscale(90%);
+    opacity: .5;
   }
 
   &__soldout {
@@ -25,14 +26,6 @@
     box-shadow: @box-shadow-dark;
   }
 
-  .van-grid-item__content {
-    position: relative;
-    padding: 0;
-    box-sizing: border-box;
-    box-shadow: @box-shadow-base;
-    background-color: @goods-columns-background-color;
-  }
-
   &__thumb {
     position: relative;
     width: 100%;
@@ -45,7 +38,7 @@
 
   &__thumb-icon {
     font-size: 48px;
-    color: @gray-5;
+    color: @orange;
   }
 
   &__thumb-tag {
@@ -101,7 +94,8 @@
 
   &__detail {
     width: 100%;
-    min-height: 80px;
+    flex: 1;
+    min-height: 40px;
     padding: @goods-columns-detail-padding;
     box-sizing: border-box;
     font-size: @goods-columns-font-size;
@@ -113,7 +107,7 @@
   }
 
   &__detail-title {
-    font-size: @font-size-lg;
+    font-size: @font-size-md;
     font-weight: @font-weight-bold;
     max-height: @goods-columns-title-height;
     line-height: @goods-columns-title-line-height;
@@ -142,6 +136,9 @@
   &__detail-bottom {
     position: relative;
     line-height: @goods-columns-bottom-line-height;
+    display: flex;
+    flex: 1;
+    align-items: flex-end;
   }
 
   &__detail-step {
@@ -158,6 +155,15 @@
         border-radius: @border-radius-lg @border-radius-lg 0 0;
       }
     }
+  }
+
+  .van-grid-item__content {
+    position: relative;
+    padding: 0;
+    box-sizing: border-box;
+    box-shadow: @box-shadow-dark;
+    background-color: @goods-columns-background-color;
+    //overflow: hidden;
   }
 
   // 会员价
@@ -196,11 +202,10 @@
     font-weight: @font-weight-bold;
     font-size: @goods-columns-price-font-size;
     font-family: @goods-columns-price-font-family;
-    padding-top: @padding-sm;
   }
 
   &__price-integer {
-    font-size: @font-size-xl;
+    font-size: 1.3em;
   }
 
   &__price-decimal {
@@ -210,7 +215,7 @@
     display: inline-block;
     margin-left: 5px;
     color: @goods-columns-origin-price-color;
-    font-size: @goods-columns-origin-price-font-size;
+    font-size: 1em;
     text-decoration: line-through;
   }
 }

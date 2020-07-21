@@ -4,7 +4,7 @@
 
 ```js
 import Vue from 'vue';
-import { RadioGroup, Radio } from 'vant';
+import { RadioGroup, Radio } from '@mudas/vant';
 
 Vue.use(Radio);
 Vue.use(RadioGroup);

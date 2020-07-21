@@ -4,7 +4,7 @@
 
 ```js
 import Vue from 'vue';
-import { CountDown } from 'vant';
+import { CountDown } from '@mudas/vant';
 
 Vue.use(CountDown);
 ```
@@ -98,7 +98,7 @@ export default {
 ```
 
 ```js
-import { Toast } from 'vant';
+import { Toast } from '@mudas/vant';
 
 export default {
   methods: {

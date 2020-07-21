@@ -4,7 +4,7 @@
 
 ```js
 import Vue from 'vue';
-import { Sticky } from 'vant';
+import { Sticky } from '@mudas/vant';
 
 Vue.use(Sticky);
 ```

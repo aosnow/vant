@@ -11,7 +11,7 @@
 Dialog 是一个函数，调用后会直接在页面中弹出相应的模态框。
 
 ```js
-import { Dialog } from 'vant';
+import { Dialog } from '@mudas/vant';
 
 Dialog({ message: '提示' });
 ```
@@ -22,7 +22,7 @@ Dialog({ message: '提示' });
 
 ```js
 import Vue from 'vue';
-import { Dialog } from 'vant';
+import { Dialog } from '@mudas/vant';
 
 // 全局注册
 Vue.use(Dialog);

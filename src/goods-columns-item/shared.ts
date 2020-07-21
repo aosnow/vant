@@ -78,7 +78,7 @@ export const goodsColumnsItemProps = {
 
   thumbTagAlign: {
     type: String,
-    default: 'right'
+    default: 'left'
   },
 
   trailingZeros: {

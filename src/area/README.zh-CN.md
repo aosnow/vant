@@ -8,7 +8,7 @@
 
 ```js
 import Vue from 'vue';
-import { Area } from 'vant';
+import { Area } from '@mudas/vant';
 
 Vue.use(Area);
 ```

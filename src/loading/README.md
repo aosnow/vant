@@ -4,7 +4,7 @@
 
 ```js
 import Vue from 'vue';
-import { Loading } from 'vant';
+import { Loading } from '@mudas/vant';
 
 Vue.use(Loading);
 ```

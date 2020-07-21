@@ -4,7 +4,7 @@
 
 ```js
 import Vue from 'vue';
-import { Cell, CellGroup } from 'vant';
+import { Cell, CellGroup } from '@mudas/vant';
 
 Vue.use(Cell);
 Vue.use(CellGroup);

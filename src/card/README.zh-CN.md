@@ -4,7 +4,7 @@
 
 ```js
 import Vue from 'vue';
-import { Card } from 'vant';
+import { Card } from '@mudas/vant';
 
 Vue.use(Card);
 ```

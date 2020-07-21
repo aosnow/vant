@@ -4,7 +4,7 @@
 
 ```js
 import Vue from 'vue';
-import { Pagination } from 'vant';
+import { Pagination } from '@mudas/vant';
 
 Vue.use(Pagination);
 ```

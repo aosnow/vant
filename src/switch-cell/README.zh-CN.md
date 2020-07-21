@@ -16,7 +16,7 @@
 
 ```js
 import Vue from 'vue';
-import { SwitchCell } from 'vant';
+import { SwitchCell } from '@mudas/vant';
 
 Vue.use(SwitchCell);
 ```

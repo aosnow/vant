@@ -4,7 +4,7 @@
 
 ```js
 import Vue from 'vue';
-import { ActionSheet } from 'vant';
+import { ActionSheet } from '@mudas/vant';
 
 Vue.use(ActionSheet);
 ```
@@ -21,7 +21,7 @@ Use `actions` prop to set options of action-sheet.
 ```
 
 ```js
-import { Toast } from 'vant';
+import { Toast } from '@mudas/vant';
 
 export default {
   data() {
@@ -56,7 +56,7 @@ export default {
 ```
 
 ```js
-import { Toast } from 'vant';
+import { Toast } from '@mudas/vant';
 
 export default {
   data() {
