@@ -192,8 +192,8 @@ function GoodsColumnsItem(
                    max={max}
                    step={step}
                    default-value={0}
-                   button-size={22}
-                   input-width={22}
+                   button-size={20}
+                   input-width={20}
                    disable-input
                    onChange={onChange}/>
         </div>
@@ -293,7 +293,7 @@ function GoodsColumnsItem(
       curPrice = trailingZeros ? curPrice : removeTrailingZeros(curPrice);
       return (
         <div class={bem('origin-price')}>
-          {slot ? slot() : `${props.currency} ${curPrice}`}
+          <span class={bem('origin-price-value')}>{slot ? slot() : `${curPrice}`}</span>
         </div>
       );
     }

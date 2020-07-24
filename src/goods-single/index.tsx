@@ -68,6 +68,12 @@ function GoodsSingle(
     });
   }
 
+  // 上下间距
+  const Spacing = {
+    'padding-top': `${props.spacing}px`,
+    'padding-bottom': `${props.spacing}px`
+  };
+
   // 若需使用插槽，如默认插槽
   // {slots.default?.()}
 
@@ -77,6 +83,7 @@ function GoodsSingle(
           border={false}
           column-num={1}
           gutter={props.gutter}
+          style={Spacing}
           {...inherit(ctx, true)}>
       {Children()}
     </Grid>

@@ -139,11 +139,12 @@
     display: flex;
     flex: 1;
     align-items: flex-end;
+    flex-wrap: wrap;
   }
 
   &__detail-step {
     text-align: center;
-    //display: inline-block;
+    padding-bottom: .05rem;
   }
 
   &--round {
@@ -161,7 +162,7 @@
     position: relative;
     padding: 0;
     box-sizing: border-box;
-    box-shadow: @box-shadow-dark;
+    box-shadow: @box-shadow-base;
     background-color: @goods-columns-background-color;
     //overflow: hidden;
   }
@@ -215,7 +216,7 @@
     display: inline-block;
     margin-left: 5px;
     color: @goods-columns-origin-price-color;
-    font-size: 1em;
+    font-size: @goods-columns-price-font-size;
     text-decoration: line-through;
   }
 }
