@@ -16,10 +16,7 @@
 </p>
 
 <p align="center">
-  🔥 <a href="https://youzan.github.io/vant">文档网站</a>
-  &nbsp;
-  &nbsp;
-  💡 <a href="https://vant-contrib.gitee.io/vant">国内镜像文档</a>
+  🔥 <a href="https://vant-contrib.gitee.io/vant">文档网站</a>
   &nbsp;
   &nbsp;
   🇨🇳 <a href="./README.zh-CN.md">中文版介绍</a>
@@ -51,6 +48,8 @@ npm i vant -S
 yarn add vant
 ```
 
+> Tips: Please install Vant 3.0 for Vue 3 projects, see [issue#7035](https://github.com/youzan/vant/issues/7035)
+
 ## Quickstart
 
 ```js
@@ -77,6 +76,7 @@ Modern browsers and Android 4.0+, iOS 8.0+.
 | --- | --- |
 | [vant-demo](https://github.com/youzan/vant-demo) | Official vant demo collection |
 | [vant-weapp](https://github.com/youzan/vant-weapp) | WeChat MiniProgram UI |
+| [vant-react](https://github.com/mxdi9i7/vant-react) | Vant React (maintained by the community) |
 | [vant-cli](https://github.com/youzan/vant/tree/dev/packages/vant-cli) | Scaffold for UI library |
 | [vant-icons](https://github.com/youzan/vant/tree/dev/packages/vant-icons) | Vant icons |
 | [vant-touch-emulator](https://github.com/youzan/vant/tree/dev/packages/vant-touch-emulator) | Using vant in desktop browsers |

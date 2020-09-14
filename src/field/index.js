@@ -190,7 +190,9 @@ export default createComponent({
       if (Array.isArray(value)) {
         return !value.length;
       }
-
+      if (value === 0) {
+        return false;
+      }
       return !value;
     },
 
@@ -253,6 +255,7 @@ export default createComponent({
           resolve();
         }
 
+        this.resetValidation();
         this.runRules(rules).then(() => {
           if (this.validateFailed) {
             resolve({
@@ -282,7 +285,7 @@ export default createComponent({
     },
 
     resetValidation() {
-      if (this.validateMessage) {
+      if (this.validateFailed) {
         this.validateFailed = false;
         this.validateMessage = '';
       }
@@ -298,8 +301,8 @@ export default createComponent({
       }
 
       if (this.type === 'number' || this.type === 'digit') {
-        const allowDot = this.type === 'number';
-        value = formatNumber(value, allowDot);
+        const isNumber = this.type === 'number';
+        value = formatNumber(value, isNumber, isNumber);
       }
 
       if (this.formatter && trigger === this.formatTrigger) {
