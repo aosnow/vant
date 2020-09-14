@@ -1,5 +1,5 @@
 // Utils
-import { createNamespace, isDef } from '../utils';
+import { createNamespace } from '../utils';
 
 // Mixins
 import { popupMixinProps } from '../mixins/popup';
@@ -85,7 +85,7 @@ export default createComponent({
             <div
               role="button"
               tabindex="0"
-              class={bem('option')}
+              class={[bem('option'), option.className]}
               onClick={() => {
                 this.onSelect(option, index);
               }}
@@ -112,7 +112,7 @@ export default createComponent({
     },
 
     genCancelText() {
-      const cancelText = isDef(this.cancelText) ? this.cancelText : t('cancel');
+      const cancelText = this.cancelText ?? t('cancel');
 
       if (cancelText) {
         return (

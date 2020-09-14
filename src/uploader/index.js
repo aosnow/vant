@@ -30,6 +30,7 @@ export default createComponent({
     beforeRead: Function,
     beforeDelete: Function,
     previewSize: [Number, String],
+    previewOptions: Object,
     name: {
       type: [Number, String],
       default: '',
@@ -256,11 +257,11 @@ export default createComponent({
 
       this.imagePreview = ImagePreview({
         images: imageContents,
-        closeOnPopstate: true,
         startPosition: imageFiles.indexOf(item),
         onClose: () => {
           this.$emit('close-preview');
         },
+        ...this.previewOptions,
       });
     },
 
@@ -319,7 +320,11 @@ export default createComponent({
         </div>
       );
 
-      const PreviewCoverContent = this.slots('preview-cover', item);
+      const PreviewCoverContent = this.slots('preview-cover', {
+        index,
+        ...item,
+      });
+
       const PreviewCover = PreviewCoverContent && (
         <div class={bem('preview-cover')}>{PreviewCoverContent}</div>
       );

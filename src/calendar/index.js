@@ -27,53 +27,37 @@ export default createComponent({
     title: String,
     color: String,
     value: Boolean,
+    readonly: Boolean,
     formatter: Function,
     confirmText: String,
     rangePrompt: String,
     defaultDate: [Date, Array],
     getContainer: [String, Function],
     allowSameDay: Boolean,
-    closeOnPopstate: Boolean,
     confirmDisabledText: String,
-    firstDayOfWeek: {
-      type: [Number, String],
-      default: 0,
-      validator: (val) => {
-        return val >= 0 && val <= 6;
-      },
-    },
     type: {
       type: String,
       default: 'single',
-    },
-    minDate: {
-      type: Date,
-      validator: isDate,
-      default: () => new Date(),
-    },
-    maxDate: {
-      type: Date,
-      validator: isDate,
-      default() {
-        const now = new Date();
-        return new Date(now.getFullYear(), now.getMonth() + 6, now.getDate());
-      },
-    },
-    position: {
-      type: String,
-      default: 'bottom',
-    },
-    rowHeight: {
-      type: [Number, String],
-      default: ROW_HEIGHT,
     },
     round: {
       type: Boolean,
       default: true,
     },
+    position: {
+      type: String,
+      default: 'bottom',
+    },
     poppable: {
       type: Boolean,
       default: true,
+    },
+    rowHeight: {
+      type: [Number, String],
+      default: ROW_HEIGHT,
+    },
+    maxRange: {
+      type: [Number, String],
+      default: null,
     },
     lazyRender: {
       type: Boolean,
@@ -95,7 +79,7 @@ export default createComponent({
       type: Boolean,
       default: true,
     },
-    safeAreaInsetBottom: {
+    closeOnPopstate: {
       type: Boolean,
       default: true,
     },
@@ -103,9 +87,27 @@ export default createComponent({
       type: Boolean,
       default: true,
     },
-    maxRange: {
+    safeAreaInsetBottom: {
+      type: Boolean,
+      default: true,
+    },
+    minDate: {
+      type: Date,
+      validator: isDate,
+      default: () => new Date(),
+    },
+    maxDate: {
+      type: Date,
+      validator: isDate,
+      default() {
+        const now = new Date();
+        return new Date(now.getFullYear(), now.getMonth() + 6, now.getDate());
+      },
+    },
+    firstDayOfWeek: {
       type: [Number, String],
-      default: null,
+      default: 0,
+      validator: (val) => val >= 0 && val <= 6,
     },
   },
 
@@ -134,12 +136,13 @@ export default createComponent({
     buttonDisabled() {
       const { type, currentDate } = this;
 
-      if (type === 'range') {
-        return !currentDate[0] || !currentDate[1];
-      }
-
-      if (type === 'multiple') {
-        return !currentDate.length;
+      if (currentDate) {
+        if (type === 'range') {
+          return !currentDate[0] || !currentDate[1];
+        }
+        if (type === 'multiple') {
+          return !currentDate.length;
+        }
       }
 
       return !currentDate;
@@ -196,6 +199,11 @@ export default createComponent({
     scrollIntoView() {
       this.$nextTick(() => {
         const { currentDate } = this;
+
+        if (!currentDate) {
+          return;
+        }
+
         const targetDate =
           this.type === 'single' ? currentDate : currentDate[0];
         const displayed = this.value || !this.poppable;
@@ -207,7 +215,8 @@ export default createComponent({
 
         this.months.some((month, index) => {
           if (compareMonth(month, targetDate) === 0) {
-            this.$refs.months[index].scrollIntoView();
+            const { body, months } = this.$refs;
+            months[index].scrollIntoView(body);
             return true;
           }
 
@@ -218,6 +227,10 @@ export default createComponent({
 
     getInitialDate() {
       const { type, minDate, maxDate, defaultDate } = this;
+
+      if (defaultDate === null) {
+        return defaultDate;
+      }
 
       let defaultVal = new Date();
 
@@ -244,21 +257,27 @@ export default createComponent({
     onScroll() {
       const { body, months } = this.$refs;
       const top = getScrollTop(body);
-      const bottom = top + this.bodyHeight;
       const heights = months.map((item) => item.getHeight());
       const heightSum = heights.reduce((a, b) => a + b, 0);
 
       // iOS scroll bounce may exceed the range
-      /* istanbul ignore next */
-      if (top < 0 || (bottom > heightSum && top > 0)) {
-        return;
+      let bottom = top + this.bodyHeight;
+      if (bottom > heightSum && top > 0) {
+        bottom = heightSum;
       }
 
       let height = 0;
       let currentMonth;
 
+      // add offset to avoid rem accuracy issues
+      // see: https://github.com/youzan/vant/issues/6929
+      const viewportOffset = 50;
+      const viewportTop = top - viewportOffset;
+      const viewportBottom = bottom + viewportOffset;
+
       for (let i = 0; i < months.length; i++) {
-        const visible = height <= bottom && height + heights[i] >= top;
+        const visible =
+          height <= viewportBottom && height + heights[i] >= viewportTop;
 
         if (visible && !currentMonth) {
           currentMonth = months[i];
@@ -282,10 +301,19 @@ export default createComponent({
     },
 
     onClickDay(item) {
+      if (this.readonly) {
+        return;
+      }
+
       const { date } = item;
       const { type, currentDate } = this;
 
       if (type === 'range') {
+        if (!currentDate) {
+          this.select([date, null]);
+          return;
+        }
+
         const [startDay, endDay] = currentDate;
 
         if (startDay && !endDay) {
@@ -302,8 +330,12 @@ export default createComponent({
           this.select([date, null]);
         }
       } else if (type === 'multiple') {
-        let selectedIndex;
+        if (!currentDate) {
+          this.select([date]);
+          return;
+        }
 
+        let selectedIndex;
         const selected = this.currentDate.some((dateItem, index) => {
           const equal = compareDay(dateItem, date) === 0;
           if (equal) {

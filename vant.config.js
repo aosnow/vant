@@ -3,7 +3,7 @@ module.exports = {
   build: {
     skipInstall: ['lazyload'],
     site: {
-      publicPath: 'https://b.yzcdn.cn/vant/',
+      publicPath: process.env.PUBLIC_PATH || 'https://b.yzcdn.cn/vant/'
     },
     vetur: {
       tagPrefix: 'van-'
@@ -11,7 +11,10 @@ module.exports = {
   },
   site: {
     defaultLang: 'en-US',
-    versions: [{ label: '1.x', link: 'https://youzan.github.io/vant/1.x/' }],
+    versions: [
+      { label: '1.x', link: '/vant/1.x/' },
+      { label: '3.x', link: '/vant/next/' }
+    ],
     baiduAnalytics: {
       seed: 'ad6b5732c36321f2dafed737ac2da92f'
     },
@@ -34,7 +37,19 @@ module.exports = {
         searchConfig: {
           apiKey: '90067aecdaa2c85220e2783cd305caac',
           indexName: 'vant',
-          placeholder: '搜索文档...'
+          placeholder: '搜索文档...',
+          transformData(hits) {
+            if (location.hostname === 'vant-contrib.gitee.io') {
+              hits.forEach((hit) => {
+                if (hit.url) {
+                  hit.url = hit.url.replace(
+                    'youzan.github.io',
+                    'vant-contrib.gitee.io'
+                  );
+                }
+              });
+            }
+          }
         },
         nav: [
           {
@@ -107,9 +122,9 @@ module.exports = {
               },
               {
                 path: 'toast',
-                title: 'Toast 轻提示',
-              },
-            ],
+                title: 'Toast 轻提示'
+              }
+            ]
           },
           {
             title: '表单组件',
@@ -278,7 +293,7 @@ module.exports = {
               },
               {
                 path: 'tag',
-                title: 'Tag 标记'
+                title: 'Tag 标签'
               }
             ]
           },
@@ -360,43 +375,6 @@ module.exports = {
               }
             ]
           },
-
-          {
-            title: '装修平台-图文类',
-            items: [
-              // {
-              //   path: 'goods-columns',
-              //   title: 'GoodsColumns 多列商品展示'
-              // }
-            ]
-          },
-          {
-            title: '装修平台-商品类',
-            items: [
-              {
-                path: 'goods-single',
-                title: 'GoodsSingle 单列商品展示'
-              },
-              {
-                path: 'goods-double',
-                title: 'GoodsDouble 双列商品展示'
-              },
-              {
-                path: 'goods-three',
-                title: 'GoodsThree 三列列商品展示'
-              }
-            ]
-          },
-          {
-            title: '装修平台-营销类',
-            items: [
-              // {
-              //   path: 'goods-columns',
-              //   title: 'GoodsColumns 多列商品展示'
-              // }
-            ]
-          },
-
           {
             title: '废弃',
             items: [
@@ -491,7 +469,7 @@ module.exports = {
               },
               {
                 path: 'toast',
-                title: 'Toast',
+                title: 'Toast'
               }
             ]
           },
