@@ -19,16 +19,10 @@ export default {
 		'en-US': {}
 	},
 
-	data() {
-		return {
-			content: 'Demo Template: GoodsSingle'
-		};
-	},
-
 	methods: {
-		clickHandler(event) {
-			console.warn('demo.clickHandler:', event);
-		}
+    clickHandler(props, event) {
+      console.warn('demo.clickHandler:', props, event);
+    }
 	}
 };
 </script>

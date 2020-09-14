@@ -58,13 +58,13 @@ function GoodsColumnsItem(
   // --------------------------------------------------------------------------
 
   function onClick(event: Event) {
-    emit(ctx, 'click', event);
+    emit(ctx, 'click', props, event);
     functionalRoute(ctx);
   }
 
   function onThumbClick(event: MouseEvent) {
     stopPropagation(event);
-    emit(ctx, 'click-thumb', event);
+    emit(ctx, 'click-thumb', props, event);
   }
 
   function onChange(value: string, detail: { name: string }) {
@@ -308,6 +308,7 @@ function GoodsColumnsItem(
   const classes = [
     bem({
       round: props.round,
+      shadow: props.shadow,
       soldout: props.soldout
     })
   ];

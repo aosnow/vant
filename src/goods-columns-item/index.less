@@ -45,6 +45,7 @@
     position: absolute;
     bottom: @goods-columns-thumb-bottom;
     opacity: @goods-columns-tag-opacity;
+    white-space: nowrap; // 保持角标文字不换行
 
     &--left {
       left: 0;
@@ -158,11 +159,16 @@
     }
   }
 
+  &--shadow {
+    .van-grid-item__content {
+      box-shadow: @box-shadow-light;
+    }
+  }
+
   .van-grid-item__content {
     position: relative;
     padding: 0;
     box-sizing: border-box;
-    box-shadow: @box-shadow-base;
     background-color: @goods-columns-background-color;
     //overflow: hidden;
   }

@@ -29,6 +29,8 @@ function GoodsDouble(
   ctx: RenderContext<SharedGoodsWrapProps>
 ) {
 
+  const { dataSource, limit, gutter, spacing, ...otherProps } = props;
+
   // --------------------------------------------------------------------------
   //
   // Event handlers
@@ -46,18 +48,22 @@ function GoodsDouble(
   ];
 
   function Children() {
-    const { round, lazyLoad, memberSymbol, thumbTagAlign, trailingZeros, showStep, dataSource, limit } = props;
+    // const { round, shadow, lazyLoad, memberSymbol, thumbTag, thumbTagAlign, trailingZeros, showStep, dataSource, limit } = props;
 
     return (dataSource.slice(0, limit)).map(item => {
       const itemData: VNodeData = {
         attrs: {
-          ...item,
-          round,
-          lazyLoad,
-          memberSymbol,
-          thumbTagAlign,
-          trailingZeros,
-          showStep
+          ...otherProps,
+          ...item
+
+          // round,
+          // shadow,
+          // lazyLoad,
+          // memberSymbol,
+          // thumbTag,
+          // thumbTagAlign,
+          // trailingZeros,
+          // showStep
         },
         on: { ...ctx.listeners }
       };
@@ -70,8 +76,8 @@ function GoodsDouble(
 
   // 上下间距
   const Spacing = {
-    'padding-top': `${props.spacing}px`,
-    'padding-bottom': `${props.spacing}px`
+    'padding-top': `${spacing}px`,
+    'padding-bottom': `${spacing}px`
   };
 
   // 若需使用插槽，如默认插槽
@@ -82,7 +88,7 @@ function GoodsDouble(
     <Grid class={classes}
           border={false}
           column-num={2}
-          gutter={props.gutter}
+          gutter={gutter}
           style={Spacing}
           {...inherit(ctx, true)}>
       {Children()}

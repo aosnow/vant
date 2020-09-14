@@ -6,9 +6,6 @@ export type GoodsData = {
   // 商品标签
   tags: Array<string>;
 
-  // 图片角标
-  thumbTag: string;
-
   // 商品名称
   title: string;
 
@@ -53,7 +50,9 @@ export type GoodsData = {
 
 export type SharedGoodsColumnsItemProps = GoodsData & {
   round?: boolean; // 是否呈现圆角容器
+  shadow?: boolean; // 是否呈现阴影
   lazyLoad?: boolean; // 图片是否开启懒加载，需要 LazyLoad 组件使用
+  thumbTag: string;
   thumbTagAlign?: 'left' | 'center' | 'right'; // 标签位置
   trailingZeros?: boolean; // 是否保留末尾小数位的 0
   memberSymbol?: string; // 会员价的符号标识
@@ -66,6 +65,11 @@ export const goodsColumnsItemProps = {
     default: true
   },
 
+  shadow: {
+    type: Boolean,
+    default: true
+  },
+
   lazyLoad: {
     type: Boolean,
     default: true
@@ -74,6 +78,11 @@ export const goodsColumnsItemProps = {
   memberSymbol: {
     type: String,
     default: 'VIP'
+  },
+
+  thumbTag: {
+    type: String,
+    default: 'NEW'
   },
 
   thumbTagAlign: {
@@ -94,7 +103,6 @@ export const goodsColumnsItemProps = {
   // 商品数据 props
   id: String,
   tags: Array,
-  thumbTag: String,
   title: String,
   thumb: String,
   desc: String,
