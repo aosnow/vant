@@ -57,48 +57,20 @@ export type SharedGoodsColumnsItemProps = GoodsData & {
   trailingZeros?: boolean; // 是否保留末尾小数位的 0
   memberSymbol?: string; // 会员价的符号标识
   showStep?: boolean; // 是否显示购买数量控制器
+
+  theme?: 'normal' | 'transparent'; // 标题栏风格
 };
 
 export const goodsColumnsItemProps = {
-  round: {
-    type: Boolean,
-    default: true
-  },
-
-  shadow: {
-    type: Boolean,
-    default: true
-  },
-
-  lazyLoad: {
-    type: Boolean,
-    default: true
-  },
-
-  memberSymbol: {
-    type: String,
-    default: 'VIP'
-  },
-
-  thumbTag: {
-    type: String,
-    default: 'NEW'
-  },
-
-  thumbTagAlign: {
-    type: String,
-    default: 'left'
-  },
-
-  trailingZeros: {
-    type: Boolean,
-    default: true
-  },
-
-  showStep: {
-    type: Boolean,
-    default: true
-  },
+  round: { type: Boolean, default: true },
+  shadow: { type: Boolean, default: true },
+  lazyLoad: { type: Boolean, default: true },
+  memberSymbol: { type: String, default: 'VIP' },
+  thumbTag: { type: String, default: 'NEW' },
+  thumbTagAlign: { type: String, default: 'left' },
+  trailingZeros: { type: Boolean, default: true },
+  showStep: { type: Boolean, default: true },
+  theme: { type: String, default: 'normal' },
 
   // 商品数据 props
   id: String,
@@ -123,25 +95,14 @@ export const goodsColumnsItemProps = {
   unit: String,
 
   // 最少购买数量（如起购数量）
-  min: {
-    type: Number,
-    default: 0
-  },
+  min: { type: Number, default: 0 },
 
   // 最多购买数量（如库存控制）
-  max: {
-    type: Number
-  },
+  max: { type: Number },
 
   // 每次加购数量（如加购数量）
-  step: {
-    type: Number,
-    default: 1
-  },
+  step: { type: Number, default: 1 },
 
   // 是否售罄
-  soldout: {
-    type: Boolean,
-    default: false
-  }
+  soldout: { type: Boolean, default: false }
 };

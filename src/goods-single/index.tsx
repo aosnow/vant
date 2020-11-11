@@ -98,7 +98,8 @@ function GoodsSingle(
 
 GoodsSingle.props = {
   ...goodsWrapProps,
-  limit: { type: Number, default: 1 }
+  limit: { type: Number, default: 1 },
+  theme: { type: String, default: 'transparent' },
 };
 
 export default createComponent<SharedGoodsWrapProps>(GoodsSingle);

@@ -45,11 +45,12 @@ function GoodsColumnsItem(
   ctx: RenderContext<GoodsColumnsItemProps>
 ) {
 
-  const { tags, title, thumb, desc, unit, price, memberPrice, originPrice, trailingZeros, soldout } = props;
+  const { tags, title, thumb, desc, unit, price, memberPrice, originPrice, trailingZeros, soldout, theme } = props;
 
   const showMemberPrice = slots['member-price'] || isDef(memberPrice);
   const showPrice = slots.price || isDef(price);
   const showOriginPrice = slots['origin-price'] || isDef(originPrice);
+  const themeName = theme || 'normal';
 
   // --------------------------------------------------------------------------
   //
@@ -86,6 +87,9 @@ function GoodsColumnsItem(
   // ----------------------------------------
   function ThumbTag() {
     if (props.thumbTag) {
+      // const mods: string[] = [String(props.thumbTagAlign)];
+      // if (themeName === 'transparent') mods.push('transparent');
+
       return (
         <Tag type="danger" class={[bem('thumb-tag', [props.thumbTagAlign])]}>
           {props.thumbTag}
@@ -156,16 +160,18 @@ function GoodsColumnsItem(
   // 商品标签
   // ----------------------------------------
 
-  function Tags() {
+  function Tags(max = -1) {
     const showTags = slots.tags || isDef(tags);
 
     if (showTags) {
+      const validTags = tags.slice(0, max === -1 ? tags.length : max);
+
       return (
         <div class={[bem('detail-tags')]}>
           {slots.tags ? slots.tags() : (
-            tags.map(tag => {
+            validTags.map(tag => {
               return (
-                <Tag plain type="danger">{tag}</Tag>
+                <div class={[bem('detail-tags--red')]}>{tag}</div>
               );
             })
           )}
@@ -305,11 +311,46 @@ function GoodsColumnsItem(
     }
   }
 
+  // ----------------------------------------
+  // 标题栏风格
+  // ----------------------------------------
+
+  function ThemeTitleBar() {
+    // 白底默认风格
+    if (themeName === 'normal') {
+      return (
+        <div class={bem('detail')}>
+          {Title()}
+          {Desc()}
+          {Tags()}
+          {MemberPrice()}
+          <div class={[bem('detail-bottom')]}>
+            {Price()}
+            {OriginPrice()}
+            {GoodsNum()}
+          </div>
+        </div>
+      );
+    }
+
+    // 半透明黑底风格
+    return (
+      <div class={bem('detail-trans')}>
+        {Title()}
+        {Tags(1)}
+        <div class={[bem('detail-trans-price')]}>
+          {Price()}
+        </div>
+      </div>
+    );
+  }
+
   const classes = [
     bem({
       round: props.round,
       shadow: props.shadow,
-      soldout: props.soldout
+      soldout: props.soldout,
+      transparent: themeName === 'transparent'
     })
   ];
 
@@ -318,18 +359,8 @@ function GoodsColumnsItem(
       {Thumb()}
       {OnlyGoodsNum()}
       {SoldoutHold()}
-      <div class={bem('detail')}>
-        {Title()}
-        {Desc()}
-        {Tags()}
-        {MemberPrice()}
-        <div class={[bem('detail-bottom')]}>
-          {Price()}
-          {OriginPrice()}
-          {GoodsNum()}
-        </div>
-      </div>
-      {Footer()}
+      {ThemeTitleBar()}
+      {themeName === 'normal' ? Footer() : null}
     </GridItem>
   );
 }

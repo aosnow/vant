@@ -19,6 +19,7 @@ export type SharedGoodsWrapProps = {
   thumbTagAlign?: 'left' | 'center' | 'right'; // 标签位置
   trailingZeros?: boolean; // 是否保留末尾小数位的 0
   showStep?: boolean; // 是否显示购买数量控制器（三列布局不显示）
+  theme?: 'normal' | 'transparent'; // 标题栏风格
 
   dataSource: Array<GoodsData>;
 };
@@ -35,6 +36,7 @@ export const goodsWrapProps = {
   thumbTagAlign: { type: String, default: 'left' },
   trailingZeros: { type: Boolean, default: true },
   showStep: { type: Boolean, default: false },
+  theme: { type: String, default: 'normal' },
 
   dataSource: {
     type: Array,

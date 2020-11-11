@@ -129,8 +129,17 @@
     line-height: @goods-columns-tags-height;
     overflow: hidden;
 
-    .van-tag {
+    &--red {
+      font-size: @font-size-sm;
       margin-right: 2px;
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 4px;
+      color: @red;
+      border: 1px solid @red;
+      border-radius: 2px;
+      line-height: 1;
     }
   }
 
@@ -157,6 +166,24 @@
         border-radius: @border-radius-lg @border-radius-lg 0 0;
       }
     }
+
+    &.van-goods-columns-item--transparent {
+      .van-grid-item__content {
+        .van-goods-columns-item__thumb {
+          border-radius: @border-radius-lg;
+        }
+
+        .van-goods-columns-item__detail-trans {
+          border-radius: 0 0 @border-radius-lg @border-radius-lg;
+        }
+      }
+    }
+  }
+
+  &--transparent {
+    .van-goods-columns-item__thumb-tag {
+      bottom: @goods-columns-thumb-bottom + 40px;
+    }
   }
 
   &--shadow {
@@ -171,6 +198,34 @@
     box-sizing: border-box;
     background-color: @goods-columns-background-color;
     //overflow: hidden;
+  }
+
+  // 半透明标题风格
+  // --------------------------------------------------
+  &__detail-trans {
+    color: @goods-columns-title-bar-color;
+    position: absolute;
+    bottom: 0;
+    min-height: @goods-columns-title-bar-height;
+    width: 100%;
+    background-color: @goods-columns-title-bar-background;
+    box-sizing: border-box;
+    padding: 0 @goods-columns-title-bar-padding;
+
+    display: flex;
+    align-items: center;
+
+    .van-goods-columns-item__detail-title {
+      flex: 1;
+    }
+
+    &-price {
+      padding-left: @goods-columns-title-bar-padding;
+
+      .van-goods-columns-item__price {
+        color: @white;
+      }
+    }
   }
 
   // 会员价
