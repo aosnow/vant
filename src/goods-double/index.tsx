@@ -50,7 +50,8 @@ function GoodsDouble(
   function Children() {
     // const { round, shadow, lazyLoad, memberSymbol, thumbTag, thumbTagAlign, trailingZeros, showStep, dataSource, limit } = props;
 
-    return (dataSource.slice(0, limit)).map(item => {
+    const source = limit && limit > 0 ? dataSource.slice(0, limit) : dataSource;
+    return source.map(item => {
       const itemData: VNodeData = {
         attrs: {
           ...otherProps,
