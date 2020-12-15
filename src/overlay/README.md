@@ -3,10 +3,11 @@
 ### Install
 
 ```js
-import Vue from 'vue';
+import { createApp } from 'vue';
 import { Overlay } from 'vant';
 
-Vue.use(Overlay);
+const app = createApp();
+app.use(Overlay);
 ```
 
 ## Usage
@@ -19,13 +20,14 @@ Vue.use(Overlay);
 ```
 
 ```js
+import { ref } from 'vue';
+
 export default {
-  data() {
-    return {
-      show: false
-    }
-  }
-},
+  setup() {
+    const show = ref(false);
+    return { show };
+  },
+};
 ```
 
 ### Embedded Content
@@ -68,12 +70,21 @@ export default {
 
 ### Events
 
-| Event | Description            | Arguments      |
-| ----- | ---------------------- | -------------- |
-| click | Triggered when clicked | _event: Event_ |
+| Event | Description                       | Arguments      |
+| ----- | --------------------------------- | -------------- |
+| click | Emitted when component is clicked | _event: Event_ |
 
 ### Slots
 
 | Name    | Description  |
 | ------- | ------------ |
 | default | Default slot |
+
+### Less Variables
+
+How to use: [Custom Theme](#/en-US/theme).
+
+| Name                      | Default Value        | Description |
+| ------------------------- | -------------------- | ----------- |
+| @overlay-z-index          | `1`                  | -           |
+| @overlay-background-color | `rgba(0, 0, 0, 0.7)` | -           |

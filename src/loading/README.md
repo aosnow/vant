@@ -3,10 +3,11 @@
 ### Install
 
 ```js
-import Vue from 'vue';
+import { createApp } from 'vue';
 import { Loading } from 'vant';
 
-Vue.use(Loading);
+const app = createApp();
+app.use(Loading);
 ```
 
 ## Usage
@@ -14,19 +15,25 @@ Vue.use(Loading);
 ### Type
 
 ```html
-<van-loading /> <van-loading type="spinner" />
+<van-loading />
+
+<van-loading type="spinner" />
 ```
 
 ### Color
 
 ```html
-<van-loading color="#1989fa" /> <van-loading type="spinner" color="#1989fa" />
+<van-loading color="#1989fa" />
+
+<van-loading type="spinner" color="#1989fa" />
 ```
 
 ### Size
 
 ```html
-<van-loading size="24" /> <van-loading type="spinner" size="24px" />
+<van-loading size="24" />
+
+<van-loading type="spinner" size="24px" />
 ```
 
 ### Text
@@ -58,3 +65,15 @@ Vue.use(Loading);
 | Name    | Description  |
 | ------- | ------------ |
 | default | Loading text |
+
+### Less Variables
+
+How to use: [Custom Theme](#/en-US/theme).
+
+| Name                                | Default Value   | Description |
+| ----------------------------------- | --------------- | ----------- |
+| @loading-text-color                 | `@gray-6`       | -           |
+| @loading-text-font-size             | `@font-size-md` | -           |
+| @loading-spinner-color              | `@gray-5`       | -           |
+| @loading-spinner-size               | `30px`          | -           |
+| @loading-spinner-animation-duration | `0.8s`          | -           |

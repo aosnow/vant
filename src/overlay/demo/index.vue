@@ -1,34 +1,32 @@
 <template>
-  <demo-section>
-    <demo-block :title="t('basicUsage')">
-      <van-button
-        type="primary"
-        :text="t('showOverlay')"
-        style="margin-left: 16px;"
-        @click="show = true"
-      />
+  <demo-block :title="t('basicUsage')">
+    <van-button
+      type="primary"
+      :text="t('showOverlay')"
+      style="margin-left: 16px"
+      @click="show = true"
+    />
+    <van-overlay :show="show" @click="show = false" />
+  </demo-block>
 
-      <van-overlay :show="show" @click="show = false" />
-    </demo-block>
-
-    <demo-block :title="t('embeddedContent')">
-      <van-button
-        type="primary"
-        :text="t('embeddedContent')"
-        style="margin-left: 16px;"
-        @click="showEmbedded = true"
-      />
-
-      <van-overlay :show="showEmbedded" @click="showEmbedded = false">
-        <div class="wrapper">
-          <div class="block" />
-        </div>
-      </van-overlay>
-    </demo-block>
-  </demo-section>
+  <demo-block :title="t('embeddedContent')">
+    <van-button
+      type="primary"
+      :text="t('embeddedContent')"
+      style="margin-left: 16px"
+      @click="showEmbedded = true"
+    />
+    <van-overlay :show="showEmbedded" @click="showEmbedded = false">
+      <div class="wrapper">
+        <div class="block" />
+      </div>
+    </van-overlay>
+  </demo-block>
 </template>
 
 <script>
+import { reactive, toRefs } from 'vue';
+
 export default {
   i18n: {
     'zh-CN': {
@@ -41,11 +39,13 @@ export default {
     },
   },
 
-  data() {
-    return {
+  setup() {
+    const state = reactive({
       show: false,
       showEmbedded: false,
-    };
+    });
+
+    return toRefs(state);
   },
 };
 </script>
@@ -67,6 +67,7 @@ export default {
     width: 120px;
     height: 120px;
     background-color: @white;
+    border-radius: 4px;
   }
 }
 </style>

@@ -1,25 +1,33 @@
 import { isPromise, noop } from '.';
 
+export type Interceptor = (...args: any[]) => Promise<boolean> | boolean;
+
 export function callInterceptor(options: {
-  interceptor?: (...args: any[]) => Promise<boolean> | boolean;
+  interceptor?: Interceptor;
+  args?: any[];
   done: () => void;
-  args: any[];
+  canceled?: () => void;
 }) {
-  const { interceptor, args, done } = options;
+  const { interceptor, args, done, canceled } = options;
 
   if (interceptor) {
-    const returnVal = interceptor(...args);
+    // eslint-disable-next-line prefer-spread
+    const returnVal = interceptor.apply(null, args || []);
 
     if (isPromise(returnVal)) {
       returnVal
         .then((value) => {
           if (value) {
             done();
+          } else if (canceled) {
+            canceled();
           }
         })
         .catch(noop);
     } else if (returnVal) {
       done();
+    } else if (canceled) {
+      canceled();
     }
   } else {
     done();

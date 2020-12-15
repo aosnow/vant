@@ -7,21 +7,22 @@ Calendar component for selecting dates or date ranges.
 ### Install
 
 ```js
-import Vue from 'vue';
+import { createApp } from 'vue';
 import { Calendar } from 'vant';
 
-Vue.use(Calendar);
+const app = createApp();
+app.use(Calendar);
 ```
 
 ## Usage
 
 ### Select Single Date
 
-The `confirm` event will be triggered after the date selection is completed.
+The `confirm` event will be emitted after the date selection is completed.
 
 ```html
 <van-cell title="Select Single Date" :value="date" @click="show = true" />
-<van-calendar v-model="show" @confirm="onConfirm" />
+<van-calendar v-model:show="show" @confirm="onConfirm" />
 ```
 
 ```js
@@ -48,7 +49,7 @@ export default {
 
 ```html
 <van-cell title="Select Multiple Date" :value="text" @click="show = true" />
-<van-calendar v-model="show" type="multiple" @confirm="onConfirm" />
+<van-calendar v-model:show="show" type="multiple" @confirm="onConfirm" />
 ```
 
 ```js
@@ -74,7 +75,7 @@ You can select a date range after setting `type` to`range`. In range mode, the d
 
 ```html
 <van-cell title="Select Date Range" :value="date" @click="show = true" />
-<van-calendar v-model="show" type="range" @confirm="onConfirm" />
+<van-calendar v-model:show="show" type="range" @confirm="onConfirm" />
 ```
 
 ```js
@@ -100,10 +101,10 @@ export default {
 
 ### Quick Select
 
-Set `show-confirm` to `false` to hide the confirm button. In this case, the `confirm` event will be triggered immediately after the selection is completed.
+Set `show-confirm` to `false` to hide the confirm button. In this case, the `confirm` event will be emitted immediately after the selection is completed.
 
 ```html
-<van-calendar v-model="show" :show-confirm="false" />
+<van-calendar v-model:show="show" :show-confirm="false" />
 ```
 
 ### Custom Color
@@ -111,7 +112,7 @@ Set `show-confirm` to `false` to hide the confirm button. In this case, the `con
 Use `color` prop to custom calendar color.
 
 ```html
-<van-calendar v-model="show" color="#07c160" />
+<van-calendar v-model:show="show" color="#1989fa" />
 ```
 
 ### Custom Date Range
@@ -119,7 +120,7 @@ Use `color` prop to custom calendar color.
 Use `min-date` and `max-date` to custom date range.
 
 ```html
-<van-calendar v-model="show" :min-date="minDate" :max-date="maxDate" />
+<van-calendar v-model:show="show" :min-date="minDate" :max-date="maxDate" />
 ```
 
 ```js
@@ -140,7 +141,7 @@ Use `confirm-text` and `confirm-disabled-text` to custom confirm text.
 
 ```html
 <van-calendar
-  v-model="show"
+  v-model:show="show"
   type="range"
   confirm-text="OK"
   confirm-disabled-text="Select End Time"
@@ -152,7 +153,7 @@ Use `confirm-text` and `confirm-disabled-text` to custom confirm text.
 Use `formatter` to custom day text.
 
 ```html
-<van-calendar v-model="show" type="range" :formatter="formatter" />
+<van-calendar v-model:show="show" type="range" :formatter="formatter" />
 ```
 
 ```js
@@ -189,7 +190,7 @@ export default {
 Use `position` to custom popup position，can be set to `top`、`left`、`right`.
 
 ```html
-<van-calendar v-model="show" :round="false" position="right" />
+<van-calendar v-model:show="show" :round="false" position="right" />
 ```
 
 ### Max Range
@@ -252,13 +253,13 @@ Following props are supported when the poppable is true
 
 | Attribute | Description | Type | Default |
 | --- | --- | --- | --- |
-| v-model | Whether to show calendar | _boolean_ | `false` |
+| v-model:show | Whether to show calendar | _boolean_ | `false` |
 | position | Popup position, can be set to `top` `right` `left` | _string_ | `bottom` |
 | round | Whether to show round corner | _boolean_ | `true` |
 | close-on-popstate `v2.4.4` | Whether to close when popstate | _boolean_ | `true` |
-| close-on-click-overlay | Whether to close when click overlay | _boolean_ | `true` |
+| close-on-click-overlay | Whether to close when overlay is clicked | _boolean_ | `true` |
 | safe-area-inset-bottom | Whether to enable bottom safe area adaptation | _boolean_ | `true` |
-| get-container `v2.4.4` | Return the mount node for Calendar | _string \| () => Element_ | - |
+| teleport `v2.4.4` | Return the mount node for Calendar | _string \| Element_ | - |
 
 ### Range Props
 
@@ -268,7 +269,7 @@ Following props are supported when the type is range
 | --- | --- | --- | --- |
 | max-range `v2.4.3` | Number of selectable days | _number \| string_ | Unlimitied |
 | range-prompt `v2.4.3` | Error message when exceeded max range | _string_ | `Choose no more than xx days` |
-| allow-same-day `v2.5.6` | Whether the start and end time of the range is allowed on the same day | _boolean_ | `fasle` |
+| allow-same-day `v2.5.6` | Whether the start and end time of the range is allowed on the same day | _boolean_ | `false` |
 
 ### Multiple Props
 
@@ -294,14 +295,14 @@ Following props are supported when the type is multiple
 
 | Event | Description | Arguments |
 | --- | --- | --- |
-| select | Triggered when select date | _value: Date \| Date[]_ |
-| confirm | Triggered after date selection is complete，if `show-confirm` is`true`, it is triggered after clicking the confirm button | _value: Date \| Date[]_ |
-| open `v2.5.2` | Triggered when open Popup | - |
-| close `v2.5.2` | Triggered when close Popup | - |
-| opened `v2.5.2` | Triggered when opened Popup | - |
-| closed `v2.5.2` | Triggered when closed Popup | - |
-| unselect `v2.7.2` | Triggered when unselect date when type is multiple | _value: Date_ |
-| month-show `v2.8.2` | Triggered when a month enters the visible area | _{ date: Date, title: string }_ |
+| select | Emitted when date is selected | _value: Date \| Date[]_ |
+| confirm | Emitted after date selection is complete，if `show-confirm` is `true`, it is Emitted after clicking the confirm button | _value: Date \| Date[]_ |
+| open `v2.5.2` | Emitted when opening Popup | - |
+| close `v2.5.2` | Emitted when closing Popup | - |
+| opened `v2.5.2` | Emitted when Popup is opened | - |
+| closed `v2.5.2` | Emitted when Popup is closed | - |
+| unselect `v2.7.2` | Emitted when unselect date when type is multiple | _value: Date_ |
+| month-show `v2.8.2` | Emitted when a month enters the visible area | _{ date: Date, title: string }_ |
 
 ### Slots
 
@@ -312,8 +313,40 @@ Following props are supported when the type is multiple
 
 ### Methods
 
-Use [ref](https://vuejs.org/v2/api/#ref) to get Calendar instance and call instance methods
+Use [ref](https://v3.vuejs.org/guide/component-template-refs.html) to get Calendar instance and call instance methods.
 
 | Name  | Description                         | Attribute | Return value |
 | ----- | ----------------------------------- | --------- | ------------ |
 | reset | Reset selected date to default date | -         | -            |
+
+### Less Variables
+
+How to use: [Custom Theme](#/en-US/theme).
+
+| Name | Default Value | Description |
+| --- | --- | --- |
+| @calendar-background-color | `@white` | - |
+| @calendar-popup-height | `80%` | - |
+| @calendar-header-box-shadow | `0 2px 10px rgba(125, 126, 128, 0.16)` | - |
+| @calendar-header-title-height | `44px` | - |
+| @calendar-header-title-font-size | `@font-size-lg` | - |
+| @calendar-header-subtitle-font-size | `@font-size-md` | - |
+| @calendar-weekdays-height | `30px` | - |
+| @calendar-weekdays-font-size | `@font-size-sm` | - |
+| @calendar-month-title-font-size | `@font-size-md` | - |
+| @calendar-month-mark-color | `fade(@gray-2, 80%)` | - |
+| @calendar-month-mark-font-size | `160px` | - |
+| @calendar-day-height | `64px` | - |
+| @calendar-day-font-size | `@font-size-lg` | - |
+| @calendar-range-edge-color | `@white` | - |
+| @calendar-range-edge-background-color | `@red` | - |
+| @calendar-range-middle-color | `@red` | - |
+| @calendar-range-middle-background-opacity | `0.1` | - |
+| @calendar-selected-day-size | `54px` | - |
+| @calendar-selected-day-color | `@white` | - |
+| @calendar-info-font-size | `@font-size-xs` | - |
+| @calendar-info-line-height | `@line-height-xs` | - |
+| @calendar-selected-day-background-color | `@red` | - |
+| @calendar-day-disabled-color | `@gray-5` | - |
+| @calendar-confirm-button-height | `36px` | - |
+| @calendar-confirm-button-margin | `7px 0` | - |

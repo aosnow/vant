@@ -3,10 +3,11 @@
 ### Install
 
 ```js
-import Vue from 'vue';
+import { createApp } from 'vue';
 import { Form } from 'vant';
 
-Vue.use(Form);
+const app = createApp();
+app.use(Form);
 ```
 
 ## Usage
@@ -31,7 +32,7 @@ Vue.use(Form);
     :rules="[{ required: true, message: 'Password is required' }]"
   />
   <div style="margin: 16px;">
-    <van-button round block type="info" native-type="submit">
+    <van-button round block type="primary" native-type="submit">
       Submit
     </van-button>
   </div>
@@ -77,7 +78,7 @@ export default {
     :rules="[{ validator: asyncValidator, message: 'Error message' }]"
   />
   <div style="margin: 16px;">
-    <van-button round block type="info" native-type="submit">
+    <van-button round block type="primary" native-type="submit">
       Submit
     </van-button>
   </div>
@@ -281,9 +282,8 @@ export default {
   placeholder="Select city"
   @click="showPicker = true"
 />
-<van-popup v-model="showPicker" position="bottom">
+<van-popup v-model:show="showPicker" position="bottom">
   <van-picker
-    show-toolbar
     :columns="columns"
     @confirm="onConfirm"
     @cancel="showPicker = false"
@@ -321,7 +321,7 @@ export default {
   placeholder="Select time"
   @click="showPicker = true"
 />
-<van-popup v-model="showPicker" position="bottom">
+<van-popup v-model:show="showPicker" position="bottom">
   <van-datetime-picker
     type="time"
     @confirm="onConfirm"
@@ -359,7 +359,7 @@ export default {
   placeholder="Select area"
   @click="showArea = true"
 />
-<van-popup v-model="showArea" position="bottom">
+<van-popup v-model:show="showArea" position="bottom">
   <van-area
     :area-list="areaList"
     @confirm="onConfirm"
@@ -379,7 +379,10 @@ export default {
   },
   methods: {
     onConfirm(values) {
-      this.value = values.map((item) => item.name).join('/');
+      this.value = values
+        .filter((item) => !!item)
+        .map((item) => item.name)
+        .join('/');
       this.showArea = false;
     },
   },
@@ -447,16 +450,24 @@ export default {
 | trigger `v2.5.2` | When to validate the form，can be set to `onChange`、`onBlur` | _string_ |
 | formatter `v2.5.3` | Format value before validate | _(value, rule) => any_ |
 
+### validate-trigger
+
+| Value    | Description                                                     |
+| -------- | --------------------------------------------------------------- |
+| onSubmit | Trigger validation after submiting form                         |
+| onBlur   | Trigger validation after submiting form or bluring input        |
+| onChange | Trigger validation after submiting form or changing input value |
+
 ### Events
 
 | Event | Description | Arguments |
 | --- | --- | --- |
-| submit | Triggered after submitting the form and validation passed | _values: object_ |
-| failed | Triggered after submitting the form and validation failed | _errorInfo: { values: object, errors: object[] }_ |
+| submit | Emitted after submitting the form and validation passed | _values: object_ |
+| failed | Emitted after submitting the form and validation failed | _errorInfo: { values: object, errors: object[] }_ |
 
 ### Methods
 
-Use [ref](https://vuejs.org/v2/api/#ref) to get Form instance and call instance methods
+Use [ref](https://v3.vuejs.org/guide/component-template-refs.html) to get Form instance and call instance methods.
 
 | Name | Description | Attribute | Return value |
 | --- | --- | --- | --- |

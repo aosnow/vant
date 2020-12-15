@@ -3,10 +3,11 @@
 ### Install
 
 ```js
-import Vue from 'vue';
+import { createApp } from 'vue';
 import { Search } from 'vant';
 
-Vue.use(Search);
+const app = createApp();
+app.use(Search);
 ```
 
 ## Usage
@@ -18,16 +19,19 @@ Vue.use(Search);
 ```
 
 ```js
+import { ref } from 'vue';
+
 export default {
-  data() {
-    value: '';
+  setup() {
+    const value = ref('');
+    return { value };
   },
 };
 ```
 
 ### Listen to Events
 
-`search` event will be triggered when click the search button on the keyboard, `cancel` event will be triggered when click the cancel button.
+`search` event will be Emitted when click the search button on the keyboard, `cancel` event will be Emitted when click the cancel button.
 
 ```html
 <form action="/">
@@ -42,21 +46,23 @@ export default {
 ```
 
 ```js
+import { ref } from 'vue';
 import { Toast } from 'vant';
 
 export default {
-  data() {
-    return {
-      value: '',
-    };
-  },
-  methods: {
-    onSearch(val) {
+  setup() {
+    const value = ref('');
+    const onSearch = (val) => {
       Toast(val);
-    },
-    onCancel() {
+    };
+    const onCancel = () => {
       Toast('Cancel');
-    },
+    };
+    return {
+      value,
+      onSearch,
+      onCancel,
+    };
   },
 };
 ```
@@ -88,7 +94,7 @@ export default {
 
 ### Custom Action Button
 
-Use `action` slot to custom right button, `cancel` event will no longer be triggered when use this slot.
+Use `action` slot to custom right button, `cancel` event will no longer be Emitted when use this slot.
 
 ```html
 <van-search
@@ -129,14 +135,23 @@ Use `action` slot to custom right button, `cancel` event will no longer be trigg
 
 ### Events
 
-| Event  | Description                        | Arguments       |
-| ------ | ---------------------------------- | --------------- |
-| search | Triggered when confirm search      | _value: string_ |
-| input  | Triggered when input value changed | _value: string_ |
-| focus  | Triggered when input gets focus    | _event: Event_  |
-| blur   | Triggered when input loses focus   | _event: Event_  |
-| clear  | Triggered when click clear icon    | _event: Event_  |
-| cancel | Triggered when click cancel button | -               |
+| Event | Description | Arguments |
+| --- | --- | --- |
+| search | Emitted when confirming search | _value: string_ |
+| update:model-value | Emitted when input value changed | _value: string_ |
+| focus | Emitted when input is focused | _event: Event_ |
+| blur | Emitted when input is blured | _event: Event_ |
+| clear | Emitted when the clear icon is clicked | _event: Event_ |
+| cancel | Emitted when the cancel button is clicked | - |
+
+### Methods
+
+Use [ref](https://v3.vuejs.org/guide/component-template-refs.html) to get Search instance and call instance methods.
+
+| Name  | Description         | Attribute | Return value |
+| ----- | ------------------- | --------- | ------------ |
+| focus | Trigger input focus | -         | -            |
+| blur  | Trigger input blur  | -         | -            |
 
 ### Slots
 
@@ -147,3 +162,21 @@ Use `action` slot to custom right button, `cancel` event will no longer be trigg
 | label      | Custom Search label                                         |
 | left-icon  | Custom left icon                                            |
 | right-icon | Custom right icon                                           |
+
+### Less Variables
+
+How to use: [Custom Theme](#/en-US/theme).
+
+| Name                             | Default Value      | Description |
+| -------------------------------- | ------------------ | ----------- |
+| @search-padding                  | `10px @padding-sm` | -           |
+| @search-background-color         | `@white`           | -           |
+| @search-content-background-color | `@gray-1`          | -           |
+| @search-input-height             | `34px`             | -           |
+| @search-label-padding            | `0 5px`            | -           |
+| @search-label-color              | `@text-color`      | -           |
+| @search-label-font-size          | `@font-size-md`    | -           |
+| @search-left-icon-color          | `@gray-6`          | -           |
+| @search-action-padding           | `0 @padding-xs`    | -           |
+| @search-action-text-color        | `@text-color`      | -           |
+| @search-action-font-size         | `@font-size-md`    | -           |

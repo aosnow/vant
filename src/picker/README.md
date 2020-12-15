@@ -7,10 +7,11 @@ The Picker component is usually used with [Popup](#/en-US/popup) Component.
 ### Install
 
 ```js
-import Vue from 'vue';
+import { createApp } from 'vue';
 import { Picker } from 'vant';
 
-Vue.use(Picker);
+const app = createApp();
+app.use(Picker);
 ```
 
 ## Usage
@@ -19,7 +20,6 @@ Vue.use(Picker);
 
 ```html
 <van-picker
-  show-toolbar
   title="Title"
   :columns="columns"
   @confirm="onConfirm"
@@ -32,21 +32,25 @@ Vue.use(Picker);
 import { Toast } from 'vant';
 
 export default {
-  data() {
-    return {
-      columns: ['Delaware', 'Florida', 'Georqia', 'Indiana', 'Maine'],
+  setup() {
+    const columns = ['Delaware', 'Florida', 'Georqia', 'Indiana', 'Maine'];
+
+    const onConfirm = (value, index) => {
+      Toast(`Value: ${value}, Index: ${index}`);
     };
-  },
-  methods: {
-    onConfirm(value, index) {
+    const onChange = (value, index) => {
       Toast(`Value: ${value}, Index: ${index}`);
-    },
-    onChange(picker, value, index) {
-      Toast(`Value: ${value}, Index: ${index}`);
-    },
-    onCancel() {
+    };
+    const onCancel = () => {
       Toast('Cancel');
-    },
+    };
+
+    return {
+      columns,
+      onChange,
+      onCancel,
+      onConfirm,
+    };
   },
 };
 ```
@@ -54,30 +58,30 @@ export default {
 ### Default Index
 
 ```html
-<van-picker show-toolbar title="Title" :columns="columns" :default-index="2" />
+<van-picker title="Title" :columns="columns" :default-index="2" />
 ```
 
 ### Multiple Columns
 
 ```html
-<van-picker show-toolbar title="Title" :columns="columns" />
+<van-picker title="Title" :columns="columns" />
 ```
 
 ```js
 export default {
-  data() {
-    return {
-      columns: [
-        {
-          values: ['Monday', 'Tuesday', 'Wednesday', 'Thusday', 'Friday'],
-          defaultIndex: 2,
-        },
-        {
-          values: ['Morging', 'Afternoon', 'Evening'],
-          defaultIndex: 1,
-        },
-      ],
-    };
+  setup() {
+    const columns = [
+      {
+        values: ['Monday', 'Tuesday', 'Wednesday', 'Thusday', 'Friday'],
+        defaultIndex: 2,
+      },
+      {
+        values: ['Morging', 'Afternoon', 'Evening'],
+        defaultIndex: 1,
+      },
+    ];
+
+    return { columns };
   },
 };
 ```
@@ -85,42 +89,42 @@ export default {
 ### Cascade
 
 ```html
-<van-picker show-toolbar title="Title" :columns="columns" />
+<van-picker title="Title" :columns="columns" />
 ```
 
 ```js
 export default {
-  data() {
-    return {
-      columns: [
-        {
-          text: 'Zhejiang',
-          children: [
-            {
-              text: 'Hangzhou',
-              children: [{ text: 'Xihu' }, { text: 'Yuhang' }],
-            },
-            {
-              text: 'Wenzhou',
-              children: [{ text: 'Lucheng' }, { text: 'Ouhai' }],
-            },
-          ],
-        },
-        {
-          text: 'Fujian',
-          children: [
-            {
-              text: 'Fuzhou',
-              children: [{ text: 'Gulou' }, { text: 'Taijiang' }],
-            },
-            {
-              text: 'Xiamen',
-              children: [{ text: 'Siming' }, { text: 'Haicang' }],
-            },
-          ],
-        },
-      ],
-    };
+  setup() {
+    const columns = [
+      {
+        text: 'Zhejiang',
+        children: [
+          {
+            text: 'Hangzhou',
+            children: [{ text: 'Xihu' }, { text: 'Yuhang' }],
+          },
+          {
+            text: 'Wenzhou',
+            children: [{ text: 'Lucheng' }, { text: 'Ouhai' }],
+          },
+        ],
+      },
+      {
+        text: 'Fujian',
+        children: [
+          {
+            text: 'Fuzhou',
+            children: [{ text: 'Gulou' }, { text: 'Taijiang' }],
+          },
+          {
+            text: 'Xiamen',
+            children: [{ text: 'Siming' }, { text: 'Haicang' }],
+          },
+        ],
+      },
+    ];
+
+    return { columns };
   },
 };
 ```
@@ -128,19 +132,19 @@ export default {
 ### Disable option
 
 ```html
-<van-picker show-toolbar :columns="columns" />
+<van-picker :columns="columns" />
 ```
 
 ```js
 export default {
-  data() {
-    return {
-      columns: [
-        { text: 'Delaware', disabled: true },
-        { text: 'Florida' },
-        { text: 'Georqia' },
-      ],
-    };
+  setup() {
+    const columns = [
+      { text: 'Delaware', disabled: true },
+      { text: 'Florida' },
+      { text: 'Georqia' },
+    ];
+
+    return { columns };
   },
 };
 ```
@@ -148,50 +152,62 @@ export default {
 ### Set Column Values
 
 ```html
-<van-picker show-toolbar title="Title" :columns="columns" @change="onChange" />
+<van-picker ref="picker" title="Title" :columns="columns" @change="onChange" />
 ```
 
 ```js
-const states = {
-  Group1: ['Delaware', 'Florida', 'Georqia', 'Indiana', 'Maine'],
-  Group2: ['Alabama', 'Kansas', 'Louisiana', 'Texas'],
-};
+import { ref } from 'vue';
 
 export default {
-  data() {
-    return {
-      columns: [{ values: Object.keys(states) }, { values: states.Group1 }],
+  setup() {
+    const picker = ref(null);
+
+    const states = {
+      Group1: ['Delaware', 'Florida', 'Georqia', 'Indiana', 'Maine'],
+      Group2: ['Alabama', 'Kansas', 'Louisiana', 'Texas'],
     };
-  },
-  methods: {
-    onChange(picker, values) {
-      picker.setColumnValues(1, states[values[0]]);
-    },
+    const columns = [
+      { values: Object.keys(states) },
+      { values: states.Group1 },
+    ];
+
+    const onChange = (values) => {
+      picker.value.setColumnValues(1, states[values[0]]);
+    };
+
+    return {
+      picker,
+      columns,
+      onChange,
+    };
   },
 };
 ```
 
 ### Loading
 
-When Picker columns data is acquired asynchronously, use `loading` prop to show loading prompt
+When Picker columns data is acquired asynchronously, use `loading` prop to show loading prompt.
 
 ```html
-<van-picker show-toolbar title="Title" :columns="columns" :loading="loading" />
+<van-picker title="Title" :columns="columns" :loading="loading" />
 ```
 
 ```js
+import { reactive } from 'vue';
+
 export default {
-  data() {
-    return {
+  setup() {
+    const state = reactive({
       columns: [],
       loading: true,
-    };
-  },
-  created() {
+    });
+
     setTimeout(() => {
-      this.loading = false;
-      this.columns = ['Option'];
+      state.loading = false;
+      state.columns = ['Option'];
     }, 1000);
+
+    return { state };
   },
 };
 ```
@@ -207,10 +223,9 @@ export default {
   placeholder="Choose City"
   @click="showPicker = true"
 />
-<van-popup v-model="showPicker" round position="bottom">
+<van-popup v-model:show="showPicker" round position="bottom">
   <van-picker
     title="Title"
-    show-toolbar
     :columns="columns"
     @cancel="showPicker = false"
     @confirm="onConfirm"
@@ -219,19 +234,26 @@ export default {
 ```
 
 ```js
+import { reactive } from 'vue';
+
 export default {
-  data() {
-    return {
+  setup() {
+    const columns = ['Delaware', 'Florida', 'Georqia', 'Indiana', 'Maine'];
+    const state = reactive({
       value: '',
       showPicker: false,
-      columns: ['Delaware', 'Florida', 'Georqia', 'Indiana', 'Maine'],
+    });
+
+    const onConfirm = (value) => {
+      state.value = value;
+      state.showPicker = false;
     };
-  },
-  methods: {
-    onConfirm(value) {
-      this.value = value;
-      this.showPicker = false;
-    },
+
+    return {
+      state,
+      columns,
+      onConfirm,
+    };
   },
 };
 ```
@@ -249,11 +271,10 @@ export default {
 | value-key | Key of option text | _string_ | `text` |
 | toolbar-position | Toolbar position, cat be set to `bottom` | _string_ | `top` |
 | loading | Whether to show loading prompt | _boolean_ | `false` |
-| readonly `v2.10.5` | Whether to be readonly | _boolean_ | `false` |
-| show-toolbar | Whether to show toolbar | _boolean_ | `false` |
-| allow-html | Whether to allow HTML in option text | _boolean_ | `true` |
+| show-toolbar | Whether to show toolbar | _boolean_ | `true` |
+| allow-html | Whether to allow HTML in option text | _boolean_ | `false` |
 | default-index | Default value index of single column picker | _number \| string_ | `0` |
-| item-height `v2.8.6` | Option height, supports `px` `vw` `rem` unit, default `px` | _number \| string_ | `44` |
+| item-height `v2.8.6` | Option height, supports `px` `vw` `vh` `rem` unit, default `px` | _number \| string_ | `44` |
 | visible-item-count | Count of visible columns | _number \| string_ | `6` |
 | swipe-duration | Duration of the momentum animation，unit `ms` | _number \| string_ | `1000` |
 
@@ -263,18 +284,21 @@ Picker events will pass different parameters according to the columns are single
 
 | Event | Description | Arguments |
 | --- | --- | --- |
-| confirm | Triggered when click confirm button | Single column：current value，current index<br>Multiple columns：current values，current indexes |
-| cancel | Triggered when click cancel button | Single column：current value，current index<br>Multiple columns：current values，current indexes |
-| change | Triggered when current option changed | Single column：Picker instance, current value，current index<br>Multiple columns：Picker instance, current values，column index |
+| confirm | Emitted when click confirm button | Single column：current value，current index<br>Multiple columns：current values，current indexes |
+| cancel | Emitted when click cancel button | Single column：current value，current index<br>Multiple columns：current values，current indexes |
+| change | Emitted when current option changed | Single column：Picker instance, current value，current index<br>Multiple columns：Picker instance, current values，column index |
 
 ### Slots
 
-| Name           | Description                  |
-| -------------- | ---------------------------- |
-| default        | Custom toolbar content       |
-| title          | Custom title                 |
-| columns-top    | Custom content above columns |
-| columns-bottom | Custom content below columns |
+| Name | Description | SlotProps |
+| --- | --- | --- |
+| default | Custom toolbar content | - |
+| title | Custom title | - |
+| confirm `v2.10.11` | Custom confirm button text | - |
+| cancel `v2.10.11` | Custom cancel button text | - |
+| option `v2.10.11` | Custom option content | _option: string \| object_ |
+| columns-top | Custom content above columns | - |
+| columns-bottom | Custom content below columns | - |
 
 ### Data Structure of Column
 
@@ -287,7 +311,7 @@ Picker events will pass different parameters according to the columns are single
 
 ### Methods
 
-Use [ref](https://vuejs.org/v2/api/#ref) to get Picker instance and call instance methods
+Use [ref](https://v3.vuejs.org/guide/component-template-refs.html) to get Picker instance and call instance methods.
 
 | Name | Description | Attribute | Return value |
 | --- | --- | --- | --- |
@@ -302,3 +326,23 @@ Use [ref](https://vuejs.org/v2/api/#ref) to get Picker instance and call instanc
 | getColumnValues | Get columns data of the column | columnIndex | values |
 | setColumnValues | Set columns data of the column | columnIndex, values | - |
 | confirm `v2.4.0` | Stop scrolling and emit confirm event | - | - |
+
+### Less Variables
+
+How to use: [Custom Theme](#/en-US/theme).
+
+| Name                            | Default Value              | Description |
+| ------------------------------- | -------------------------- | ----------- |
+| @picker-background-color        | `@white`                   | -           |
+| @picker-toolbar-height          | `44px`                     | -           |
+| @picker-title-font-size         | `@font-size-lg`            | -           |
+| @picker-title-line-height       | `@line-height-md`          | -           |
+| @picker-action-padding          | `0 @padding-md`            | -           |
+| @picker-action-font-size        | `@font-size-md`            | -           |
+| @picker-confirm-action-color    | `@text-link-color`         | -           |
+| @picker-cancel-action-color     | `@gray-6`                  | -           |
+| @picker-option-font-size        | `@font-size-lg`            | -           |
+| @picker-option-text-color       | `@black`                   | -           |
+| @picker-option-disabled-opacity | `0.3`                      | -           |
+| @picker-loading-icon-color      | `@blue`                    | -           |
+| @picker-loading-mask-color      | `rgba(255, 255, 255, 0.9)` | -           |

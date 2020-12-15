@@ -7,10 +7,11 @@
 ### 引入
 
 ```js
-import Vue from 'vue';
+import { createApp } from 'vue';
 import { Toast } from 'vant';
 
-Vue.use(Toast);
+const app = createApp();
+app.use(Toast);
 ```
 
 ## 代码演示
@@ -56,7 +57,6 @@ Toast({
   icon: 'https://img.yzcdn.cn/vant/logo.png',
 });
 
-// 自定义加载图标
 Toast.loading({
   message: '加载中...',
   forbidClick: true,
@@ -82,11 +82,11 @@ Toast({
 
 ### 动态更新提示
 
-执行 Toast 方法时会返回对应的 Toast 实例，通过修改实例上的 message 属性可以实现动态更新提示的效果。
+执行 Toast 方法时会返回对应的 Toast 实例，通过修改实例上的 `message` 属性可以实现动态更新提示的效果。
 
 ```js
 const toast = Toast.loading({
-  duration: 0, // 持续展示 toast
+  duration: 0,
   forbidClick: true,
   message: '倒计时 3 秒',
 });
@@ -98,7 +98,6 @@ const timer = setInterval(() => {
     toast.message = `倒计时 ${second} 秒`;
   } else {
     clearInterval(timer);
-    // 手动清除 Toast
     Toast.clear();
   }
 }, 1000);
@@ -106,7 +105,7 @@ const timer = setInterval(() => {
 
 ### 全局方法
 
-引入 Toast 组件后，会自动在 Vue 的 prototype 上挂载 `$toast` 方法，便于在组件内调用。
+通过 `app.use` 注册 Toast 组件后，会自动在 app 的所有子组件上挂载 `$toast` 方法，便于在组件内调用。
 
 ```js
 export default {
@@ -132,19 +131,15 @@ toast2.clear();
 
 ### 修改默认配置
 
-通过`Toast.setDefaultOptions`函数可以全局修改 Toast 的默认配置。
+通过 `Toast.setDefaultOptions` 函数可以全局修改 Toast 的默认配置。
 
 ```js
-// 将所有 Toast 的展示时长设置为 2000 毫秒
 Toast.setDefaultOptions({ duration: 2000 });
 
-// 将所有 loading Toast 设置为背景不可点击
 Toast.setDefaultOptions('loading', { forbidClick: true });
 
-// 重置所有 Toast 的默认配置
 Toast.resetDefaultOptions();
 
-// 重置 loading Toast 的默认配置
 Toast.resetDefaultOptions('loading');
 ```
 
@@ -154,13 +149,13 @@ Toast.resetDefaultOptions('loading');
 
 | 方法名 | 说明 | 参数 | 返回值 |
 | --- | --- | --- | --- |
-| Toast | 展示提示 | `options | message` | toast 实例 |
-| Toast.loading | 展示加载提示 | `options | message` | toast 实例 |
-| Toast.success | 展示成功提示 | `options | message` | toast 实例 |
-| Toast.fail | 展示失败提示 | `options | message` | toast 实例 |
+| Toast | 展示提示 | `options \| message` | toast 实例 |
+| Toast.loading | 展示加载提示 | `options \| message` | toast 实例 |
+| Toast.success | 展示成功提示 | `options \| message` | toast 实例 |
+| Toast.fail | 展示失败提示 | `options \| message` | toast 实例 |
 | Toast.clear | 关闭提示 | `clearAll: boolean` | `void` |
 | Toast.allowMultiple | 允许同时存在多个 Toast | - | `void` |
-| Toast.setDefaultOptions | 修改默认配置，对所有 Toast 生效。<br>传入 type 可以修改指定类型的默认配置 | `type | options` | `void` |
+| Toast.setDefaultOptions | 修改默认配置，对所有 Toast 生效。<br>传入 type 可以修改指定类型的默认配置 | `type \| options` | `void` |
 | Toast.resetDefaultOptions | 重置默认配置，对所有 Toast 生效。<br>传入 type 可以重置指定类型的默认配置 | `type` | `void` |
 
 ### Options
@@ -181,5 +176,27 @@ Toast.resetDefaultOptions('loading');
 | className | 自定义类名 | _any_ | - |
 | onOpened | 完全展示后的回调函数 | _Function_ | - |
 | onClose | 关闭时的回调函数 | _Function_ | - |
-| transition | 动画类名，等价于 [transtion](https://cn.vuejs.org/v2/api/index.html#transition) 的`name`属性 | _string_ | `van-fade` |
-| getContainer | 指定挂载的节点，[用法示例](#/zh-CN/popup#zhi-ding-gua-zai-wei-zhi) | _string \| () => Element_ | `body` |
+| transition | 动画类名，等价于 [transtion](https://v3.cn.vuejs.org/api/built-in-components.html#transition) 的`name`属性 | _string_ | `van-fade` |
+| teleport | 指定挂载的节点，[用法示例](#/zh-CN/popup#zhi-ding-gua-zai-wei-zhi) | _string \| Element_ | `body` |
+
+### 样式变量
+
+组件提供了下列 Less 变量，可用于自定义样式，使用方法请参考[主题定制](#/zh-CN/theme)。
+
+| 名称                            | 默认值                    | 描述 |
+| ------------------------------- | ------------------------- | ---- |
+| @toast-max-width                | `70%`                     | -    |
+| @toast-font-size                | `@font-size-md`           | -    |
+| @toast-text-color               | `@white`                  | -    |
+| @toast-loading-icon-color       | `@white`                  | -    |
+| @toast-line-height              | `@line-height-md`         | -    |
+| @toast-border-radius            | `@border-radius-lg`       | -    |
+| @toast-background-color         | `fade(@black, 70%)`       | -    |
+| @toast-icon-size                | `36px`                    | -    |
+| @toast-text-min-width           | `96px`                    | -    |
+| @toast-text-padding             | `@padding-xs @padding-sm` | -    |
+| @toast-default-padding          | `@padding-md`             | -    |
+| @toast-default-width            | `88px`                    | -    |
+| @toast-default-min-height       | `88px`                    | -    |
+| @toast-position-top-distance    | `20%`                     | -    |
+| @toast-position-bottom-distance | `20%`                     | -    |

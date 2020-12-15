@@ -1,6 +1,6 @@
 name: 🔂 Surge PR Preview
 
-on: [push, pull_request]
+on: pull_request_target
 
 jobs:
   preview:
@@ -9,11 +9,13 @@ jobs:
       PUBLIC_PATH: '/'
     steps:
       - uses: actions/checkout@v2
+        with:
+          ref: refs/pull/${{ github.event.pull_request.number }}/merge
       - uses: afc163/surge-preview@v1
         with:
           surge_token: ${{ secrets.SURGE_TOKEN }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
           build: |
-            npm install
+            yarn
             ./node_modules/.bin/vant-cli build-site
           dist: site

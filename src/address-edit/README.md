@@ -3,10 +3,11 @@
 ### Install
 
 ```js
-import Vue from 'vue';
+import { createApp } from 'vue';
 import { AddressEdit } from 'vant';
 
-Vue.use(AddressEdit);
+const app = createApp();
+app.use(AddressEdit);
 ```
 
 ## Usage
@@ -29,34 +30,39 @@ Vue.use(AddressEdit);
 ```
 
 ```js
+import { ref } from 'vue';
 import { Toast } from 'vant';
 
 export default {
-  data() {
-    return {
-      areaList,
-      searchResult: [],
-    };
-  },
-  methods: {
-    onSave() {
+  setup() {
+    const searchResult = ref([]);
+
+    const onSave = () => {
       Toast('save');
-    },
-    onDelete() {
+    };
+    const onDelete = () => {
       Toast('delete');
-    },
-    onChangeDetail(val) {
+    };
+    const onChangeDetail = (val) => {
       if (val) {
-        this.searchResult = [
+        searchResult.value = [
           {
-            name: '黄龙万科中心',
-            address: '杭州市西湖区',
+            name: 'Name1',
+            address: 'Address',
           },
         ];
       } else {
-        this.searchResult = [];
+        searchResult.value = [];
       }
-    },
+    };
+
+    return {
+      onSave,
+      onDelete,
+      areaList,
+      searchResult,
+      onChangeDetail,
+    };
   },
 };
 ```
@@ -94,15 +100,15 @@ export default {
 
 | Event | Description | Arguments |
 | --- | --- | --- |
-| save | Triggered when click save button | content：form content |
-| focus | Triggered when focus field | key: field name |
-| delete | Triggered when confirm delete | content：form content |
-| cancel-delete | Triggered when cancel delete | content：form content |
-| select-search | Triggered when select search result | value: search content |
-| click-area `v2.5.9` | Triggered when click area | - |
-| change-area | Triggered when change area | values: area values |
-| change-detail | Triggered when address detail changed | value: address detail |
-| change-default | Triggered when switch default address | value: checked |
+| save | Emitted when the save button is clicked | content：form content |
+| focus | Emitted when field is focused | key: field name |
+| delete | Emitted when confirming delete | content：form content |
+| cancel-delete | Emitted when canceling delete | content：form content |
+| select-search | Emitted when a search result is selected | value: search content |
+| click-area `v2.5.9` | Emitted when the area field is clicked | - |
+| change-area | Emitted when area changed | values: area values |
+| change-detail | Emitted when address detail changed | value: address detail |
+| change-default | Emitted when switching default address | value: checked |
 
 ### Slots
 
@@ -112,7 +118,7 @@ export default {
 
 ### Methods
 
-Use [ref](https://vuejs.org/v2/api/#ref) to get AddressEdit instance and call instance methods
+Use [ref](https://v3.vuejs.org/guide/component-template-refs.html) to get AddressEdit instance and call instance methods.
 
 | Name             | Description        | Attribute             | Return value |
 | ---------------- | ------------------ | --------------------- | ------------ |
@@ -143,3 +149,15 @@ Use [ref](https://vuejs.org/v2/api/#ref) to get AddressEdit instance and call in
 ### Area Data Structure
 
 Please refer to [Area](#/en-US/area) component。
+
+### Less Variables
+
+How to use: [Custom Theme](#/en-US/theme).
+
+| Name | Default Value | Description |
+| --- | --- | --- |
+| @address-edit-padding | `@padding-sm` | - |
+| @address-edit-buttons-padding | `@padding-xl @padding-base` | - |
+| @address-edit-button-margin-bottom | `@padding-sm` | - |
+| @address-edit-detail-finish-color | `@blue` | - |
+| @address-edit-detail-finish-font-size | `@font-size-sm` | - |

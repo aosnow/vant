@@ -3,10 +3,11 @@
 ### Install
 
 ```js
-import Vue from 'vue';
+import { createApp } from 'vue';
 import { Field } from 'vant';
 
-Vue.use(Field);
+const app = createApp();
+app.use(Field);
 ```
 
 ## Usage
@@ -22,11 +23,12 @@ The value of field is bound with v-model.
 ```
 
 ```js
+import { ref } from 'vue';
+
 export default {
-  data() {
-    return {
-      value: '',
-    };
+  setup() {
+    const value = ref('');
+    return { value };
   },
 };
 ```
@@ -36,23 +38,27 @@ export default {
 Use `type` prop to custom different type fields.
 
 ```html
-<van-field v-model="text" label="Text" />
-<van-field v-model="tel" type="tel" label="Phone" />
-<van-field v-model="digit" type="digit" label="Digit" />
-<van-field v-model="number" type="number" label="Number" />
-<van-field v-model="password" type="password" label="Password" />
+<van-field v-model="state.text" label="Text" />
+<van-field v-model="state.tel" type="tel" label="Phone" />
+<van-field v-model="state.digit" type="digit" label="Digit" />
+<van-field v-model="state.number" type="number" label="Number" />
+<van-field v-model="state.password" type="password" label="Password" />
 ```
 
 ```js
+import { reactive } from 'vue';
+
 export default {
-  data() {
-    return {
+  setup() {
+    const state = reactive({
       tel: '',
       text: '',
       digit: '',
       number: '',
       password: '',
-    };
+    });
+
+    return { state };
   },
 };
 ```
@@ -71,14 +77,14 @@ export default {
 ```html
 <van-cell-group>
   <van-field
-    v-model="value1"
+    v-model="state.value1"
     label="Text"
     left-icon="smile-o"
     right-icon="warning-o"
     placeholder="Show Icon"
   />
   <van-field
-    v-model="value2"
+    v-model="state.value2"
     clearable
     label="Text"
     left-icon="music-o"
@@ -88,12 +94,16 @@ export default {
 ```
 
 ```js
+import { reactive } from 'vue';
+
 export default {
-  data() {
-    return {
+  setup() {
+    const state = reactive({
       value1: '',
       value2: '123',
-    };
+    });
+
+    return { state };
   },
 };
 ```
@@ -139,13 +149,13 @@ Use `formatter` prop to format the input value.
 
 ```html
 <van-field
-  v-model="value1"
+  v-model="state.value1"
   label="Text"
   :formatter="formatter"
   placeholder="Format On Change"
 />
 <van-field
-  v-model="value2"
+  v-model="state.value2"
   label="Text"
   :formatter="formatter"
   format-trigger="onBlur"
@@ -154,17 +164,20 @@ Use `formatter` prop to format the input value.
 ```
 
 ```js
+import { reactive } from 'vue';
+
 export default {
-  data() {
-    return {
+  setup() {
+    const state = reactive({
       value1: '',
       value2: '',
+    });
+    const formatter = (value) => value.replace(/\d/g, '');
+
+    return {
+      state,
+      formatter,
     };
-  },
-  methods: {
-    formatter(value) {
-      return value.replace(/\d/g, '');
-    },
   },
 };
 ```
@@ -218,7 +231,7 @@ Use `input-align` prop to align the input value.
 
 | Attribute | Description | Type | Default |
 | --- | --- | --- | --- |
-| v-model (value) | Field value | _number \| string_ | - |
+| v-model | Field value | _number \| string_ | - |
 | label | Field label | _string_ | - |
 | name `v2.5.0` | Name | _string_ | - |
 | type | Input type, can be set to `tel` `digit`<br>`number` `textarea` `password` | _string_ | `text` |
@@ -259,18 +272,18 @@ Field support all native events of input tag
 
 | Event | Description | Parameters |
 | --- | --- | --- |
-| input | Triggered when input value changed | _value: string_ |
-| focus | Triggered when input gets focus | _event: Event_ |
-| blur | Triggered when input loses focus | _event: Event_ |
-| clear | Triggered when click clear icon | _event: Event_ |
-| click | Triggered when click Field | _event: Event_ |
-| click-input `v2.8.1` | Triggered when click input | _event: Event_ |
-| click-left-icon | Triggered when click the left icon of Field | _event: Event_ |
-| click-right-icon | Triggered when click the right icon of Field | _event: Event_ |
+| update:model-value | Emitted when input value changed | _value: string_ |
+| focus | Emitted when input is focused | _event: Event_ |
+| blur | Emitted when input is blured | _event: Event_ |
+| clear | Emitted when the clear icon is clicked | _event: Event_ |
+| click | Emitted when component is clicked | _event: Event_ |
+| click-input `v2.8.1` | Emitted when the input is clicked | _event: Event_ |
+| click-left-icon | Emitted when the left icon is clicked | _event: Event_ |
+| click-right-icon | Emitted when the right icon is clicked | _event: Event_ |
 
 ### Methods
 
-Use [ref](https://vuejs.org/v2/api/#ref) to get Field instance and call instance methods
+Use [ref](https://v3.vuejs.org/guide/component-template-refs.html) to get Field instance and call instance methods.
 
 | Name  | Description         | Attribute | Return value |
 | ----- | ------------------- | --------- | ------------ |
@@ -287,3 +300,28 @@ Use [ref](https://vuejs.org/v2/api/#ref) to get Field instance and call instance
 | right-icon     | Custom right icon           |
 | button         | Insert button               |
 | extra `v2.8.2` | Custom content on the right |
+
+### Less Variables
+
+How to use: [Custom Theme](#/en-US/theme).
+
+| Name                             | Default Value   | Description |
+| -------------------------------- | --------------- | ----------- |
+| @field-label-width               | `6.2em`         | -           |
+| @field-label-color               | `@gray-7`       | -           |
+| @field-label-margin-right        | `@padding-sm`   | -           |
+| @field-input-text-color          | `@text-color`   | -           |
+| @field-input-error-text-color    | `@red`          | -           |
+| @field-input-disabled-text-color | `@gray-5`       | -           |
+| @field-placeholder-text-color    | `@gray-5`       | -           |
+| @field-icon-size                 | `16px`          | -           |
+| @field-clear-icon-size           | `16px`          | -           |
+| @field-clear-icon-color          | `@gray-5`       | -           |
+| @field-right-icon-color          | `@gray-6`       | -           |
+| @field-error-message-color       | `@red`          | -           |
+| @field-error-message-text-color  | `12px`          | -           |
+| @field-text-area-min-height      | `60px`          | -           |
+| @field-word-limit-color          | `@gray-7`       | -           |
+| @field-word-limit-font-size      | `@font-size-sm` | -           |
+| @field-word-limit-line-height    | `16px`          | -           |
+| @field-disabled-text-color       | `@gray-5`       | -           |

@@ -1,34 +1,34 @@
 <template>
-  <demo-section>
-    <van-tabs v-model="activeTab">
-      <van-tab :title="t('basicUsage')">
-        <van-index-bar>
-          <div v-for="index in indexList" :key="index">
-            <van-index-anchor :index="index" />
-            <van-cell :title="t('text')" />
-            <van-cell :title="t('text')" />
-            <van-cell :title="t('text')" />
-          </div>
-        </van-index-bar>
-      </van-tab>
+  <van-tabs v-model="activeTab">
+    <van-tab :title="t('basicUsage')">
+      <van-index-bar>
+        <div v-for="index in indexList" :key="index">
+          <van-index-anchor :index="index" />
+          <van-cell :title="t('text')" />
+          <van-cell :title="t('text')" />
+          <van-cell :title="t('text')" />
+        </div>
+      </van-index-bar>
+    </van-tab>
 
-      <van-tab :title="t('customIndexList')">
-        <van-index-bar :index-list="customIndexList">
-          <div v-for="index in customIndexList" :key="index">
-            <van-index-anchor :index="index">
-              {{ t('title') + index }}
-            </van-index-anchor>
-            <van-cell :title="t('text')" />
-            <van-cell :title="t('text')" />
-            <van-cell :title="t('text')" />
-          </div>
-        </van-index-bar>
-      </van-tab>
-    </van-tabs>
-  </demo-section>
+    <van-tab :title="t('customIndexList')">
+      <van-index-bar :index-list="customIndexList">
+        <div v-for="index in customIndexList" :key="index">
+          <van-index-anchor :index="index">
+            {{ t('title') + index }}
+          </van-index-anchor>
+          <van-cell :title="t('text')" />
+          <van-cell :title="t('text')" />
+          <van-cell :title="t('text')" />
+        </div>
+      </van-index-bar>
+    </van-tab>
+  </van-tabs>
 </template>
 
 <script>
+import { ref } from 'vue';
+
 export default {
   i18n: {
     'zh-CN': {
@@ -41,7 +41,8 @@ export default {
     },
   },
 
-  data() {
+  setup() {
+    const activeTab = ref(0);
     const indexList = [];
     const charCodeOfA = 'A'.charCodeAt(0);
 
@@ -50,7 +51,7 @@ export default {
     }
 
     return {
-      activeTab: 0,
+      activeTab,
       indexList,
       customIndexList: [1, 2, 3, 4, 5, 6, 8, 9, 10],
     };

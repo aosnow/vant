@@ -3,11 +3,12 @@
 ### Install
 
 ```js
-import Vue from 'vue';
+import { createApp } from 'vue';
 import { Tabbar, TabbarItem } from 'vant';
 
-Vue.use(Tabbar);
-Vue.use(TabbarItem);
+const app = createApp();
+app.use(Tabbar);
+app.use(TabbarItem);
 ```
 
 ## Usage
@@ -24,11 +25,12 @@ Vue.use(TabbarItem);
 ```
 
 ```js
+import { ref } from 'vue';
+
 export default {
-  data() {
-    return {
-      active: 0,
-    };
+  setup() {
+    const active = ref(0);
+    return { active };
   },
 };
 ```
@@ -45,11 +47,12 @@ export default {
 ```
 
 ```js
+import { ref } from 'vue';
+
 export default {
-  data() {
-    return {
-      active: 'home',
-    };
+  setup() {
+    const active = ref('home');
+    return { active };
   },
 };
 ```
@@ -67,7 +70,7 @@ export default {
 
 ### Custom Icon
 
-Use `icon` slot to custom icon
+Use `icon` slot to custom icon.
 
 ```html
 <van-tabbar v-model="active">
@@ -83,14 +86,18 @@ Use `icon` slot to custom icon
 ```
 
 ```js
+import { ref } from 'vue';
+
 export default {
-  data() {
+  setup() {
+    const active = ref(0);
+    const icon = {
+      active: 'https://img.yzcdn.cn/vant/user-active.png',
+      inactive: 'https://img.yzcdn.cn/vant/user-inactive.png',
+    };
     return {
-      active: 0,
-      icon: {
-        active: 'https://img.yzcdn.cn/vant/user-active.png',
-        inactive: 'https://img.yzcdn.cn/vant/user-inactive.png',
-      },
+      icon,
+      active,
     };
   },
 };
@@ -99,7 +106,7 @@ export default {
 ### Custom Color
 
 ```html
-<van-tabbar v-model="active" active-color="#07c160" inactive-color="#000">
+<van-tabbar v-model="active" active-color="#ee0a24" inactive-color="#000">
   <van-tabbar-item icon="home-o">Tab</van-tabbar-item>
   <van-tabbar-item icon="search">Tab</van-tabbar-item>
   <van-tabbar-item icon="friends-o">Tab</van-tabbar-item>
@@ -111,21 +118,28 @@ export default {
 
 ```html
 <van-tabbar v-model="active" @change="onChange">
-  <van-tabbar-item icon="home-o">Tab1</van-tabbar-item>
-  <van-tabbar-item icon="search">Tab2</van-tabbar-item>
-  <van-tabbar-item icon="friends-o">Tab3</van-tabbar-item>
-  <van-tabbar-item icon="setting-o">Tab4</van-tabbar-item>
+  <van-tabbar-item icon="home-o">Tab 1</van-tabbar-item>
+  <van-tabbar-item icon="search">Tab 2</van-tabbar-item>
+  <van-tabbar-item icon="friends-o">Tab 3</van-tabbar-item>
+  <van-tabbar-item icon="setting-o">Tab 4</van-tabbar-item>
 </van-tabbar>
 ```
 
 ```js
-import { Notify } from 'vant';
+import { ref } from 'vue';
+import { Toast } from 'vant';
 
 export default {
-  methods: {
-    onChange(index) {
-      Notify({ type: 'primary', message: index });
-    },
+  setup() {
+    const active = ref(0);
+    const onChange = (index) => {
+      Toast(`Tab ${index}`);
+    };
+
+    return {
+      icon,
+      onChange,
+    };
   },
 };
 ```
@@ -136,12 +150,8 @@ export default {
 <router-view />
 
 <van-tabbar route>
-  <van-tabbar-item replace to="/home" icon="home-o">
-    Tab
-  </van-tabbar-item>
-  <van-tabbar-item replace to="/search" icon="search">
-    Tab
-  </van-tabbar-item>
+  <van-tabbar-item replace to="/home" icon="home-o">Tab</van-tabbar-item>
+  <van-tabbar-item replace to="/search" icon="search">Tab</van-tabbar-item>
 </van-tabbar>
 ```
 
@@ -166,7 +176,7 @@ export default {
 
 | Event  | Description                      | Arguments                    |
 | ------ | -------------------------------- | ---------------------------- |
-| change | Triggered when change active tab | active: index of current tab |
+| change | Emitted when changing active tab | active: index of current tab |
 
 ### TabbarItem Props
 
@@ -186,3 +196,20 @@ export default {
 | Name | Description | SlotProps |
 | ---- | ----------- | --------- |
 | icon | Custom icon | active    |
+
+### Less Variables
+
+How to use: [Custom Theme](#/en-US/theme).
+
+| Name | Default Value | Description |
+| --- | --- | --- |
+| @tabbar-height | `50px` | - |
+| @tabbar-z-index | `1` | - |
+| @tabbar-background-color | `@white` | - |
+| @tabbar-item-font-size | `@font-size-sm` | - |
+| @tabbar-item-text-color | `@gray-7` | - |
+| @tabbar-item-active-color | `@blue` | - |
+| @tabbar-item-active-background-color | `@tabbar-background-color` | - |
+| @tabbar-item-line-height | `1` | - |
+| @tabbar-item-icon-size | `22px` | - |
+| @tabbar-item-margin-bottom | `4px` | - |

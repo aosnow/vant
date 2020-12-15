@@ -3,10 +3,11 @@
 ### Install
 
 ```js
-import Vue from 'vue';
+import { createApp } from 'vue';
 import { Tag } from 'vant';
 
-Vue.use(Tag);
+const app = createApp();
+app.use(Tag);
 ```
 
 ## Usage
@@ -41,22 +42,25 @@ Vue.use(Tag);
 ### Closeable
 
 ```html
-<van-tag v-if="show" closeable size="medium" type="primary" @close="close">
+<van-tag :show="show" closeable size="medium" type="primary" @close="close">
   Tag
 </van-tag>
 ```
 
 ```js
+import { ref } from 'vue';
+
 export default {
-  data() {
-    return {
-      show: true,
+  setup() {
+    const show = ref(true);
+    const close = () => {
+      show.value = false;
     };
-  },
-  methods: {
-    close() {
-      this.show = false;
-    },
+
+    return {
+      show,
+      close,
+    };
   },
 };
 ```
@@ -86,6 +90,7 @@ export default {
 | type | Type, can be set to `primary` `success` `danger` `warning` | _string_ | `default` |
 | size | Size, can be set to `large` `medium` | _string_ | - |
 | color | Custom color | _string_ | - |
+| show | Whether to show tag | _boolean_ | `true` |
 | plain | Whether to be plain style | _boolean_ | `false` |
 | round | Whether to be round style | _boolean_ | `false` |
 | mark | Whether to be mark style | _boolean_ | `false` |
@@ -100,7 +105,30 @@ export default {
 
 ### Events
 
-| Event | Description                     | Arguments      |
-| ----- | ------------------------------- | -------------- |
-| click | Triggered when clicked          | _event: Event_ |
-| close | Triggered when click close icon | -              |
+| Event | Description                        | Arguments      |
+| ----- | ---------------------------------- | -------------- |
+| click | Emitted when component is clicked  | _event: Event_ |
+| close | Emitted when close icon is clicked | -              |
+
+### Less Variables
+
+How to use: [Custom Theme](#/en-US/theme).
+
+| Name                        | Default Value               | Description |
+| --------------------------- | --------------------------- | ----------- |
+| @tag-padding                | `0 @padding-base`           | -           |
+| @tag-text-color             | `@white`                    | -           |
+| @tag-font-size              | `@font-size-sm`             | -           |
+| @tag-border-radius          | `2px`                       | -           |
+| @tag-line-height            | `16px`                      | -           |
+| @tag-medium-padding         | `2px 6px`                   | -           |
+| @tag-large-padding          | `@padding-base @padding-xs` | -           |
+| @tag-large-border-radius    | `@border-radius-md`         | -           |
+| @tag-large-font-size        | `@font-size-md`             | -           |
+| @tag-round-border-radius    | `@border-radius-max`        | -           |
+| @tag-danger-color           | `@red`                      | -           |
+| @tag-primary-color          | `@blue`                     | -           |
+| @tag-success-color          | `@green`                    | -           |
+| @tag-warning-color          | `@orange`                   | -           |
+| @tag-default-color          | `@gray-6`                   | -           |
+| @tag-plain-background-color | `@white`                    | -           |

@@ -1,12 +1,17 @@
 # AddressEdit 地址编辑
 
+### 介绍
+
+收货地址编辑组件，用于新建、更新、删除收货地址。
+
 ### 引入
 
 ```js
-import Vue from 'vue';
+import { createApp } from 'vue';
 import { AddressEdit } from 'vant';
 
-Vue.use(AddressEdit);
+const app = createApp();
+app.use(AddressEdit);
 ```
 
 ## 代码演示
@@ -29,34 +34,39 @@ Vue.use(AddressEdit);
 ```
 
 ```js
+import { ref } from 'vue';
 import { Toast } from 'vant';
 
 export default {
-  data() {
-    return {
-      areaList,
-      searchResult: [],
-    };
-  },
-  methods: {
-    onSave() {
+  setup() {
+    const searchResult = ref([]);
+
+    const onSave = () => {
       Toast('save');
-    },
-    onDelete() {
+    };
+    const onDelete = () => {
       Toast('delete');
-    },
-    onChangeDetail(val) {
+    };
+    const onChangeDetail = (val) => {
       if (val) {
-        this.searchResult = [
+        searchResult.value = [
           {
             name: '黄龙万科中心',
             address: '杭州市西湖区',
           },
         ];
       } else {
-        this.searchResult = [];
+        searchResult.value = [];
       }
-    },
+    };
+
+    return {
+      onSave,
+      onDelete,
+      areaList,
+      searchResult,
+      onChangeDetail,
+    };
   },
 };
 ```
@@ -112,7 +122,7 @@ export default {
 
 ### 方法
 
-通过 ref 可以获取到 AddressEdit 实例并调用实例方法，详见[组件实例方法](#/zh-CN/quickstart#zu-jian-shi-li-fang-fa)
+通过 ref 可以获取到 AddressEdit 实例并调用实例方法，详见[组件实例方法](#/zh-CN/advanced-usage#zu-jian-shi-li-fang-fa)。
 
 | 方法名           | 说明         | 参数                  | 返回值 |
 | ---------------- | ------------ | --------------------- | ------ |
@@ -145,3 +155,15 @@ export default {
 ### 省市县列表数据格式
 
 请参考 [Area](#/zh-CN/area) 组件。
+
+### 样式变量
+
+组件提供了下列 Less 变量，可用于自定义样式，使用方法请参考[主题定制](#/zh-CN/theme)。
+
+| 名称                                  | 默认值                      | 描述 |
+| ------------------------------------- | --------------------------- | ---- |
+| @address-edit-padding                 | `@padding-sm`               | -    |
+| @address-edit-buttons-padding         | `@padding-xl @padding-base` | -    |
+| @address-edit-button-margin-bottom    | `@padding-sm`               | -    |
+| @address-edit-detail-finish-color     | `@blue`                     | -    |
+| @address-edit-detail-finish-font-size | `@font-size-sm`             | -    |

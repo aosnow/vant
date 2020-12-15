@@ -7,10 +7,11 @@ Used to select time, support date and time dimensions, usually used with the [Po
 ### Install
 
 ```js
-import Vue from 'vue';
+import { createApp } from 'vue';
 import { DatetimePicker } from 'vant';
 
-Vue.use(DatetimePicker);
+const app = createApp();
+app.use(DatetimePicker);
 ```
 
 ## Usage
@@ -28,12 +29,15 @@ Vue.use(DatetimePicker);
 ```
 
 ```js
+import { ref } from 'vue';
+
 export default {
   data() {
+    const currentDate = ref(new Date());
     return {
       minDate: new Date(2020, 0, 1),
       maxDate: new Date(2025, 10, 1),
-      currentDate: new Date(),
+      currentDate,
     };
   },
 };
@@ -53,23 +57,27 @@ export default {
 ```
 
 ```js
+import { ref } from 'vue';
+
 export default {
   data() {
-    return {
-      minDate: new Date(2020, 0, 1),
-      maxDate: new Date(2025, 10, 1),
-      currentDate: new Date(),
-    };
-  },
-  methods: {
-    formatter(type, val) {
+    const currentDate = ref(new Date());
+
+    const formatter = (type, val) => {
       if (type === 'year') {
         return `${val} Year`;
       } else if (type === 'month') {
         return `${val} Month`;
       }
       return val;
-    },
+    };
+
+    return {
+      minDate: new Date(2020, 0, 1),
+      maxDate: new Date(2025, 10, 1),
+      formatter,
+      currentDate,
+    };
   },
 };
 ```
@@ -88,23 +96,27 @@ export default {
 ```
 
 ```js
+import { ref } from 'vue';
+
 export default {
   data() {
-    return {
-      minDate: new Date(2020, 0, 1),
-      maxDate: new Date(2025, 10, 1),
-      currentDate: new Date(),
-    };
-  },
-  methods: {
-    formatter(type, val) {
+    const currentDate = ref(new Date());
+
+    const formatter = (type, val) => {
       if (type === 'month') {
         return `${val} Month`;
       } else if (type === 'day') {
         return `${val} Day`;
       }
       return val;
-    },
+    };
+
+    return {
+      minDate: new Date(2020, 0, 1),
+      maxDate: new Date(2025, 10, 1),
+      formatter,
+      currentDate,
+    };
   },
 };
 ```
@@ -122,11 +134,12 @@ export default {
 ```
 
 ```js
+import { ref } from 'vue';
+
 export default {
   data() {
-    return {
-      currentTime: '12:00',
-    };
+    const currentTime = ref('12:00');
+    return { currentTime };
   },
 };
 ```
@@ -144,12 +157,15 @@ export default {
 ```
 
 ```js
+import { ref } from 'vue';
+
 export default {
   data() {
+    const currentDate = ref(new Date());
     return {
       minDate: new Date(2020, 0, 1),
       maxDate: new Date(2025, 10, 1),
-      currentDate: new Date(),
+      currentDate,
     };
   },
 };
@@ -168,12 +184,15 @@ export default {
 ```
 
 ```js
+import { ref } from 'vue';
+
 export default {
   data() {
+    const currentDate = ref(new Date());
     return {
       minDate: new Date(2020, 0, 1),
       maxDate: new Date(2025, 10, 1),
-      currentDate: new Date(),
+      currentDate,
     };
   },
 };
@@ -191,19 +210,23 @@ export default {
 ```
 
 ```js
+import { ref } from 'vue';
+
 export default {
   data() {
-    return {
-      currentTime: '12:00',
-    };
-  },
-  methods: {
-    filter(type, options) {
+    const currentTime = ref('12:00');
+
+    const filter = (type, options) => {
       if (type === 'minute') {
-        return options.filter((option) => option % 5 === 0);
+        return options.filter((option) => Number(option) % 5 === 0);
       }
       return options;
-    },
+    };
+
+    return {
+      filter,
+      currentTime,
+    };
   },
 };
 ```
@@ -221,14 +244,13 @@ export default {
 ```
 
 ```js
+import { ref } from 'vue';
+
 export default {
-  data() {
-    return {
-      currentDate: new Date(),
-    };
-  },
-  methods: {
-    formatter(type, val) {
+  setup() {
+    const currentDate = ref(new Date());
+
+    const formatter = (type, val) => {
       if (type === 'year') {
         return val + ' Year';
       }
@@ -239,7 +261,12 @@ export default {
         return val + ' Day';
       }
       return val;
-    },
+    };
+
+    return {
+      formatter,
+      currentDate,
+    };
   },
 };
 ```
@@ -260,7 +287,7 @@ export default {
 | filter | Option filter | _(type, vals) => vals_ | - |
 | formatter | Option text formatter | _(type, val) => val_ | - |
 | columns-order `v2.9.2` | Array for ordering columns, where item can be set to<br> `year`, `month`, `day`, `hour` and `minute` | _string[]_ | - |
-| item-height `v2.8.6` | Option height, supports `px` `vw` `rem` unit, default `px` | _number \| string_ | `44` |
+| item-height `v2.8.6` | Option height, supports `px` `vw` `vh` `rem` unit, default `px` | _number \| string_ | `44` |
 | visible-item-count | Count of visible columns | _number \| string_ | `6` |
 | swipe-duration | Duration of the momentum animation，unit `ms` | _number \| string_ | `1000` |
 
@@ -286,15 +313,27 @@ Following props are supported when the type is time
 
 ### Events
 
-| Event   | Description                         | Arguments               |
-| ------- | ----------------------------------- | ----------------------- |
-| change  | Triggered when value changed        | picker: Picker instance |
-| confirm | Triggered when click confirm button | value: current value    |
-| cancel  | Triggered when click cancel button  | -                       |
+| Event   | Description                                | Arguments            |
+| ------- | ------------------------------------------ | -------------------- |
+| change  | Emitted when value changed                 | value: current value |
+| confirm | Emitted when the confirm button is clicked | value: current value |
+| cancel  | Emitted when the cancel button is clicked  | -                    |
+
+### Slots
+
+| Name | Description | SlotProps |
+| --- | --- | --- |
+| default `v2.11.1` | Custom toolbar content | - |
+| title `v2.11.1` | Custom title | - |
+| confirm `v2.11.1` | Custom confirm button text | - |
+| cancel `v2.11.1` | Custom cancel button text | - |
+| option `v2.11.1` | Custom option content | _option: string \| object_ |
+| columns-top `v2.11.1` | Custom content above columns | - |
+| columns-bottom `v2.11.1` | Custom content below columns | - |
 
 ### Methods
 
-Use [ref](https://vuejs.org/v2/api/#ref) to get DatetimePicker instance and call instance methods
+Use [ref](https://v3.vuejs.org/guide/component-template-refs.html) to get DatetimePicker instance and call instance methods.
 
 | Name               | Description         | Attribute | Return value |
 | ------------------ | ------------------- | --------- | ------------ |

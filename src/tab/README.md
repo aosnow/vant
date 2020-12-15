@@ -3,21 +3,22 @@
 ### Install
 
 ```js
-import Vue from 'vue';
+import { createApp } from 'vue';
 import { Tab, Tabs } from 'vant';
 
-Vue.use(Tab);
-Vue.use(Tabs);
+const app = createApp();
+app.use(Tab);
+app.use(Tabs);
 ```
 
 ## Usage
 
 ### Basic Usage
 
-The first tab is actived by default, you can set `v-model` to active specified tab.
+The first tab is actived by default, you can set `v-model:active` to active specified tab.
 
 ```html
-<van-tabs v-model="active">
+<van-tabs v-model:active="active">
   <van-tab v-for="index in 4" :title="'tab' + index">
     content of tab {{ index }}
   </van-tab>
@@ -25,11 +26,12 @@ The first tab is actived by default, you can set `v-model` to active specified t
 ```
 
 ```js
+import { ref } from 'vue';
+
 export default {
-  data() {
-    return {
-      active: 2,
-    };
+  setup() {
+    const active = ref(2);
+    return { active };
   },
 };
 ```
@@ -37,7 +39,7 @@ export default {
 ### Match By Name
 
 ```html
-<van-tabs v-model="activeName">
+<van-tabs v-model:active="activeName">
   <van-tab title="tab 1" name="a">content of tab 1</van-tab>
   <van-tab title="tab 2" name="b">content of tab 2</van-tab>
   <van-tab title="tab 3" name="c">content of tab 3</van-tab>
@@ -45,11 +47,12 @@ export default {
 ```
 
 ```js
+import { ref } from 'vue';
+
 export default {
-  data() {
-    return {
-      activeName: 'a',
-    };
+  setup() {
+    const activeName = ref('a');
+    return { activeName };
   },
 };
 ```
@@ -82,10 +85,14 @@ You can set `disabled` attribute on the corresponding `van-tab`.
 import { Toast } from 'vant';
 
 export default {
-  methods: {
-    onClickDisabled(name, title) {
-      Toast(title + ' is disabled');
-    },
+  setup() {
+    const onClickDisabled = (name, title) => {
+      Toast(name + ' is disabled');
+    };
+
+    return {
+      onClickDisabled,
+    };
   },
 };
 ```
@@ -116,10 +123,14 @@ Tabs styled as cards.
 import { Toast } from 'vant';
 
 export default {
-  methods: {
-    onClick(name, title) {
+  setup() {
+    const onClick = (name, title) => {
       Toast(title);
-    },
+    };
+
+    return {
+      onClick,
+    };
   },
 };
 ```
@@ -129,7 +140,7 @@ export default {
 In sticky mode, the tab will be fixed to top when scroll to top.
 
 ```html
-<van-tabs v-model="active" sticky>
+<van-tabs v-model:active="active" sticky>
   <van-tab v-for="index in 4" :title="'tab ' + index">
     content {{ index }}
   </van-tab>
@@ -141,7 +152,7 @@ In sticky mode, the tab will be fixed to top when scroll to top.
 Use title slot to custom tab title.
 
 ```html
-<van-tabs v-model="active">
+<van-tabs v-model:active="active">
   <van-tab v-for="index in 2" :key="index">
     <template #title> <van-icon name="more-o" />tab </template>
     content {{ index }}
@@ -154,7 +165,7 @@ Use title slot to custom tab title.
 Use `animated` props to change tabs with animation.
 
 ```html
-<van-tabs v-model="active" animated>
+<van-tabs v-model:active="active" animated>
   <van-tab v-for="index in 4" :title="'tab ' + index">
     content {{ index }}
   </van-tab>
@@ -166,7 +177,7 @@ Use `animated` props to change tabs with animation.
 In swipeable mode, you can switch tabs with swipe gestrue in the content.
 
 ```html
-<van-tabs v-model="active" swipeable>
+<van-tabs v-model:active="active" swipeable>
   <van-tab v-for="index in 4" :title="'tab ' + index">
     content {{ index }}
   </van-tab>
@@ -178,7 +189,7 @@ In swipeable mode, you can switch tabs with swipe gestrue in the content.
 In scrollspy mode, the list of content will be tiled.
 
 ```html
-<van-tabs v-model="active" scrollspy sticky>
+<van-tabs v-model:active="active" scrollspy sticky>
   <van-tab v-for="index in 8" :title="'tab ' + index">
     content {{ index }}
   </van-tab>
@@ -197,8 +208,8 @@ In scrollspy mode, the list of content will be tiled.
 
 ```js
 export default {
-  methods: {
-    beforeChange(index) {
+  setup() {
+    const beforeChange = (index) => {
       // prevent change
       if (index === 1) {
         return false;
@@ -208,7 +219,11 @@ export default {
       return new Promise((resolve) => {
         resolve(index !== 3);
       });
-    },
+    };
+
+    return {
+      beforeChange,
+    };
   },
 };
 ```
@@ -219,7 +234,7 @@ export default {
 
 | Attribute | Description | Type | Default |
 | --- | --- | --- | --- |
-| v-model | Index of active tab | _number \| string_ | `0` |
+| v-model:active | Index of active tab | _number \| string_ | `0` |
 | type | Can be set to `line` `card` | _string_ | `line` |
 | color | Tab color | _string_ | `#ee0a24` |
 | background | Background color | _string_ | `white` |
@@ -233,7 +248,7 @@ export default {
 | swipeable | Whether to switch tabs with swipe gestrue in the content | _boolean_ | `false` |
 | lazy-render | Whether to enable tab content lazy render | _boolean_ | `true` |
 | scrollspy `v2.3.0` | Whether to use scrollspy mode | _boolean_ | `false` |
-| offset-top `v2.8.7` | Sticky offset top , supports `px` `vw` `rem` unit, default `px` | _number \| string_ | `0` |
+| offset-top `v2.8.7` | Sticky offset top , supports `px` `vw` `vh` `rem` unit, default `px` | _number \| string_ | `0` |
 | swipe-threshold | Set swipe tabs threshold | _number \| string_ | `5` | - |
 | title-active-color | Title active color | _string_ | - |
 | title-inactive-color | Title inactive color | _string_ | - |
@@ -257,20 +272,20 @@ export default {
 
 | Event | Description | Arguments |
 | --- | --- | --- |
-| click | Triggered when click tab | name，title |
-| change | Triggered when active tab changed | name，title |
-| disabled | Triggered when click disabled tab | name，title |
-| rendered `v2.3.0` | Triggered when content first rendered in lazy-render mode | name，title |
-| scroll | Triggered when tab scroll in sticky mode | object: { scrollTop, isFixed } |
+| click | Emitted when a tab is clicked | name，title |
+| change | Emitted when active tab changed | name，title |
+| disabled | Emitted when a disabled tab is clicked | name，title |
+| rendered `v2.3.0` | Emitted when content first rendered in lazy-render mode | name，title |
+| scroll | Emitted when tab scrolling in sticky mode | object: { scrollTop, isFixed } |
 
 ### Tabs Methods
 
-Use [ref](https://vuejs.org/v2/api/#ref) to get Tabs instance and call instance methods
+Use [ref](https://v3.vuejs.org/guide/component-template-refs.html) to get Tabs instance and call instance methods.
 
 | Name | Description | Attribute | Return value |
 | --- | --- | --- | --- |
-| resize | Resize Tabs when container element resized | - | void |
-| scrollTo `v2.9.3` | Go to specified tab in scrollspy mode | name | void |
+| resize | Resize Tabs when container element resized or visibility changed | - | - |
+| scrollTo `v2.9.3` | Go to specified tab in scrollspy mode | name | - |
 
 ### Tabs Slots
 
@@ -285,3 +300,22 @@ Use [ref](https://vuejs.org/v2/api/#ref) to get Tabs instance and call instance 
 | ------- | ---------------- |
 | default | Content of tab   |
 | title   | Custom tab title |
+
+### Less Variables
+
+How to use: [Custom Theme](#/en-US/theme).
+
+| Name                       | Default Value         | Description |
+| -------------------------- | --------------------- | ----------- |
+| @tab-text-color            | `@gray-7`             | -           |
+| @tab-active-text-color     | `@text-color`         | -           |
+| @tab-disabled-text-color   | `@gray-5`             | -           |
+| @tab-font-size             | `@font-size-md`       | -           |
+| @tab-line-height           | `@line-height-md`     | -           |
+| @tabs-default-color        | `@red`                | -           |
+| @tabs-line-height          | `44px`                | -           |
+| @tabs-card-height          | `30px`                | -           |
+| @tabs-nav-background-color | `@white`              | -           |
+| @tabs-bottom-bar-width     | `40px`                | -           |
+| @tabs-bottom-bar-height    | `3px`                 | -           |
+| @tabs-bottom-bar-color     | `@tabs-default-color` | -           |

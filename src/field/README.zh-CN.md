@@ -7,10 +7,11 @@
 ### 引入
 
 ```js
-import Vue from 'vue';
+import { createApp } from 'vue';
 import { Field } from 'vant';
 
-Vue.use(Field);
+const app = createApp();
+app.use(Field);
 ```
 
 ## 代码演示
@@ -27,11 +28,12 @@ Vue.use(Field);
 ```
 
 ```js
+import { ref } from 'vue';
+
 export default {
-  data() {
-    return {
-      value: '',
-    };
+  setup() {
+    const value = ref('');
+    return { value };
   },
 };
 ```
@@ -42,27 +44,31 @@ export default {
 
 ```html
 <!-- 输入任意文本 -->
-<van-field v-model="text" label="文本" />
+<van-field v-model="state.text" label="文本" />
 <!-- 输入手机号，调起手机号键盘 -->
-<van-field v-model="tel" type="tel" label="手机号" />
+<van-field v-model="state.tel" type="tel" label="手机号" />
 <!-- 允许输入正整数，调起纯数字键盘 -->
-<van-field v-model="digit" type="digit" label="整数" />
+<van-field v-model="state.digit" type="digit" label="整数" />
 <!-- 允许输入数字，调起带符号的纯数字键盘 -->
-<van-field v-model="number" type="number" label="数字" />
+<van-field v-model="state.number" type="number" label="数字" />
 <!-- 输入密码 -->
-<van-field v-model="password" type="password" label="密码" />
+<van-field v-model="state.password" type="password" label="密码" />
 ```
 
 ```js
+import { reactive } from 'vue';
+
 export default {
-  data() {
-    return {
+  setup() {
+    const state = reactive({
       tel: '',
       text: '',
       digit: '',
       number: '',
       password: '',
-    };
+    });
+
+    return { state };
   },
 };
 ```
@@ -87,14 +93,14 @@ export default {
 ```html
 <van-cell-group>
   <van-field
-    v-model="value1"
+    v-model="state.value1"
     label="文本"
     left-icon="smile-o"
     right-icon="warning-o"
     placeholder="显示图标"
   />
   <van-field
-    v-model="value2"
+    v-model="state.value2"
     clearable
     label="文本"
     left-icon="music-o"
@@ -104,12 +110,16 @@ export default {
 ```
 
 ```js
+import { reactive } from 'vue';
+
 export default {
-  data() {
-    return {
+  setup() {
+    const state = reactive({
       value1: '',
       value2: '123',
-    };
+    });
+
+    return { state };
   },
 };
 ```
@@ -161,13 +171,13 @@ export default {
 
 ```html
 <van-field
-  v-model="value1"
+  v-model="state.value1"
   label="文本"
   :formatter="formatter"
   placeholder="在输入时执行格式化"
 />
 <van-field
-  v-model="value2"
+  v-model="state.value2"
   label="文本"
   :formatter="formatter"
   format-trigger="onBlur"
@@ -176,18 +186,21 @@ export default {
 ```
 
 ```js
+import { reactive } from 'vue';
+
 export default {
-  data() {
-    return {
+  setup() {
+    const state = reactive({
       value1: '',
       value2: '',
+    });
+    // 过滤输入的数字
+    const formatter = (value) => value.replace(/\d/g, '');
+
+    return {
+      state,
+      formatter,
     };
-  },
-  methods: {
-    formatter(value) {
-      // 过滤输入的数字
-      return value.replace(/\d/g, '');
-    },
   },
 };
 ```
@@ -243,7 +256,7 @@ export default {
 
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
-| v-model (value) | 当前输入的值 | _number \| string_ | - |
+| v-model | 当前输入的值 | _number \| string_ | - |
 | label | 输入框左侧文本 | _string_ | - |
 | name `v2.5.0` | 名称，提交表单的标识符 | _string_ | - |
 | type | 输入框类型, 可选值为 `tel` `digit`<br>`number` `textarea` `password` 等 | _string_ | `text` |
@@ -280,11 +293,9 @@ export default {
 
 ### Events
 
-除下列事件外，Field 默认支持 Input 标签所有的原生事件
-
 | 事件                 | 说明                 | 回调参数                       |
 | -------------------- | -------------------- | ------------------------------ |
-| input                | 输入框内容变化时触发 | _value: string (当前输入的值)_ |
+| update:model-value   | 输入框内容变化时触发 | _value: string (当前输入的值)_ |
 | focus                | 输入框获得焦点时触发 | _event: Event_                 |
 | blur                 | 输入框失去焦点时触发 | _event: Event_                 |
 | clear                | 点击清除按钮时触发   | _event: Event_                 |
@@ -295,7 +306,7 @@ export default {
 
 ### 方法
 
-通过 ref 可以获取到 Field 实例并调用实例方法，详见[组件实例方法](#/zh-CN/quickstart#zu-jian-shi-li-fang-fa)
+通过 ref 可以获取到 Field 实例并调用实例方法，详见[组件实例方法](#/zh-CN/advanced-usage#zu-jian-shi-li-fang-fa)。
 
 | 方法名 | 说明           | 参数 | 返回值 |
 | ------ | -------------- | ---- | ------ |
@@ -313,6 +324,31 @@ export default {
 | button         | 自定义输入框尾部按钮                                       |
 | extra `v2.8.2` | 自定义输入框最右侧的额外内容                               |
 
+### 样式变量
+
+组件提供了下列 Less 变量，可用于自定义样式，使用方法请参考[主题定制](#/zh-CN/theme)。
+
+| 名称                             | 默认值          | 描述 |
+| -------------------------------- | --------------- | ---- |
+| @field-label-width               | `6.2em`         | -    |
+| @field-label-color               | `@gray-7`       | -    |
+| @field-label-margin-right        | `@padding-sm`   | -    |
+| @field-input-text-color          | `@text-color`   | -    |
+| @field-input-error-text-color    | `@red`          | -    |
+| @field-input-disabled-text-color | `@gray-5`       | -    |
+| @field-placeholder-text-color    | `@gray-5`       | -    |
+| @field-icon-size                 | `16px`          | -    |
+| @field-clear-icon-size           | `16px`          | -    |
+| @field-clear-icon-color          | `@gray-5`       | -    |
+| @field-right-icon-color          | `@gray-6`       | -    |
+| @field-error-message-color       | `@red`          | -    |
+| @field-error-message-text-color  | `12px`          | -    |
+| @field-text-area-min-height      | `60px`          | -    |
+| @field-word-limit-color          | `@gray-7`       | -    |
+| @field-word-limit-font-size      | `@font-size-sm` | -    |
+| @field-word-limit-line-height    | `16px`          | -    |
+| @field-disabled-text-color       | `@gray-5`       | -    |
+
 ## 常见问题
 
 ### 设置 type 为 number 后，为什么 input 标签的类型仍为 text?
@@ -321,4 +357,4 @@ HTML 原生的 `type="number"` 属性在 iOS 和 Android 系统上都存在一�
 
 ### 在桌面端点击清除按钮无效？
 
-清除按钮监听是的移动端 Touch 事件，参见[在桌面端使用](#/zh-CN/quickstart#zai-zhuo-mian-duan-shi-yong)。
+清除按钮监听是的移动端 Touch 事件，参见[桌面端适配](#/zh-CN/advanced-usage#zhuo-mian-duan-gua-pei)。

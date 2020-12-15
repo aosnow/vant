@@ -7,10 +7,11 @@ The Picker component is usually used with [Popup](#/en-US/popup) Component.
 ### Install
 
 ```js
-import Vue from 'vue';
+import { createApp } from 'vue';
 import { Area } from 'vant';
 
-Vue.use(Area);
+const app = createApp();
+app.use(Area);
 ```
 
 ## Usage
@@ -65,7 +66,7 @@ To have a selected value，simply pass the `code` of target area to `value` prop
 | columns-placeholder | Placeholder of columns | _string[]_ | `[]` |
 | loading | Whether to show loading prompt | _boolean_ | `false` |
 | readonly `v2.10.5` | Whether to be readonly | _boolean_ | `false` |
-| item-height `v2.8.6` | Option height, supports `px` `vw` `rem` unit, default `px` | _number \| string_ | `44` |
+| item-height `v2.8.6` | Option height, supports `px` `vw` `vh` `rem` unit, default `px` | _number \| string_ | `44` |
 | columns-num | Level of picker | _number \| string_ | `3` |
 | visible-item-count | Count of visible columns | _number \| string_ | `6` |
 | swipe-duration | Duration of the momentum animation，unit `ms` | _number \| string_ | `1000` |
@@ -75,9 +76,9 @@ To have a selected value，simply pass the `code` of target area to `value` prop
 
 | Event | Description | Arguments |
 | --- | --- | --- |
-| confirm | triggers when clicking the confirm button | an array |
-| cancel | triggers when clicking the cancel button | - |
-| change | Triggered when current option changed | Picker instance, current values，column index |
+| confirm | Emitted when the confirm button is clicked | selected areas |
+| cancel | Emitted when the cancel button is clicked | - |
+| change | Emitted when current option changed | current values，column index |
 
 ### Slots
 
@@ -89,7 +90,7 @@ To have a selected value，simply pass the `code` of target area to `value` prop
 
 ### Methods
 
-Use [ref](https://vuejs.org/v2/api/#ref) to get Area instance and call instance methods
+Use [ref](https://v3.vuejs.org/guide/component-template-refs.html) to get Area instance and call instance methods.
 
 | Name  | Description               | Attribute     | Return value |
 | ----- | ------------------------- | ------------- | ------------ |

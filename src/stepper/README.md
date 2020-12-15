@@ -3,10 +3,11 @@
 ### Install
 
 ```js
-import Vue from 'vue';
+import { createApp } from 'vue';
 import { Stepper } from 'vant';
 
-Vue.use(Stepper);
+const app = createApp();
+app.use(Stepper);
 ```
 
 ## Usage
@@ -18,11 +19,12 @@ Vue.use(Stepper);
 ```
 
 ```js
+import { ref } from 'vue';
+
 export default {
-  data() {
-    return {
-      value: 1,
-    };
+  setup() {
+    const value = ref(1);
+    return { value };
   },
 };
 ```
@@ -69,30 +71,36 @@ export default {
 <van-stepper v-model="value" input-width="40px" button-size="32px" />
 ```
 
-### Async Change
+### Before Change
 
 ```html
-<van-stepper :value="value" async-change @change="onChange" />
+<van-stepper v-model="value" :before-change="beforeChange" />
 ```
 
 ```js
+import { ref } from 'vue';
 import { Toast } from 'vant';
 
 export default {
-  data() {
-    return {
-      value: 1,
-    };
-  },
-  methods: {
-    onChange(value) {
+  setup() {
+    const value = ref(1);
+
+    const beforeChange = (value) => {
       Toast.loading({ forbidClick: true });
 
-      setTimeout(() => {
-        Toast.clear();
-        this.value = value;
-      }, 500);
-    },
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          Toast.clear();
+          // resolve 'true' or 'false'
+          resolve(true);
+        }, 500);
+      });
+    };
+
+    return {
+      value,
+      beforeChange,
+    };
   },
 };
 ```
@@ -125,7 +133,7 @@ export default {
 | disable-plus | Whether to disable plus button | _boolean_ | `false` |
 | disable-minus | Whether to disable minus button | _boolean_ | `false` |
 | disable-input | Whether to disable input | _boolean_ | `false` |
-| async-change | Whether to enable async change | _boolean_ | `false` | - |
+| before-change | Callback function before changing，return `false` to prevent change，support return Promise | _(value) => boolean \| Promise_ | `false` |
 | show-plus | Whether to show plus button | _boolean_ | `true` |
 | show-minus | Whether to show minus button | _boolean_ | `true` |
 | long-press `v2.4.3` | Whether to allow long press | _boolean_ | `true` |
@@ -135,9 +143,30 @@ export default {
 
 | Event | Description | Arguments |
 | --- | --- | --- |
-| change | Triggered when value change | _value: string, detail: { name: string }_ |
-| overlimit | Triggered when click disabled button | - |
-| plus | Triggered when click plus button | - |
-| minus | Triggered when click minus button | - |
-| focus | Triggered when input focused | _event: Event_ |
-| blur | Triggered when input blured | _event: Event_ |
+| change | Emitted when value changed | _value: string, detail: { name: string }_ |
+| overlimit | Emitted when a disabled button is clicked | - |
+| plus | Emitted when the plus button is clicked | - |
+| minus | Emitted when the minus button is clicked | - |
+| focus | Emitted when the input is focused | _event: Event_ |
+| blur | Emitted when the input is blured | _event: Event_ |
+
+### Less Variables
+
+How to use: [Custom Theme](#/en-US/theme).
+
+| Name                                     | Default Value       | Description |
+| ---------------------------------------- | ------------------- | ----------- |
+| @stepper-active-color                    | `#e8e8e8`           | -           |
+| @stepper-background-color                | `@active-color`     | -           |
+| @stepper-button-icon-color               | `@text-color`       | -           |
+| @stepper-button-disabled-color           | `@background-color` | -           |
+| @stepper-button-disabled-icon-color      | `@gray-5`           | -           |
+| @stepper-button-round-theme-color        | `@red`              | -           |
+| @stepper-input-width                     | `32px`              | -           |
+| @stepper-input-height                    | `28px`              | -           |
+| @stepper-input-font-size                 | `@font-size-md`     | -           |
+| @stepper-input-line-height               | `normal`            | -           |
+| @stepper-input-text-color                | `@text-color`       | -           |
+| @stepper-input-disabled-text-color       | `@gray-5`           | -           |
+| @stepper-input-disabled-background-color | `@active-color`     | -           |
+| @stepper-border-radius                   | `@border-radius-md` | -           |

@@ -1,25 +1,29 @@
-import { mount } from '../../../test';
+import { mount } from '@vue/test-utils';
 import Loading from '..';
 
-test('size prop', () => {
+test('should change loading size when using size prop', () => {
   const wrapper = mount(Loading, {
-    propsData: {
+    props: {
       size: 20,
     },
   });
 
-  expect(wrapper).toMatchSnapshot();
+  const spinner = wrapper.find('.van-loading__spinner').element;
+  expect(spinner.style.width).toEqual('20px');
+  expect(spinner.style.height).toEqual('20px');
 });
 
-test('text-size prop', () => {
+test('should change text font-size when using text-size prop', () => {
   const wrapper = mount(Loading, {
-    propsData: {
+    props: {
       textSize: 20,
     },
-    scopedSlots: {
+    slots: {
       default: () => 'Text',
     },
   });
 
-  expect(wrapper).toMatchSnapshot();
+  expect(wrapper.find('.van-loading__text').element.style.fontSize).toEqual(
+    '20px'
+  );
 });

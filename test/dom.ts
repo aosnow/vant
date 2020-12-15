@@ -37,11 +37,11 @@ export function mockScrollIntoView() {
 }
 
 export function mockGetBoundingClientRect(
-  rect: ClientRect | DOMRect
-): Function {
+  rect: DOMRect
+): () => void {
   const originMethod = Element.prototype.getBoundingClientRect;
 
-  Element.prototype.getBoundingClientRect = <any>jest.fn(() => rect);
+  Element.prototype.getBoundingClientRect = jest.fn(() => rect);
 
   return function () {
     Element.prototype.getBoundingClientRect = originMethod;

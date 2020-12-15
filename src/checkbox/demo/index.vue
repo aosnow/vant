@@ -1,111 +1,112 @@
 <template>
-  <demo-section>
-    <demo-block :title="t('basicUsage')">
-      <van-checkbox v-model="checkbox1">{{ t('checkbox') }}</van-checkbox>
-    </demo-block>
+  <demo-block :title="t('basicUsage')">
+    <van-checkbox v-model="checkbox1">{{ t('checkbox') }}</van-checkbox>
+  </demo-block>
 
-    <demo-block :title="t('disabled')">
-      <van-checkbox :value="false" disabled>
-        {{ t('checkbox') }}
-      </van-checkbox>
-      <van-checkbox :value="true" disabled>
-        {{ t('checkbox') }}
-      </van-checkbox>
-    </demo-block>
+  <demo-block :title="t('disabled')">
+    <van-checkbox :model-value="false" disabled>
+      {{ t('checkbox') }}
+    </van-checkbox>
+    <van-checkbox :model-value="true" disabled>
+      {{ t('checkbox') }}
+    </van-checkbox>
+  </demo-block>
 
-    <demo-block :title="t('customShape')">
-      <van-checkbox v-model="checkboxShape" shape="square">
-        {{ t('customColor') }}
-      </van-checkbox>
-    </demo-block>
+  <demo-block :title="t('customShape')">
+    <van-checkbox v-model="checkboxShape" shape="square">
+      {{ t('customShape') }}
+    </van-checkbox>
+  </demo-block>
 
-    <demo-block :title="t('customColor')">
-      <van-checkbox v-model="checkbox2" checked-color="#07c160">
-        {{ t('customColor') }}
-      </van-checkbox>
-    </demo-block>
+  <demo-block :title="t('customColor')">
+    <van-checkbox v-model="checkbox2" checked-color="#ee0a24">
+      {{ t('customColor') }}
+    </van-checkbox>
+  </demo-block>
 
-    <demo-block :title="t('customIconSize')">
-      <van-checkbox v-model="checboxIcon" icon-size="24px">
-        {{ t('customIconSize') }}
-      </van-checkbox>
-    </demo-block>
+  <demo-block :title="t('customIconSize')">
+    <van-checkbox v-model="checboxIcon" icon-size="24px">
+      {{ t('customIconSize') }}
+    </van-checkbox>
+  </demo-block>
 
-    <demo-block :title="t('customIcon')">
-      <van-checkbox v-model="checkbox3">
-        {{ t('customIcon') }}
-        <template #icon="{ checked }">
-          <img :src="checked ? activeIcon : inactiveIcon" />
-        </template>
-      </van-checkbox>
-    </demo-block>
+  <demo-block :title="t('customIcon')">
+    <van-checkbox v-model="checkbox3">
+      {{ t('customIcon') }}
+      <template #icon="{ checked }">
+        <img :src="checked ? activeIcon : inactiveIcon" />
+      </template>
+    </van-checkbox>
+  </demo-block>
 
-    <demo-block :title="t('disableLabel')">
-      <van-checkbox v-model="checkboxLabel" label-disabled>
-        {{ t('checkbox') }}
-      </van-checkbox>
-    </demo-block>
+  <demo-block :title="t('disableLabel')">
+    <van-checkbox v-model="checkboxLabel" label-disabled>
+      {{ t('checkbox') }}
+    </van-checkbox>
+  </demo-block>
 
-    <demo-block :title="t('title3')">
-      <van-checkbox-group v-model="result">
-        <van-checkbox name="a">{{ t('checkbox') }} a</van-checkbox>
-        <van-checkbox name="b">{{ t('checkbox') }} b</van-checkbox>
-      </van-checkbox-group>
-    </demo-block>
+  <demo-block :title="t('title3')">
+    <van-checkbox-group v-model="result">
+      <van-checkbox name="a">{{ t('checkbox') }} a</van-checkbox>
+      <van-checkbox name="b">{{ t('checkbox') }} b</van-checkbox>
+    </van-checkbox-group>
+  </demo-block>
 
-    <demo-block v-if="!isWeapp" :title="t('horizontal')">
-      <van-checkbox-group v-model="horizontalResult" direction="horizontal">
-        <van-checkbox name="a">{{ t('checkbox') }} a</van-checkbox>
-        <van-checkbox name="b">{{ t('checkbox') }} b</van-checkbox>
-      </van-checkbox-group>
-    </demo-block>
+  <demo-block v-if="!isWeapp" :title="t('horizontal')">
+    <van-checkbox-group v-model="horizontalResult" direction="horizontal">
+      <van-checkbox name="a">{{ t('checkbox') }} a</van-checkbox>
+      <van-checkbox name="b">{{ t('checkbox') }} b</van-checkbox>
+    </van-checkbox-group>
+  </demo-block>
 
-    <demo-block :title="t('title4')">
-      <van-checkbox-group v-model="result2" :max="2">
-        <van-checkbox name="a">{{ t('checkbox') }} a</van-checkbox>
-        <van-checkbox name="b">{{ t('checkbox') }} b</van-checkbox>
-        <van-checkbox name="c">{{ t('checkbox') }} c</van-checkbox>
-      </van-checkbox-group>
-    </demo-block>
+  <demo-block :title="t('title4')">
+    <van-checkbox-group v-model="result2" :max="2">
+      <van-checkbox name="a">{{ t('checkbox') }} a</van-checkbox>
+      <van-checkbox name="b">{{ t('checkbox') }} b</van-checkbox>
+      <van-checkbox name="c">{{ t('checkbox') }} c</van-checkbox>
+    </van-checkbox-group>
+  </demo-block>
 
-    <demo-block v-if="!isWeapp" :title="t('toggleAll')">
-      <van-checkbox-group v-model="checkAllResult" ref="group">
-        <van-checkbox name="a">{{ t('checkbox') }} a</van-checkbox>
-        <van-checkbox name="b">{{ t('checkbox') }} b</van-checkbox>
-        <van-checkbox name="c">{{ t('checkbox') }} c</van-checkbox>
-      </van-checkbox-group>
+  <demo-block v-if="!isWeapp" :title="t('toggleAll')">
+    <van-checkbox-group v-model="checkAllResult" ref="group">
+      <van-checkbox name="a">{{ t('checkbox') }} a</van-checkbox>
+      <van-checkbox name="b">{{ t('checkbox') }} b</van-checkbox>
+      <van-checkbox name="c">{{ t('checkbox') }} c</van-checkbox>
+    </van-checkbox-group>
 
-      <div class="demo-checkbox-buttons">
-        <van-button type="primary" @click="checkAll">
-          {{ t('checkAll') }}
-        </van-button>
-        <van-button type="info" @click="toggleAll">
-          {{ t('inverse') }}
-        </van-button>
-      </div>
-    </demo-block>
+    <div class="demo-checkbox-buttons">
+      <van-button type="primary" @click="checkAll">
+        {{ t('checkAll') }}
+      </van-button>
+      <van-button type="primary" @click="toggleAll">
+        {{ t('inverse') }}
+      </van-button>
+    </div>
+  </demo-block>
 
-    <demo-block :title="t('title5')">
-      <van-checkbox-group v-model="result3">
-        <van-cell-group>
-          <van-cell
-            v-for="(item, index) in list"
-            clickable
-            :key="index"
-            :title="`${t('checkbox')} ${item}`"
-            @click="toggle(index)"
-          >
-            <template #right-icon>
-              <van-checkbox ref="checkboxes" :name="item" />
-            </template>
-          </van-cell>
-        </van-cell-group>
-      </van-checkbox-group>
-    </demo-block>
-  </demo-section>
+  <demo-block :title="t('title5')">
+    <van-checkbox-group v-model="result3">
+      <van-cell-group>
+        <van-cell
+          v-for="(item, index) in list"
+          clickable
+          :key="index"
+          :title="`${t('checkbox')} ${item}`"
+          @click="toggle(index)"
+        >
+          <template #right-icon>
+            <van-checkbox :ref="setRefs(index)" :name="item" @click.stop />
+          </template>
+        </van-cell>
+      </van-cell-group>
+    </van-checkbox-group>
+  </demo-block>
 </template>
 
 <script>
+import { ref, reactive, toRefs } from 'vue';
+import { useRefs } from '../../composables/use-refs';
+
 export default {
   i18n: {
     'zh-CN': {
@@ -140,8 +141,8 @@ export default {
     },
   },
 
-  data() {
-    return {
+  setup() {
+    const state = reactive({
       checkbox1: true,
       checkbox2: true,
       checkbox3: true,
@@ -154,23 +155,33 @@ export default {
       result3: [],
       checkAllResult: [],
       horizontalResult: [],
+    });
+
+    const group = ref();
+    const [refs, setRefs] = useRefs();
+
+    const toggle = (index) => {
+      refs.value[index].toggle();
+    };
+
+    const checkAll = () => {
+      group.value.toggleAll(true);
+    };
+
+    const toggleAll = () => {
+      group.value.toggleAll();
+    };
+
+    return {
+      ...toRefs(state),
+      group,
+      toggle,
+      setRefs,
+      checkAll,
+      toggleAll,
       activeIcon: 'https://img.yzcdn.cn/vant/user-active.png',
       inactiveIcon: 'https://img.yzcdn.cn/vant/user-inactive.png',
     };
-  },
-
-  methods: {
-    toggle(index) {
-      this.$refs.checkboxes[index].toggle();
-    },
-
-    checkAll() {
-      this.$refs.group.toggleAll(true);
-    },
-
-    toggleAll() {
-      this.$refs.group.toggleAll();
-    },
   },
 };
 </script>

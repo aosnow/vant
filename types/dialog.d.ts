@@ -1,4 +1,5 @@
 import { VanComponent } from './component';
+import { TeleportProps } from 'vue';
 
 type DialogAction = 'confirm' | 'cancel';
 type DialogDone = (close?: boolean) => void;
@@ -9,13 +10,14 @@ export type DialogOptions = {
   message?: string;
   theme?: string;
   overlay?: boolean;
+  teleport?: TeleportProps['to'];
   className?: any;
   allowHtml?: boolean;
   lockScroll?: boolean;
   transition?: string;
   messageAlign?: string;
   overlayClass?: string;
-  overlayStyle?: object;
+  overlayStyle?: Record<string, any>;
   closeOnPopstate?: boolean;
   cancelButtonText?: string;
   cancelButtonColor?: string;
@@ -24,7 +26,6 @@ export type DialogOptions = {
   showConfirmButton?: boolean;
   showCancelButton?: boolean;
   closeOnClickOverlay?: boolean;
-  getContainer?: string | (() => Element);
   beforeClose?: (action: DialogAction, done: DialogDone) => void;
 };
 
@@ -39,8 +40,8 @@ export interface Dialog {
   Component: typeof VanComponent;
 }
 
-declare module 'vue/types/vue' {
-  interface Vue {
+declare module '@vue/runtime-core' {
+  interface ComponentCustomProperties {
     $dialog: Dialog;
   }
 }

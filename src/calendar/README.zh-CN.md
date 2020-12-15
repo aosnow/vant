@@ -7,10 +7,11 @@
 ### 引入
 
 ```js
-import Vue from 'vue';
+import { createApp } from 'vue';
 import { Calendar } from 'vant';
 
-Vue.use(Calendar);
+const app = createApp();
+app.use(Calendar);
 ```
 
 ## 代码演示
@@ -21,7 +22,7 @@ Vue.use(Calendar);
 
 ```html
 <van-cell title="选择单个日期" :value="date" @click="show = true" />
-<van-calendar v-model="show" @confirm="onConfirm" />
+<van-calendar v-model:show="show" @confirm="onConfirm" />
 ```
 
 ```js
@@ -50,7 +51,7 @@ export default {
 
 ```html
 <van-cell title="选择多个日期" :value="text" @click="show = true" />
-<van-calendar v-model="show" type="multiple" @confirm="onConfirm" />
+<van-calendar v-model:show="show" type="multiple" @confirm="onConfirm" />
 ```
 
 ```js
@@ -76,7 +77,7 @@ export default {
 
 ```html
 <van-cell title="选择日期区间" :value="date" @click="show = true" />
-<van-calendar v-model="show" type="range" @confirm="onConfirm" />
+<van-calendar v-model:show="show" type="range" @confirm="onConfirm" />
 ```
 
 ```js
@@ -105,7 +106,7 @@ export default {
 将 `show-confirm` 设置为 `false` 可以隐藏确认按钮，这种情况下选择完成后会立即触发 `confirm` 事件。
 
 ```html
-<van-calendar v-model="show" :show-confirm="false" />
+<van-calendar v-model:show="show" :show-confirm="false" />
 ```
 
 ### 自定义颜色
@@ -113,7 +114,7 @@ export default {
 通过 `color` 属性可以自定义日历的颜色，对选中日期和底部按钮生效。
 
 ```html
-<van-calendar v-model="show" color="#07c160" />
+<van-calendar v-model:show="show" color="#1989fa" />
 ```
 
 ### 自定义日期范围
@@ -121,7 +122,7 @@ export default {
 通过 `min-date` 和 `max-date` 定义日历的范围。
 
 ```html
-<van-calendar v-model="show" :min-date="minDate" :max-date="maxDate" />
+<van-calendar v-model:show="show" :min-date="minDate" :max-date="maxDate" />
 ```
 
 ```js
@@ -142,7 +143,7 @@ export default {
 
 ```html
 <van-calendar
-  v-model="show"
+  v-model:show="show"
   type="range"
   confirm-text="完成"
   confirm-disabled-text="请选择结束时间"
@@ -154,7 +155,7 @@ export default {
 通过传入 `formatter` 函数来对日历上每一格的内容进行格式化。
 
 ```html
-<van-calendar v-model="show" type="range" :formatter="formatter" />
+<van-calendar v-model:show="show" type="range" :formatter="formatter" />
 ```
 
 ```js
@@ -191,7 +192,7 @@ export default {
 通过 `position` 属性自定义弹出层的弹出位置，可选值为 `top`、`left`、`right`。
 
 ```html
-<van-calendar v-model="show" :round="false" position="right" />
+<van-calendar v-model:show="show" :round="false" position="right" />
 ```
 
 ### 日期区间最大范围
@@ -254,13 +255,13 @@ export default {
 
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
-| v-model | 是否显示日历弹窗 | _boolean_ | `false` |
+| v-model:show | 是否显示日历弹窗 | _boolean_ | `false` |
 | position | 弹出位置，可选值为 `top` `right` `left` | _string_ | `bottom` |
 | round | 是否显示圆角弹窗 | _boolean_ | `true` |
 | close-on-popstate `v2.4.4` | 是否在页面回退时自动关闭 | _boolean_ | `true` |
 | close-on-click-overlay | 是否在点击遮罩层后关闭 | _boolean_ | `true` |
-| safe-area-inset-bottom | 是否开启[底部安全区适配](#/zh-CN/quickstart#di-bu-an-quan-qu-gua-pei) | _boolean_ | `true` |
-| get-container `v2.4.4` | 指定挂载的节点，[用法示例](#/zh-CN/popup#zhi-ding-gua-zai-wei-zhi) | _string \| () => Element_ | - |
+| safe-area-inset-bottom | 是否开启[底部安全区适配](#/zh-CN/advanced-usage#di-bu-an-quan-qu-gua-pei) | _boolean_ | `true` |
+| teleport `v2.4.4` | 指定挂载的节点，[用法示例](#/zh-CN/popup#zhi-ding-gua-zai-wei-zhi) | _string \| Element_ | - |
 
 ### Range Props
 
@@ -270,7 +271,7 @@ export default {
 | --- | --- | --- | --- |
 | max-range `v2.4.3` | 日期区间最多可选天数 | _number \| string_ | 无限制 |
 | range-prompt `v2.4.3` | 范围选择超过最多可选天数时的提示文案 | _string_ | `选择天数不能超过 xx 天` |
-| allow-same-day `v2.5.6` | 是否允许日期范围的起止时间为同一天 | _boolean_ | `fasle` |
+| allow-same-day `v2.5.6` | 是否允许日期范围的起止时间为同一天 | _boolean_ | `false` |
 
 ### Multiple Props
 
@@ -316,11 +317,43 @@ export default {
 
 ### 方法
 
-通过 ref 可以获取到 Calendar 实例并调用实例方法，详见[组件实例方法](#/zh-CN/quickstart#zu-jian-shi-li-fang-fa)
+通过 ref 可以获取到 Calendar 实例并调用实例方法，详见[组件实例方法](#/zh-CN/advanced-usage#zu-jian-shi-li-fang-fa)。
 
 | 方法名 | 说明                   | 参数 | 返回值 |
 | ------ | ---------------------- | ---- | ------ |
 | reset  | 重置选中的日期到默认值 | -    | -      |
+
+### 样式变量
+
+组件提供了下列 Less 变量，可用于自定义样式，使用方法请参考[主题定制](#/zh-CN/theme)。
+
+| 名称 | 默认值 | 描述 |
+| --- | --- | --- |
+| @calendar-background-color | `@white` | - |
+| @calendar-popup-height | `80%` | - |
+| @calendar-header-box-shadow | `0 2px 10px rgba(125, 126, 128, 0.16)` | - |
+| @calendar-header-title-height | `44px` | - |
+| @calendar-header-title-font-size | `@font-size-lg` | - |
+| @calendar-header-subtitle-font-size | `@font-size-md` | - |
+| @calendar-weekdays-height | `30px` | - |
+| @calendar-weekdays-font-size | `@font-size-sm` | - |
+| @calendar-month-title-font-size | `@font-size-md` | - |
+| @calendar-month-mark-color | `fade(@gray-2, 80%)` | - |
+| @calendar-month-mark-font-size | `160px` | - |
+| @calendar-day-height | `64px` | - |
+| @calendar-day-font-size | `@font-size-lg` | - |
+| @calendar-range-edge-color | `@white` | - |
+| @calendar-range-edge-background-color | `@red` | - |
+| @calendar-range-middle-color | `@red` | - |
+| @calendar-range-middle-background-opacity | `0.1` | - |
+| @calendar-selected-day-size | `54px` | - |
+| @calendar-selected-day-color | `@white` | - |
+| @calendar-info-font-size | `@font-size-xs` | - |
+| @calendar-info-line-height | `@line-height-xs` | - |
+| @calendar-selected-day-background-color | `@red` | - |
+| @calendar-day-disabled-color | `@gray-5` | - |
+| @calendar-confirm-button-height | `36px` | - |
+| @calendar-confirm-button-margin | `7px 0` | - |
 
 ## 常见问题
 
